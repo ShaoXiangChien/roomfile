@@ -124,7 +124,7 @@ Amazon, it preserves the ASIN, seller, shipping result, manufacturer, and
 manufacturer dimensions. Marketplace dimensions must be cross-checked before
 approval.
 
-Roomfile uses no affiliate links in v0.1.0 and never purchases, enters checkout,
+Roomfile uses no affiliate links in v0.1.1 and never purchases, enters checkout,
 contacts a retailer, or communicates externally.
 
 Projects in other regions use their configured local retailers, currency,
@@ -177,7 +177,7 @@ estimates provider cost before a batch.
 
 ## Limitations and safety
 
-Roomfile v0.1.0 supports reversible decorating changes in real rooms. It does
+Roomfile v0.1.1 supports reversible decorating changes in real rooms. It does
 not provide structural, electrical, building-code, contractor, or purchasing
 instructions. It cannot guarantee color, material, comfort, quality, price,
 stock, shipping, or return policy. Recheck current retailer claims and local

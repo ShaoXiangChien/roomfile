@@ -62,7 +62,7 @@ const workflow = [
     number: "03 / 05",
     kicker: "$roomfile explore",
     title: "Compare real alternatives.",
-    body: "Three directions resolve the same room truth and style evidence in deliberately different ways.",
+    body: "Roomfile derives three directions by default from the same room truth and your style evidence—not a fixed catalog.",
     accent: "brass",
   },
   {

@@ -1,4 +1,4 @@
-# Roomfile v0.1.0 launch copy
+# Roomfile v0.1.1 launch copy
 
 Edit dates, links, and any generated-image notes before publishing.
 
@@ -10,9 +10,10 @@ furniture that can actually be bought.
 
 I built Roomfile: an open-source interior-design skill for Codex.
 
-It keeps your room and taste in a local project, explores real alternatives,
-checks furniture fit with deterministic geometry, and turns the selected idea
-into dated IKEA/Amazon sourcing and a phased plan.
+It works with any room and any style: keeping room truth and taste in a local
+project, exploring real alternatives, checking furniture fit with deterministic
+geometry, and turning the selected idea into dated regional sourcing and a
+phased plan.
 
 No subscription. Apache-2.0.
 
@@ -23,7 +24,7 @@ No subscription. Apache-2.0.
 ## LinkedIn
 
 Most AI interior-design demos end with a beautiful image. Decorating an actual
-apartment starts after that image.
+room starts after that image.
 
 The model has to remember the room, fixed architecture, rental restrictions,
 existing furniture, budget, and the decisions made over many rounds. It also has
@@ -35,10 +36,10 @@ It is an open-source Agent Skill, tested in Codex, that:
 
 - turns inspiration into specific taste evidence;
 - captures a canonical room once;
-- explores Mid-century Modern, Bauhaus, Japandi, or other distinct directions;
+- derives distinct directions from your evidence, without a fixed style catalog;
 - keeps visual rendering separate from deterministic fit checks;
-- sources dated IKEA/Amazon candidates with identifiers, sellers, dimensions,
-  and availability evidence;
+- sources dated regional candidates with identifiers, sellers, dimensions, and
+  availability evidence—the public example happens to use IKEA US and Amazon US;
 - creates a phased shopping and installation plan.
 
 Personal room files remain local and gitignored. Roomfile has no subscription;
@@ -48,7 +49,7 @@ Apache-2.0: [GITHUB_URL]
 
 ## Reddit
 
-**Title:** I built an open-source Codex skill for apartment decorating that
+**Title:** I built an open-source Codex skill for room decorating that
 remembers the room and checks furniture fit
 
 I kept running into the same problem with AI room generators: the first image
@@ -60,16 +61,18 @@ Roomfile stores the work in a private local project:
 
 1. taste evidence from links/screenshots;
 2. canonical room photos, measurements, openings, and rental constraints;
-3. three deliberately different concepts;
+3. three deliberately different concepts by default, with arbitrary styles and
+   additional rounds supported;
 4. refinement with locked architecture and inventory;
 5. deterministic scaled layout and collision/clearance checks;
 6. current product sourcing with IKEA article numbers, Amazon ASINs, seller,
    dimensions, retrieval date, and ZIP-delivery evidence;
 7. phased execution and budget plan.
 
-The public demo is a completely fictional US rental with Mid-century Modern,
-Bauhaus, and Japandi options. Renders are always labeled visual approximations;
-only the geometry checker can claim fit.
+The public demo is a completely fictional apartment. Eclectic Mid-century
+Modern, Bauhaus, and Japandi demonstrate three possible directions; they are
+examples, not presets. Renders are always labeled visual approximations; only
+the geometry checker can claim fit.
 
 It is Apache-2.0 and tested in Codex:
 
@@ -85,7 +88,7 @@ retailer verification policy.
 **Title:** Show HN: Roomfile – an open-source interior-design skill that
 remembers constraints and checks furniture fit
 
-Roomfile is a file-based Agent Skill for long-running apartment decorating
+Roomfile is a file-based Agent Skill for long-running room decorating
 projects.
 
 The problem: existing AI tools generate attractive rooms but forget constraints
@@ -98,7 +101,7 @@ dependency-free deterministic Node checker. Sourcing records IKEA article
 numbers, Amazon ASINs, seller/manufacturer distinctions, dimensions, price,
 availability, ZIP delivery result, and retrieval date.
 
-The repository includes a fictional US rental example, a static docs site, and
+The repository includes a fictional apartment example, a static docs site, and
 no accounts, analytics, affiliate links, checkout, or subscription.
 
 Apache-2.0, Codex-first:
