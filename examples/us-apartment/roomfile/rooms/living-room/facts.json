@@ -1,0 +1,45 @@
+{
+  "schema_version": "0.1.0",
+  "facts": [
+    {
+      "id": "room-boundary",
+      "label": "Room boundary is 240 × 180 inches",
+      "classification": "measured",
+      "confidence": 1,
+      "critical_for_fit": true,
+      "source": "fictional tape-measure walkthrough"
+    },
+    {
+      "id": "entry-door",
+      "label": "Entry door is 36 inches wide and swings inward",
+      "classification": "measured",
+      "confidence": 1,
+      "critical_for_fit": true,
+      "source": "fictional tape-measure walkthrough"
+    },
+    {
+      "id": "protected-windows",
+      "label": "Two north windows are landlord-protected",
+      "classification": "observed",
+      "confidence": 1,
+      "critical_for_fit": false,
+      "source": "canonical source image and fictional lease"
+    },
+    {
+      "id": "fixed-flooring",
+      "label": "Wood-look rental flooring cannot be altered",
+      "classification": "observed",
+      "confidence": 1,
+      "critical_for_fit": false,
+      "source": "canonical source image and fictional lease"
+    },
+    {
+      "id": "warm-graphic-taste",
+      "label": "Resident prefers a warm neutral base with one graphic accent",
+      "classification": "desired",
+      "confidence": 0.85,
+      "critical_for_fit": false,
+      "source": "inspiration reactions"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "schema_version": "0.1.0",
+  "estimated_at": "2026-07-18T00:00:00Z",
+  "provider": "banana",
+  "model": "gemini-3.1-flash-image",
+  "resolution": "2K",
+  "aspect_ratio": "4:3",
+  "pricing": "standard synchronous API",
+  "planned_images": 6,
+  "estimated_cost_per_image_usd": 0.101,
+  "estimated_total_usd": 0.606,
+  "input_token_cost_note": "Input-token charges, if any, are provider-dependent and not included in this image-output estimate.",
+  "status": "completed",
+  "actual_batch_images": 6,
+  "actual_batch_output_cost_usd": 0.606,
+  "smoke_test_images": 1,
+  "smoke_test_output_cost_usd": 0.067,
+  "actual_session_output_cost_usd": 0.673
+}

@@ -1,0 +1,26 @@
+name: Feature request
+description: Propose a focused workflow, format, retailer, or safety improvement.
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: User problem
+      description: What decorating decision is currently hard or unreliable?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: Explain how it fits the existing Roomfile project model.
+    validations:
+      required: true
+  - type: checkboxes
+    id: boundaries
+    attributes:
+      label: Boundaries
+      options:
+        - label: This does not add purchasing, checkout, affiliate redirection, contractor commitments, or structural/electrical instructions.
+          required: true

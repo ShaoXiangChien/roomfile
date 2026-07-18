@@ -1,0 +1,4 @@
+interface:
+  display_name: "Roomfile"
+  short_description: "Plan a real room from inspiration to purchase"
+  default_prompt: "Use $roomfile to initialize my apartment design project and recommend the next step."

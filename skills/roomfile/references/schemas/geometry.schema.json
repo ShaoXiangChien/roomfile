@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://roomfile.dev/schemas/geometry.schema.json",
+  "title": "Roomfile geometry",
+  "type": "object",
+  "required": ["schema_version", "unit", "boundary", "openings", "fixed_elements", "clearance_zones"],
+  "properties": {
+    "schema_version": { "const": "0.1.0" },
+    "unit": { "enum": ["in", "cm"] },
+    "boundary": {
+      "type": "object",
+      "required": ["type", "points"],
+      "properties": {
+        "type": { "const": "polygon" },
+        "points": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "$ref": "#/$defs/point" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "openings": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/spatialElement" }
+    },
+    "fixed_elements": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/spatialElement" }
+    },
+    "clearance_zones": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/rectangle" }
+    }
+  },
+  "$defs": {
+    "point": {
+      "type": "object",
+      "required": ["x", "y"],
+      "properties": {
+        "x": { "type": "number" },
+        "y": { "type": "number" }
+      },
+      "additionalProperties": false
+    },
+    "rectangle": {
+      "type": "object",
+      "required": ["id", "x", "y", "width", "depth"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "x": { "type": "number" },
+        "y": { "type": "number" },
+        "width": { "type": "number", "exclusiveMinimum": 0 },
+        "depth": { "type": "number", "exclusiveMinimum": 0 }
+      }
+    },
+    "spatialElement": {
+      "allOf": [
+        { "$ref": "#/$defs/rectangle" },
+        {
+          "type": "object",
+          "properties": {
+            "kind": { "type": "string" },
+            "clearance": { "$ref": "#/$defs/rectangle" }
+          }
+        }
+      ]
+    }
+  },
+  "additionalProperties": false
+}

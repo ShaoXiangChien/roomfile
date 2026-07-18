@@ -1,0 +1,25 @@
+name: False fit result
+description: Report a collision, overflow, rotation, clearance, or edge-touch result that is wrong.
+title: "[False fit]: "
+labels: ["fit-checker"]
+body:
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected and actual result
+    validations:
+      required: true
+  - type: textarea
+    id: fixture
+    attributes:
+      label: Minimal fictional fixture
+      description: Include the smallest geometry and products JSON that reproduces the result. Never attach private project data.
+      render: json
+    validations:
+      required: true
+  - type: input
+    id: node
+    attributes:
+      label: Node version
+    validations:
+      required: true

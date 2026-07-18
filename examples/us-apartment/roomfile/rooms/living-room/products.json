@@ -1,0 +1,145 @@
+{
+  "schema_version": "0.1.0",
+  "products": [
+    {
+      "id": "existing-sofa",
+      "name": "Existing warm-gray sofa",
+      "role": "seating",
+      "retailer": "Existing inventory",
+      "product_identifier": "inventory-sofa-01",
+      "dimensions": { "width": 84, "depth": 36, "height": 32, "unit": "in" },
+      "placement": { "x": 92, "y": 52, "rotation": 0 },
+      "price": { "amount": 0, "currency": "USD" },
+      "availability": "owned",
+      "delivery": { "postal_code": "00000", "result": "not-applicable" },
+      "source": {
+        "url": "https://github.com/ShaoXiangChien/roomfile",
+        "retrieved_at": "2026-07-18T00:00:00Z",
+        "dimension_source": "fictional measured inventory"
+      },
+      "status": "approved",
+      "approval": {
+        "approved_by_user": true,
+        "approved_at": "2026-07-18T00:00:00Z",
+        "note": "Fictional resident confirmed this owned sofa must remain."
+      },
+      "locked": true
+    },
+    {
+      "id": "existing-dining-table",
+      "name": "Existing oak dining table",
+      "role": "dining",
+      "retailer": "Existing inventory",
+      "product_identifier": "inventory-table-01",
+      "dimensions": { "width": 60, "depth": 36, "height": 29, "unit": "in" },
+      "placement": { "x": 196, "y": 135, "rotation": 0 },
+      "price": { "amount": 0, "currency": "USD" },
+      "availability": "owned",
+      "delivery": { "postal_code": "00000", "result": "not-applicable" },
+      "source": {
+        "url": "https://github.com/ShaoXiangChien/roomfile",
+        "retrieved_at": "2026-07-18T00:00:00Z",
+        "dimension_source": "fictional measured inventory"
+      },
+      "status": "approved",
+      "approval": {
+        "approved_by_user": true,
+        "approved_at": "2026-07-18T00:00:00Z",
+        "note": "Fictional resident confirmed this owned table must remain."
+      },
+      "locked": true
+    },
+    {
+      "id": "ikea-stockholm-coffee-table",
+      "name": "STOCKHOLM coffee table, walnut veneer",
+      "role": "coffee-table",
+      "retailer": "IKEA US",
+      "product_identifier": "702.397.10",
+      "article_number": "702.397.10",
+      "dimensions": { "width": 70.875, "depth": 23.25, "height": 15.75, "unit": "in" },
+      "package_dimensions": { "width": 24, "depth": 73.5, "height": 2.75, "unit": "in" },
+      "placement": { "x": 88, "y": 91, "rotation": 0 },
+      "price": { "amount": 449.99, "currency": "USD" },
+      "availability": "catalog-listed; fictional ZIP delivery not checked",
+      "delivery": { "postal_code": "00000", "result": "unknown-fictional-zip" },
+      "assembly_required": true,
+      "source": {
+        "url": "https://www.ikea.com/us/en/p/stockholm-coffee-table-walnut-veneer-70239710/",
+        "retrieved_at": "2026-07-18T00:00:00Z",
+        "dimension_source": "IKEA US product and package measurements"
+      },
+      "status": "approved",
+      "approval": {
+        "approved_by_user": true,
+        "approved_at": "2026-07-18T00:00:00Z",
+        "note": "Fictional resident approved the table for the public-demo execution plan after fit review."
+      }
+    },
+    {
+      "id": "ikea-lauters-floor-lamp",
+      "name": "LAUTERS floor lamp, ash/white",
+      "role": "lighting",
+      "retailer": "IKEA US",
+      "product_identifier": "004.050.48",
+      "article_number": "004.050.48",
+      "dimensions": { "width": 24, "depth": 24, "height": 59, "unit": "in" },
+      "package_dimensions": { "width": 15, "depth": 33.75, "height": 3.25, "unit": "in" },
+      "placement": { "x": 148, "y": 51, "rotation": 0 },
+      "price": { "amount": 79.99, "currency": "USD" },
+      "availability": "catalog-listed; fictional ZIP delivery not checked",
+      "delivery": { "postal_code": "00000", "result": "unknown-fictional-zip" },
+      "assembly_required": true,
+      "source": {
+        "url": "https://www.ikea.com/us/en/p/lauters-floor-lamp-ash-white-00405048/",
+        "retrieved_at": "2026-07-18T00:00:00Z",
+        "dimension_source": "IKEA US product and package measurements"
+      },
+      "status": "approved",
+      "approval": {
+        "approved_by_user": true,
+        "approved_at": "2026-07-18T00:00:00Z",
+        "note": "Fictional resident approved the lamp for the public-demo execution plan."
+      }
+    },
+    {
+      "id": "amazon-tolead-console",
+      "name": "TOLEAD 59-inch media console",
+      "role": "media-storage-alternative",
+      "retailer": "Amazon US",
+      "product_identifier": "B0DPKTVQDF",
+      "asin": "B0DPKTVQDF",
+      "seller": "not shown while unavailable",
+      "manufacturer": "TOLEAD",
+      "dimensions": { "width": 59, "depth": 15.3, "height": 17.7, "unit": "in" },
+      "placement": { "x": 200, "y": 76, "rotation": 0 },
+      "availability": "unavailable at retrieval; dimensions conflict with product-information block",
+      "delivery": { "postal_code": "00000", "result": "unavailable" },
+      "source": {
+        "url": "https://us.amazon.com/TOLEAD-Console-Century-Profile-Credenza/dp/B0DPKTVQDF",
+        "retrieved_at": "2026-07-18T00:00:00Z",
+        "dimension_source": "manufacturer marketing dimensions on Amazon; cross-check required"
+      },
+      "status": "rejected"
+    },
+    {
+      "id": "amazon-basics-air-purifier",
+      "name": "Amazon Basics air purifier",
+      "role": "air-care",
+      "retailer": "Amazon US",
+      "product_identifier": "B0CL993435",
+      "asin": "B0CL993435",
+      "seller": "not verified",
+      "manufacturer": "Amazon",
+      "dimensions": { "width": 9.6, "depth": 9.6, "height": 14.3, "unit": "in" },
+      "placement": { "x": 153, "y": 92, "rotation": 0 },
+      "availability": "page accessible; price, seller, and fictional ZIP delivery not verified",
+      "delivery": { "postal_code": "00000", "result": "unknown-fictional-zip" },
+      "source": {
+        "url": "https://us.amazon.com/Amazon-Basics-Purifier-Bedroom-Allergies/dp/B0CL993435",
+        "retrieved_at": "2026-07-18T00:00:00Z",
+        "dimension_source": "manufacturer product dimensions on Amazon"
+      },
+      "status": "candidate"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+name: Bug
+description: Report a reproducible problem in the skill, scripts, example, or docs.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: Never attach private room photos, addresses, ZIP codes, budgets, or credentials.
+  - type: textarea
+    id: behavior
+    attributes:
+      label: What happened?
+      description: Include the command, expected result, and actual result.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Minimal reproduction
+      description: Use fictional or redacted files only.
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      placeholder: Codex version, OS, Node version
+    validations:
+      required: true

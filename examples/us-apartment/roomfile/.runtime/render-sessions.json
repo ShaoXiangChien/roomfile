@@ -1,0 +1,23 @@
+{
+  "schema_version": "0.1.0",
+  "providers": {
+    "banana": {
+      "model": "gemini-3.1-flash-image",
+      "route": "direct-rest-fallback",
+      "status": "completed",
+      "interaction_ids": {},
+      "continuity_note": "The long-running MCP worker retained the prior key, so the documented direct REST fallback used the same paid Banana model. Each concept used the canonical source image; refinement used the initial Mid-century image; product placement used the refined image.",
+      "source_chain": {
+        "canonical": "assets/source/source-room.png",
+        "mid-century-modern": "assets/source/source-room.png",
+        "bauhaus": "assets/source/source-room.png",
+        "japandi": "assets/source/source-room.png",
+        "mid-century-modern-refined": "assets/generated/mid-century-modern.png",
+        "ikea-stockholm-placement": "assets/generated/mid-century-modern-refined.png"
+      },
+      "post_processing": "Every batch image received the same deterministic bottom-edge crop and rescale to remove an accidentally rendered disclaimer while preserving comparative geometry.",
+      "completed_at": "2026-07-18T00:00:00Z",
+      "last_error": null
+    }
+  }
+}

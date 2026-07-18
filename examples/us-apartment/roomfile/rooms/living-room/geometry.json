@@ -1,0 +1,69 @@
+{
+  "schema_version": "0.1.0",
+  "unit": "in",
+  "boundary": {
+    "type": "polygon",
+    "points": [
+      { "x": 0, "y": 0 },
+      { "x": 240, "y": 0 },
+      { "x": 240, "y": 180 },
+      { "x": 0, "y": 180 }
+    ]
+  },
+  "openings": [
+    {
+      "id": "entry-door",
+      "kind": "door",
+      "wall": "south",
+      "start": 8,
+      "width": 36,
+      "swing": "inward-left",
+      "clearance": { "x": 0, "y": 0, "width": 48, "depth": 48 }
+    },
+    {
+      "id": "north-window-a",
+      "kind": "window",
+      "wall": "north",
+      "start": 36,
+      "width": 60,
+      "sill_height": 30
+    },
+    {
+      "id": "north-window-b",
+      "kind": "window",
+      "wall": "north",
+      "start": 126,
+      "width": 60,
+      "sill_height": 30
+    }
+  ],
+  "fixed_elements": [
+    {
+      "id": "radiator",
+      "kind": "radiator",
+      "x": 102,
+      "y": 168,
+      "width": 36,
+      "depth": 12,
+      "locked": true
+    },
+    {
+      "id": "hvac-register",
+      "kind": "hvac",
+      "x": 212,
+      "y": 164,
+      "width": 18,
+      "depth": 8,
+      "locked": true
+    }
+  ],
+  "clearance_zones": [
+    {
+      "id": "radiator-service",
+      "x": 96,
+      "y": 150,
+      "width": 48,
+      "depth": 30
+    }
+  ]
+}

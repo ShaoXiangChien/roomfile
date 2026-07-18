@@ -1,0 +1,84 @@
+name: CI
+
+on:
+  push:
+    branches: ["main", "codex/**"]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  node:
+    name: Node ${{ matrix.node-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [20, 22]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            website/package-lock.json
+      - run: npm ci
+      - name: Skill and deterministic script tests
+        run: npm test
+      - name: Validate portable skill
+        run: npm run test:skill
+      - name: Validate fictional example
+        run: npm run validate:example
+      - name: Fresh initialization smoke test
+        run: npm run smoke:fresh
+      - name: Privacy scan
+        run: npm run check:privacy
+
+  website:
+    name: Website build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: website/package-lock.json
+      - run: npm ci
+        working-directory: website
+      - name: Build and rendered-route tests
+        run: npm test
+        working-directory: website
+      - name: Lint website
+        run: npm run lint
+        working-directory: website
+
+  links:
+    name: Link check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check repository and website links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --no-progress
+            --exclude-path website/node_modules
+            --exclude-path website/dist
+            README.md CONTRIBUTING.md website/app/**/*.tsx
+          fail: true
+
+  secrets:
+    name: Secret scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Scan repository history and working tree
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

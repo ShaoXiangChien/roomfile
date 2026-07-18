@@ -1,0 +1,38 @@
+{
+  "schema_version": "0.1.0",
+  "id": "bauhaus",
+  "version": 1,
+  "status": "draft",
+  "style_direction": "Bauhaus",
+  "summary": "Tubular steel, disciplined geometry, and small primary-color accents turn the same neutral rental into a high-contrast functional composition.",
+  "locked_elements": [
+    "room geometry",
+    "camera viewpoint",
+    "existing sofa",
+    "existing dining table",
+    "north windows",
+    "wood-look flooring",
+    "radiator",
+    "HVAC register",
+    "entry door",
+    "outlets",
+    "ceiling junction"
+  ],
+  "allowed_changes": [
+    "coffee table",
+    "floor lamp",
+    "removable textiles",
+    "freestanding storage",
+    "plants",
+    "no-drill art"
+  ],
+  "decisions": [],
+  "renders": [
+    {
+      "path": "assets/generated/bauhaus.png",
+      "provider": "banana",
+      "created_at": "2026-07-18T00:00:00Z",
+      "disclaimer": "Visual approximation — verify dimensions, color, material, and availability before purchasing."
+    }
+  ]
+}

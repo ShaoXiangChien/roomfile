@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 856 656" role="img" aria-labelledby="title desc">
+<title id="title">Roomfile scaled layout</title>
+<desc id="desc">Measured room boundary, openings, clearance zones, fixed elements, and placed products. Visual renders are approximate; this diagram is dimension-based.</desc>
+<style>
+  .boundary{fill:#f3efe7;stroke:#1e1b18;stroke-width:3}
+  .product{fill:#59624d;fill-opacity:.86;stroke:#1e1b18;stroke-width:1.5}
+  .opening{fill:#b86f52;fill-opacity:.62;stroke:#1e1b18;stroke-width:1}
+  .fixed{fill:#b49255;fill-opacity:.7;stroke:#1e1b18;stroke-width:1}
+  .clearance{fill:#ffffff;fill-opacity:.2;stroke:#b86f52;stroke-width:1.5;stroke-dasharray:6 4}
+  text{font:12px ui-monospace,monospace;fill:#1e1b18;text-anchor:middle;dominant-baseline:middle}
+</style>
+<polygon points="28,28 828,28 828,628 28,628" class="boundary"/>
+<g><rect x="348" y="528" width="160" height="100" rx="2" class="clearance"/><text x="428" y="578">radiator-service</text></g>
+<g><rect x="NaN" y="NaN" width="120" height="NaN" rx="2" class="opening"/><text x="NaN" y="NaN">entry-door</text></g>
+<g><rect x="NaN" y="NaN" width="200" height="NaN" rx="2" class="opening"/><text x="NaN" y="NaN">north-window-a</text></g>
+<g><rect x="NaN" y="NaN" width="200" height="NaN" rx="2" class="opening"/><text x="NaN" y="NaN">north-window-b</text></g>
+<g><rect x="368" y="588" width="120" height="40" rx="2" class="fixed"/><text x="428" y="608">radiator</text></g>
+<g><rect x="734.6666666666667" y="574.6666666666667" width="60" height="26.666666666666668" rx="2" class="fixed"/><text x="764.6666666666667" y="588.0000000000001">hvac-register</text></g>
+<g><rect x="194.66666666666669" y="141.33333333333334" width="280" height="120" rx="2" class="product"/><text x="334.6666666666667" y="201.33333333333334">Existing warm-gray sofa</text></g>
+<g><rect x="581.3333333333334" y="418" width="200" height="120" rx="2" class="product"/><text x="681.3333333333334" y="478">Existing oak dining table</text></g>
+<g><rect x="203.20833333333334" y="292.58333333333337" width="236.25" height="77.5" rx="2" class="product"/><text x="321.33333333333337" y="331.33333333333337">STOCKHOLM coffee table, walnut veneer</text></g>
+<g><rect x="481.33333333333337" y="158" width="80" height="80" rx="2" class="product"/><text x="521.3333333333334" y="198">LAUTERS floor lamp, ash/white</text></g>
+<g><rect x="596.3333333333334" y="255.83333333333331" width="196.66666666666669" height="51.00000000000001" rx="2" class="product"/><text x="694.6666666666667" y="281.3333333333333">TOLEAD 59-inch media console</text></g>
+<g><rect x="522" y="318.6666666666667" width="32" height="32" rx="2" class="product"/><text x="538" y="334.6666666666667">Amazon Basics air purifier</text></g>
+</svg>

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://roomfile.dev/schemas/render-request.schema.json",
+  "title": "Roomfile render request",
+  "type": "object",
+  "required": ["schema_version", "concept_id", "concept_version", "canonical_images", "goal", "locked_facts", "allowed_changes", "style_evidence", "camera_view", "output", "disclaimer"],
+  "properties": {
+    "schema_version": { "const": "0.1.0" },
+    "concept_id": { "type": "string", "minLength": 1 },
+    "concept_version": { "type": "integer", "minimum": 1 },
+    "canonical_images": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string" }
+    },
+    "goal": { "type": "string", "minLength": 1 },
+    "locked_facts": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "allowed_changes": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "style_evidence": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "product_references": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "camera_view": { "type": "string", "minLength": 1 },
+    "output": { "type": "string", "minLength": 1 },
+    "disclaimer": {
+      "const": "Visual approximation — verify dimensions, color, material, and availability before purchasing."
+    }
+  },
+  "additionalProperties": false
+}

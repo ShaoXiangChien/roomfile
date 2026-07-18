@@ -1,0 +1,23 @@
+{
+  "name": "roomfile",
+  "version": "0.1.0",
+  "description": "A project-based interior design Agent Skill for real rooms, constraints, fit checks, and sourcing.",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShaoXiangChien/roomfile.git"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "test:skill": "python3 skills/roomfile/scripts/validate-skill.py",
+    "test:website": "npm --prefix website test",
+    "validate:example": "node skills/roomfile/scripts/validate-project.mjs --project examples/us-apartment/roomfile --json",
+    "smoke:fresh": "node scripts/fresh-install-smoke.mjs",
+    "check:privacy": "node scripts/privacy-scan.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

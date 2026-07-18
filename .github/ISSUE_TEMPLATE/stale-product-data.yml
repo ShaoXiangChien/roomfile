@@ -1,0 +1,25 @@
+name: Stale product data
+description: Flag an archived example whose price, stock, seller, or product page changed.
+title: "[Stale data]: "
+labels: ["data-staleness"]
+body:
+  - type: input
+    id: identifier
+    attributes:
+      label: Product identifier and retailer
+    validations:
+      required: true
+  - type: input
+    id: retrieved
+    attributes:
+      label: Date you rechecked
+      placeholder: YYYY-MM-DD
+    validations:
+      required: true
+  - type: textarea
+    id: change
+    attributes:
+      label: What changed?
+      description: Price, stock, seller, shipping, dimensions, URL, or return policy.
+    validations:
+      required: true

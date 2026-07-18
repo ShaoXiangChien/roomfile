@@ -1,0 +1,12 @@
+node_modules/
+website/node_modules/
+website/dist/
+website/.next/
+website/.wrangler/
+.DS_Store
+*.log
+*.tgz
+tmp/
+
+# Local Roomfile projects created while testing this repository.
+/roomfile/

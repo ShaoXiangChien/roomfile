@@ -1,0 +1,24 @@
+name: Retailer failure
+description: Report an identifier, seller, dimension, availability, or parsing failure.
+title: "[Retailer]: "
+labels: ["retailer"]
+body:
+  - type: dropdown
+    id: retailer
+    attributes:
+      label: Retailer
+      options: ["IKEA US", "Amazon US", "Target", "Wayfair", "Walmart", "The Home Depot", "Lowe's", "Other"]
+    validations:
+      required: true
+  - type: input
+    id: identifier
+    attributes:
+      label: Product identifier
+      placeholder: IKEA article number or Amazon ASIN
+  - type: textarea
+    id: failure
+    attributes:
+      label: Failure and retrieval date
+      description: Do not include an address or personal ZIP. Use a fictional or broad region.
+    validations:
+      required: true

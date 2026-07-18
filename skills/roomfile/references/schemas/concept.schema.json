@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://roomfile.dev/schemas/concept.schema.json",
+  "title": "Roomfile concept",
+  "type": "object",
+  "required": ["schema_version", "id", "version", "status", "style_direction", "locked_elements", "allowed_changes", "decisions", "renders"],
+  "properties": {
+    "schema_version": { "const": "0.1.0" },
+    "id": { "type": "string", "minLength": 1 },
+    "version": { "type": "integer", "minimum": 1 },
+    "status": {
+      "enum": ["draft", "selected", "approved", "rejected", "archived"]
+    },
+    "style_direction": { "type": "string", "minLength": 1 },
+    "summary": { "type": "string" },
+    "locked_elements": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "allowed_changes": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "decisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["decision", "approved_by_user"],
+        "properties": {
+          "decision": { "type": "string" },
+          "approved_by_user": { "type": "boolean" },
+          "recorded_at": { "type": "string", "format": "date-time" }
+        }
+      }
+    },
+    "renders": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path", "disclaimer"],
+        "properties": {
+          "path": { "type": "string" },
+          "provider": { "type": "string" },
+          "created_at": { "type": "string", "format": "date-time" },
+          "disclaimer": { "type": "string" }
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

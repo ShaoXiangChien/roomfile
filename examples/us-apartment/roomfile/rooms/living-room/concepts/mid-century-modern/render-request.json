@@ -1,0 +1,32 @@
+{
+  "schema_version": "0.1.0",
+  "concept_id": "mid-century-modern",
+  "concept_version": 2,
+  "canonical_images": ["assets/source/source-room.png"],
+  "goal": "Refine the selected warm Mid-century Modern direction while preserving the exact fictional rental architecture and measured inventory.",
+  "locked_facts": [
+    "same 4:3 camera position and lens",
+    "same wall, window, door, radiator, HVAC, outlet, and ceiling-light locations",
+    "same wood-look flooring",
+    "same 84 × 36 inch warm-gray sofa",
+    "same 60 × 36 inch oak dining table"
+  ],
+  "allowed_changes": [
+    "add walnut coffee table",
+    "add sculptural ash floor lamp",
+    "add removable oatmeal and moss textiles",
+    "add freestanding decor and plants",
+    "add no-drill art"
+  ],
+  "style_evidence": [
+    "warm wood with visible grain",
+    "restrained 1960s references",
+    "sculptural lighting",
+    "tapered furniture",
+    "calm neutral base"
+  ],
+  "product_references": ["702.397.10", "004.050.48"],
+  "camera_view": "Phone camera at 5 ft height near southwest entry, facing north-northeast, 4:3 landscape.",
+  "output": "assets/generated/mid-century-modern-refined.png",
+  "disclaimer": "Visual approximation — verify dimensions, color, material, and availability before purchasing."
+}

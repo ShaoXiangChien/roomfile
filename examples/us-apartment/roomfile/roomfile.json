@@ -1,0 +1,34 @@
+{
+  "schema_version": "0.1.0",
+  "project_name": "Fictional Oak Street Apartment",
+  "country": "US",
+  "region": "US demo region",
+  "postal_code": "00000",
+  "currency": "USD",
+  "measurement_unit": "in",
+  "budget": {
+    "amount": 3000,
+    "currency": "USD"
+  },
+  "privacy_mode": "public-demo",
+  "preferred_retailers": [
+    "IKEA US",
+    "Amazon US",
+    "Target",
+    "Wayfair",
+    "Walmart",
+    "The Home Depot",
+    "Lowe's"
+  ],
+  "rendering": {
+    "preferred_adapter": "banana",
+    "external_processing_consent": "ask-per-provider"
+  },
+  "rooms": [
+    {
+      "id": "living-room",
+      "name": "Living room",
+      "status": "planned"
+    }
+  ]
+}

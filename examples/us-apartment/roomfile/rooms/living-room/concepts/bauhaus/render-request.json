@@ -1,0 +1,32 @@
+{
+  "schema_version": "0.1.0",
+  "concept_id": "bauhaus",
+  "concept_version": 1,
+  "canonical_images": ["assets/source/source-room.png"],
+  "goal": "Explore a disciplined Bauhaus alternative in the exact same fictional rental room.",
+  "locked_facts": [
+    "same 4:3 camera position and lens",
+    "same wall, window, door, radiator, HVAC, outlet, and ceiling-light locations",
+    "same wood-look flooring",
+    "same 84 × 36 inch warm-gray sofa",
+    "same 60 × 36 inch oak dining table"
+  ],
+  "allowed_changes": [
+    "add tubular-steel coffee table",
+    "add geometric floor lamp",
+    "add removable primary-color textiles",
+    "add freestanding decor",
+    "add no-drill geometric art"
+  ],
+  "style_evidence": [
+    "primary-color accents",
+    "tubular steel",
+    "geometric forms",
+    "bold functional contrast",
+    "disciplined composition"
+  ],
+  "product_references": [],
+  "camera_view": "Phone camera at 5 ft height near southwest entry, facing north-northeast, 4:3 landscape.",
+  "output": "assets/generated/bauhaus.png",
+  "disclaimer": "Visual approximation — verify dimensions, color, material, and availability before purchasing."
+}
