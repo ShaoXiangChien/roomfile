@@ -18,7 +18,7 @@ Generated from `/Users/ericchien/Documents/Interior Design/examples/us-apartment
 
 Create a photorealistic interior-design visualization using the supplied canonical room image as the architectural source of truth.
 
-Goal: Refine the selected Eclectic Mid-century Modern direction in the exact same fictional apartment, strengthening the approved warm, collected, 1970s-inflected evidence while preserving every locked architectural and inventory fact.
+Goal: Refine the selected Mid-century Modern direction in the exact same fictional apartment, strengthening the approved warm, collected, 1970s-inflected evidence while preserving every locked architectural and inventory fact.
 
 Camera and composition: Phone camera at 5 ft height near southwest entry, facing north-northeast, 4:3 landscape. Keep this viewpoint, framing, perspective, lens character, and visible architecture consistent.
 
@@ -43,7 +43,7 @@ Visible style evidence to express:
 4. mushroom lamps, an arched floor lamp, and practical layered lighting
 5. tactile upholstery and a large graphic 1970s rug
 6. records, books, posters, plants, and collected personal objects
-7. Eclectic Mid-century Modern mixed with space-age, Bauhaus, and 1970s revival references
+7. Mid-century Modern mixed with space-age, Bauhaus, and 1970s revival references
 8. intentional collected abundance with clear circulation
 
 Product references to depict approximately, without inventing dimensional proof:

@@ -12,11 +12,11 @@ test("repository has public launch and licensing contracts", async () => {
     readFile(path.join(root, "package.json"), "utf8"),
   ]);
 
-  assert.match(readme, /Your room, remembered/);
+  assert.match(readme, /Design your home, together/);
   assert.match(readme, /npx skills add ShaoXiangChien\/roomfile/);
-  assert.match(readme, /any room.*any style/is);
-  assert.match(readme, /examples, not presets/i);
-  assert.match(readme, /Eclectic Mid-century Modern/);
+  assert.match(readme, /understand.*space.*discover.*love.*iterate.*real/is);
+  assert.doesNotMatch(readme, /Eclectic Mid-century Modern/);
+  assert.doesNotMatch(readme, /Your room, remembered/);
   assert.doesNotMatch(readme, /serves US apartment renters/i);
   assert.match(readme, /Mid-century Modern/);
   assert.match(readme, /Bauhaus/);
@@ -31,7 +31,7 @@ test("repository has public launch and licensing contracts", async () => {
 
   const pkg = JSON.parse(packageJson);
   assert.equal(pkg.name, "roomfile");
-  assert.equal(pkg.version, "0.1.1");
+  assert.equal(pkg.version, "0.2.0");
   assert.equal(pkg.license, "Apache-2.0");
   assert.equal(pkg.scripts.test.includes("node --test"), true);
 });
@@ -67,8 +67,8 @@ test("social launch kit has editable copy, alt text, and required assets", async
   for (const platform of ["X", "LinkedIn", "Reddit", "Hacker News"]) {
     assert.match(copy, new RegExp(platform, "i"));
   }
-  assert.match(copy, /forget constraints/i);
-  assert.match(copy, /furniture that can actually be bought/i);
+  assert.match(copy, /Design your home, together/i);
+  assert.match(copy, /first photo.*final placement/is);
   assert.match(alt, /before/i);
   assert.match(alt, /workflow/i);
 

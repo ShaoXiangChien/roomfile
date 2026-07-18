@@ -3,6 +3,7 @@ import { access, readdir } from "node:fs/promises";
 import path from "node:path";
 import {
   SCHEMA_VERSION,
+  SUPPORTED_SCHEMA_VERSIONS,
   failInput,
   parseArgs,
   printResult,
@@ -23,11 +24,29 @@ try {
   const manifest = await inspectJson(manifestPath, "manifest_missing");
 
   if (manifest) {
-    if (manifest.schema_version !== SCHEMA_VERSION) {
-      errors.push({
-        code: "unsupported_schema_version",
-        message: `Expected schema ${SCHEMA_VERSION}; received ${manifest.schema_version}.`,
+    if (manifest.schema_version === "0.1.0") {
+      warnings.push({
+        code: "schema_upgrade_available",
+        message: "Schema 0.1.0 is supported; migrate to 0.2.0 when convenient.",
       });
+    }
+    if (manifest.schema_version === SCHEMA_VERSION) {
+      const missingProfile = [
+        manifest.setup_status !== "ready",
+        !manifest.country,
+        !manifest.currency,
+        !["in", "cm"].includes(manifest.measurement_unit),
+        !["user-preferred", "agent-suggested"].includes(
+          manifest.retailer_strategy,
+        ),
+      ].some(Boolean);
+      if (missingProfile) {
+        errors.push({
+          code: "shopping_profile_incomplete",
+          message:
+            "Complete location, currency, units, and retailer strategy before sourcing.",
+        });
+      }
     }
     for (const field of [
       "country",
@@ -57,11 +76,22 @@ try {
     const products = await inspectJson(productsPath, "products_missing");
 
     if ((geometry?.boundary?.points ?? []).length < 3) {
-      errors.push({
+      const issue = {
         code: "invalid_boundary",
         room_id: room.id,
         message: `${room.id} needs a measured polygon with at least three points.`,
-      });
+      };
+      if (
+        manifest?.schema_version === SCHEMA_VERSION &&
+        room.status === "capture-needed"
+      ) {
+        warnings.push({
+          ...issue,
+          code: "room_geometry_needed",
+        });
+      } else {
+        errors.push(issue);
+      }
     }
     for (const fact of facts?.facts ?? []) {
       if (fact.critical_for_fit && fact.classification !== "measured") {
@@ -131,11 +161,11 @@ try {
       await access(file);
       const value = await readJson(file);
       artifacts.push(file);
-      if (value.schema_version !== SCHEMA_VERSION) {
+      if (!SUPPORTED_SCHEMA_VERSIONS.has(value.schema_version)) {
         errors.push({
           code: "unsupported_schema_version",
           file,
-          message: `${file} uses unsupported schema ${value.schema_version}.`,
+          message: `${file} uses unsupported schema ${value.schema_version}; supported versions are 0.1.0 and ${SCHEMA_VERSION}.`,
         });
       }
       return value;

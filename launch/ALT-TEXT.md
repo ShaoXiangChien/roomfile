@@ -1,44 +1,35 @@
 # Accessible alt text
 
-## Open Graph card / repository preview
+## Open Graph card and repository preview
 
-Warm editorial graphic for Roomfile. On an ivory background, the headline
-“Your room, remembered.” sits beside two views of the same fictional rental
-living room: an undecorated source and a warm Eclectic Mid-century Modern
-direction.
-Small labels note any style, room truth, deterministic fit, and regional
-sourcing.
+Contemporary editorial image for Roomfile with the headline “Design your home,
+together.” A warm Mid-century Modern living room fills the composition while a
+small inset shows the same room before decorating. Folio labels trace the
+journey from first photo to final placement.
 
 ## README hero
 
-Warm editorial banner for Roomfile. The headline “Your room, remembered.” sits
-beside the same fictional apartment before decorating and after a refined
-Eclectic Mid-century Modern direction. The windows, floor, sofa, dining table,
-radiator, and camera remain fixed, and a label marks the render as a visual
-approximation.
+Wide editorial comparison of the same living room before decorating and after
+an iterative Mid-century Modern design. Windows, flooring, sofa, dining table,
+radiator, and camera view remain consistent.
 
-## Before/after carousel
+## Before-and-after carousel
 
-1. Sparse fictional rental living/dining room with a warm-gray sofa, oak dining
-   table, two protected windows, fixed flooring, radiator, and HVAC register.
-2. Taste evidence translates reactions into amber light, walnut, olive and rust,
-   tactile layers, records, books, posters, plants, and dislike of sterile beige.
-3. Three side-by-side visual approximations of the same room in Eclectic
-   Mid-century Modern, Bauhaus, and Japandi directions—examples, not presets.
-4. Selected Eclectic Mid-century Modern room beside a scaled plan showing product
-   footprints, entry swing, and radiator clearance.
-5. Final phased shopping plan with dated IKEA products, a rejected Amazon
-   candidate, budget reserve, and reminder to recheck current availability.
+1. The original fictional living and dining room before decorating.
+2. Specific taste notes for amber light, walnut, olive, rust, tactile textiles,
+   books, records, plants, and collected objects.
+3. Two successive versions of the same Mid-century Modern room with margin
+   notes showing what changed and what stayed.
+4. A real coffee table tested inside the refined room beside a measured fit
+   result.
+5. The completed room annotated with numbered products and an actionable
+   sourcing ledger.
 
 ## Workflow carousel
 
-1. “Remember the room” — canonical photos, measured geometry, and protected
-   rental features enter one private project.
-2. “Learn the taste” — inspiration reactions become specific likes, dislikes,
-   anti-references, and contradictions.
-3. “Explore real alternatives” — Roomfile derives three directions by default
-   from the room and the user’s evidence, without a fixed style catalog.
-4. “Prove fit separately” — an inch-based floor plan checks boundaries,
-   overlaps, door swings, circulation, and clearance.
-5. “Turn it into reality” — dated regional retailer evidence becomes a phased
-   shopping, assembly, placement, styling, and reserve plan.
+1. “Meet the room” — photos, layout, existing furniture, and daily needs.
+2. “Find what feels like you” — inspiration becomes specific reactions rather
+   than a forced style label.
+3. “Design it together” — the room evolves through focused revisions.
+4. “Try the real thing” — furniture is visualized and measured separately.
+5. “Make it real” — researched products become a phased decorating plan.

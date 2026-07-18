@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { mkdtemp, readFile, stat } from "node:fs/promises";
+import { mkdtemp, readFile, stat, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
@@ -14,9 +14,36 @@ function run(args, cwd) {
   });
 }
 
-test("private initialization creates a US project and one gitignore block", async () => {
+test("private initialization applies a non-US shopping profile and one gitignore block", async () => {
   const target = await mkdtemp(path.join(tmpdir(), "roomfile-private-"));
-  const first = run(["--target", target, "--privacy", "private", "--json"], target);
+  const profilePath = path.join(target, "profile.json");
+  await writeFile(
+    profilePath,
+    JSON.stringify({
+      project_name: "Montréal home",
+      country: "CA",
+      region: "Québec",
+      postal_code: "H2X 1Y4",
+      currency: "CAD",
+      measurement_unit: "cm",
+      budget: { amount: 4200, currency: "CAD" },
+      preferred_retailers: ["EQ3", "Article"],
+      retailer_strategy: "user-preferred",
+      rooms: [{ id: "salon", name: "Salon" }],
+    }),
+  );
+  const first = run(
+    [
+      "--target",
+      target,
+      "--privacy",
+      "private",
+      "--profile",
+      profilePath,
+      "--json",
+    ],
+    target,
+  );
 
   assert.equal(first.status, 0, first.stderr || first.stdout);
   const result = JSON.parse(first.stdout);
@@ -26,31 +53,99 @@ test("private initialization creates a US project and one gitignore block", asyn
   const manifest = JSON.parse(
     await readFile(path.join(target, "roomfile", "roomfile.json"), "utf8"),
   );
-  assert.equal(manifest.schema_version, "0.1.0");
-  assert.equal(manifest.country, "US");
-  assert.equal(manifest.currency, "USD");
-  assert.equal(manifest.measurement_unit, "in");
-  assert.deepEqual(manifest.preferred_retailers.slice(0, 2), [
-    "IKEA US",
-    "Amazon US",
-  ]);
+  assert.equal(manifest.schema_version, "0.2.0");
+  assert.equal(manifest.setup_status, "ready");
+  assert.equal(manifest.country, "CA");
+  assert.equal(manifest.region, "Québec");
+  assert.equal(manifest.currency, "CAD");
+  assert.equal(manifest.measurement_unit, "cm");
+  assert.equal(manifest.retailer_strategy, "user-preferred");
+  assert.deepEqual(manifest.preferred_retailers, ["EQ3", "Article"]);
 
-  await stat(path.join(target, "roomfile", "rooms", "living-room", "geometry.json"));
+  const geometry = JSON.parse(
+    await readFile(
+      path.join(target, "roomfile", "rooms", "salon", "geometry.json"),
+      "utf8",
+    ),
+  );
+  assert.equal(geometry.unit, "cm");
+  await stat(path.join(target, "roomfile", "rooms", "salon", "geometry.json"));
   const ignore = await readFile(path.join(target, ".gitignore"), "utf8");
   assert.equal((ignore.match(/# roomfile-private-start/g) ?? []).length, 1);
   assert.match(ignore, /^roomfile\/$/m);
 
-  const second = run(["--target", target, "--privacy", "private", "--json"], target);
+  const second = run(
+    [
+      "--target",
+      target,
+      "--privacy",
+      "private",
+      "--profile",
+      profilePath,
+      "--json",
+    ],
+    target,
+  );
   assert.equal(second.status, 0, second.stderr || second.stdout);
   const ignoreAfter = await readFile(path.join(target, ".gitignore"), "utf8");
   assert.equal((ignoreAfter.match(/# roomfile-private-start/g) ?? []).length, 1);
   assert.equal(JSON.parse(second.stdout).warnings.includes("Project already exists; no files overwritten."), true);
 });
 
-test("public-demo initialization does not hide the generated project", async () => {
-  const target = await mkdtemp(path.join(tmpdir(), "roomfile-demo-"));
+test("initialization without a profile creates a neutral needs-profile scaffold", async () => {
+  const target = await mkdtemp(path.join(tmpdir(), "roomfile-neutral-"));
   const result = run(
     ["--target", target, "--privacy", "public-demo", "--json"],
+    target,
+  );
+
+  assert.equal(result.status, 0, result.stderr || result.stdout);
+  const report = JSON.parse(result.stdout);
+  assert.equal(
+    report.warnings.some((warning) => /shopping profile/i.test(warning)),
+    true,
+  );
+  const manifest = JSON.parse(
+    await readFile(path.join(target, "roomfile", "roomfile.json"), "utf8"),
+  );
+  assert.equal(manifest.schema_version, "0.2.0");
+  assert.equal(manifest.setup_status, "needs-profile");
+  assert.equal(manifest.country, "");
+  assert.equal(manifest.currency, "");
+  assert.equal(manifest.measurement_unit, null);
+  assert.deepEqual(manifest.preferred_retailers, []);
+  assert.equal("retailer_strategy" in manifest, false);
+  assert.doesNotMatch(JSON.stringify(manifest), /IKEA|Amazon|USD|United States/i);
+});
+
+test("public-demo initialization does not hide the generated project", async () => {
+  const target = await mkdtemp(path.join(tmpdir(), "roomfile-demo-"));
+  const profilePath = path.join(target, "profile.json");
+  await writeFile(
+    profilePath,
+    JSON.stringify({
+      project_name: "Demo home",
+      country: "GB",
+      region: "London",
+      postal_code: "",
+      currency: "GBP",
+      measurement_unit: "cm",
+      budget: { amount: 2500, currency: "GBP" },
+      preferred_retailers: [],
+      retailer_strategy: "agent-suggested",
+      rooms: [{ id: "living-room", name: "Living room" }],
+    }),
+  );
+  const result = run(
+    [
+      "--target",
+      target,
+      "--privacy",
+      "public-demo",
+      "--profile",
+      profilePath,
+      "--json",
+    ],
     target,
   );
 

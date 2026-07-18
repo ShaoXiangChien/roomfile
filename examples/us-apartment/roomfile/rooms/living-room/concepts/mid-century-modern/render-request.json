@@ -1,9 +1,11 @@
 {
-  "schema_version": "0.1.0",
+  "schema_version": "0.2.0",
   "concept_id": "mid-century-modern",
   "concept_version": 2,
-  "canonical_images": ["assets/source/source-room.png"],
-  "goal": "Refine the selected Eclectic Mid-century Modern direction in the exact same fictional apartment, strengthening the approved warm, collected, 1970s-inflected evidence while preserving every locked architectural and inventory fact.",
+  "canonical_images": [
+    "assets/source/source-room.png"
+  ],
+  "goal": "Refine the selected Mid-century Modern direction in the exact same fictional apartment, strengthening the approved warm, collected, 1970s-inflected evidence while preserving every locked architectural and inventory fact.",
   "locked_facts": [
     "same 4:3 camera position and lens",
     "same wall, window, door, radiator, HVAC, outlet, and ceiling-light locations",
@@ -25,10 +27,13 @@
     "mushroom lamps, an arched floor lamp, and practical layered lighting",
     "tactile upholstery and a large graphic 1970s rug",
     "records, books, posters, plants, and collected personal objects",
-    "Eclectic Mid-century Modern mixed with space-age, Bauhaus, and 1970s revival references",
+    "Mid-century Modern mixed with space-age, Bauhaus, and 1970s revival references",
     "intentional collected abundance with clear circulation"
   ],
-  "product_references": ["702.397.10", "004.050.48"],
+  "product_references": [
+    "702.397.10",
+    "004.050.48"
+  ],
   "camera_view": "Phone camera at 5 ft height near southwest entry, facing north-northeast, 4:3 landscape.",
   "output": "assets/generated/mid-century-modern-refined.png",
   "disclaimer": "Visual approximation — verify dimensions, color, material, and availability before purchasing."

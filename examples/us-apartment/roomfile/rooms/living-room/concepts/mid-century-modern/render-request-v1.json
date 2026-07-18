@@ -1,9 +1,11 @@
 {
-  "schema_version": "0.1.0",
+  "schema_version": "0.2.0",
   "concept_id": "mid-century-modern",
   "concept_version": 1,
-  "canonical_images": ["assets/source/source-room.png"],
-  "goal": "Explore an Eclectic Mid-century Modern direction in the exact same fictional apartment, translating the approved warm, collected, 1970s-inflected evidence while preserving every locked architectural and inventory fact.",
+  "canonical_images": [
+    "assets/source/source-room.png"
+  ],
+  "goal": "Explore a Mid-century Modern direction in the exact same fictional apartment, translating the approved warm, collected, 1970s-inflected evidence while preserving every locked architectural and inventory fact.",
   "locked_facts": [
     "same 4:3 camera position and lens",
     "same wall, window, door, radiator, HVAC, outlet, and ceiling-light locations",
@@ -25,7 +27,7 @@
     "mushroom lamps, an arched floor lamp, and practical layered lighting",
     "tactile upholstery and a large graphic 1970s rug",
     "records, books, posters, plants, and collected personal objects",
-    "Eclectic Mid-century Modern mixed with space-age, Bauhaus, and 1970s revival references",
+    "Mid-century Modern mixed with space-age, Bauhaus, and 1970s revival references",
     "intentional collected abundance with clear circulation"
   ],
   "product_references": [],

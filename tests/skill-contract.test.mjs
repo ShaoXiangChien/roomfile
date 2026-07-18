@@ -31,6 +31,10 @@ test("skill metadata and command router are complete", async () => {
   assert.match(skill, /approval/i);
   assert.match(skill, /project-configured region/i);
   assert.match(skill, /style evidence.*no style allowlist/is);
+  assert.match(skill, /--profile/);
+  assert.match(skill, /retailer_strategy/);
+  assert.match(skill, /before searching.*ask/is);
+  assert.doesNotMatch(skill, /For US projects,\s*prefer IKEA US and Amazon US/is);
   assert.doesNotMatch(skill, /Initialize a private US apartment project/);
 });
 
@@ -48,6 +52,7 @@ test("focused references and schemas exist", async () => {
     "concept.schema.json",
     "products.schema.json",
     "render-request.schema.json",
+    "profile.schema.json",
   ];
   for (const file of references) {
     const content = await readFile(path.join(skillDir, "references", file), "utf8");
@@ -58,8 +63,18 @@ test("focused references and schemas exist", async () => {
       await readFile(path.join(skillDir, "references", "schemas", file), "utf8"),
     );
     assert.equal(schema.$schema, "https://json-schema.org/draft/2020-12/schema");
-    assert.equal(schema.properties.schema_version.const, "0.1.0");
+    if (schema.properties.schema_version) {
+      assert.equal(schema.properties.schema_version.const, "0.2.0");
+    }
   }
+
+  const products = JSON.parse(
+    await readFile(
+      path.join(skillDir, "references", "schemas", "products.schema.json"),
+      "utf8",
+    ),
+  );
+  assert.equal(products.properties.products.items.properties.price.properties.currency.pattern, "^[A-Z]{3}$");
 });
 
 test("portable skill ships reusable templates and a render-contract translator", async () => {
@@ -73,6 +88,7 @@ test("portable skill ships reusable templates and a render-contract translator",
     "assets/templates/SHOPPING.md",
     "assets/templates/EXECUTION.md",
     "scripts/build-render-brief.mjs",
+    "scripts/migrate-project.mjs",
   ];
 
   await Promise.all(

@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { mkdir, mkdtemp, readFile, writeFile } from "node:fs/promises";
+import { cp, mkdir, mkdtemp, readFile, readdir, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
@@ -15,10 +15,43 @@ function run(script, args, cwd) {
   });
 }
 
+async function writeProfile(target) {
+  const profilePath = path.join(target, "profile.json");
+  await writeFile(
+    profilePath,
+    JSON.stringify({
+      project_name: "Test home",
+      country: "AU",
+      region: "Victoria",
+      postal_code: "3000",
+      currency: "AUD",
+      measurement_unit: "cm",
+      budget: { amount: 5000, currency: "AUD" },
+      preferred_retailers: ["Temple & Webster"],
+      retailer_strategy: "user-preferred",
+      rooms: [{ id: "living-room", name: "Living room" }],
+    }),
+  );
+  return profilePath;
+}
+
 test("validator accepts an initialized project and reports its artifacts", async () => {
   const target = await mkdtemp(path.join(tmpdir(), "roomfile-valid-"));
+  const profilePath = await writeProfile(target);
   assert.equal(
-    run(initScript, ["--target", target, "--privacy", "public-demo", "--json"], target)
+    run(
+      initScript,
+      [
+        "--target",
+        target,
+        "--privacy",
+        "public-demo",
+        "--profile",
+        profilePath,
+        "--json",
+      ],
+      target,
+    )
       .status,
     0,
   );
@@ -34,9 +67,74 @@ test("validator accepts an initialized project and reports its artifacts", async
   assert.equal(report.artifacts.some((item) => item.endsWith("geometry.json")), true);
 });
 
+test("validator rejects a v0.2 project whose shopping profile is incomplete", async () => {
+  const target = await mkdtemp(path.join(tmpdir(), "roomfile-incomplete-"));
+  run(initScript, ["--target", target, "--privacy", "public-demo", "--json"], target);
+
+  const result = run(
+    validateScript,
+    ["--project", path.join(target, "roomfile"), "--json"],
+    target,
+  );
+  assert.equal(result.status, 1, result.stderr || result.stdout);
+  const report = JSON.parse(result.stdout);
+  assert.equal(
+    report.errors.some((item) => item.code === "shopping_profile_incomplete"),
+    true,
+  );
+});
+
+test("validator accepts a complete v0.1 project with an upgrade warning", async () => {
+  const target = await mkdtemp(path.join(tmpdir(), "roomfile-legacy-"));
+  const project = path.join(target, "roomfile");
+  await cp(path.resolve("examples/us-apartment/roomfile"), project, {
+    recursive: true,
+  });
+  await setSchemaVersion(project, "0.1.0");
+  const result = run(
+    validateScript,
+    ["--project", project, "--json"],
+    process.cwd(),
+  );
+  assert.equal(result.status, 0, result.stderr || result.stdout);
+  const report = JSON.parse(result.stdout);
+  assert.equal(
+    report.warnings.some((item) => item.code === "schema_upgrade_available"),
+    true,
+  );
+});
+
+async function setSchemaVersion(directory, version) {
+  for (const entry of await readdir(directory, { withFileTypes: true })) {
+    const file = path.join(directory, entry.name);
+    if (entry.isDirectory()) {
+      await setSchemaVersion(file, version);
+    } else if (entry.isFile() && entry.name.endsWith(".json")) {
+      const value = JSON.parse(await readFile(file, "utf8"));
+      if (value?.schema_version) {
+        value.schema_version = version;
+        await writeFile(file, `${JSON.stringify(value, null, 2)}\n`);
+      }
+    }
+  }
+}
+
 test("validator rejects inferred facts that are marked critical for fit", async () => {
   const target = await mkdtemp(path.join(tmpdir(), "roomfile-invalid-"));
-  run(initScript, ["--target", target, "--privacy", "public-demo", "--json"], target);
+  const profilePath = await writeProfile(target);
+  run(
+    initScript,
+    [
+      "--target",
+      target,
+      "--privacy",
+      "public-demo",
+      "--profile",
+      profilePath,
+      "--json",
+    ],
+    target,
+  );
 
   const factsPath = path.join(
     target,
@@ -72,7 +170,20 @@ test("validator rejects inferred facts that are marked critical for fit", async 
 
 test("validator rejects approved products without explicit user approval", async () => {
   const target = await mkdtemp(path.join(tmpdir(), "roomfile-unapproved-product-"));
-  run(initScript, ["--target", target, "--privacy", "public-demo", "--json"], target);
+  const profilePath = await writeProfile(target);
+  run(
+    initScript,
+    [
+      "--target",
+      target,
+      "--privacy",
+      "public-demo",
+      "--profile",
+      profilePath,
+      "--json",
+    ],
+    target,
+  );
   const productsPath = path.join(
     target,
     "roomfile",
@@ -88,7 +199,7 @@ test("validator rejects approved products without explicit user approval", async
     retailer: "IKEA US",
     product_identifier: "000.000.00",
     dimensions: { width: 40, depth: 20, height: 16, unit: "in" },
-    price: { amount: 99, currency: "USD" },
+    price: { amount: 99, currency: "AUD" },
     source: {
       url: "https://www.ikea.com/us/en/",
       retrieved_at: "2026-07-18T00:00:00Z",
@@ -114,7 +225,20 @@ test("validator rejects approved products without explicit user approval", async
 
 test("validator rejects approved concepts without an approved decision", async () => {
   const target = await mkdtemp(path.join(tmpdir(), "roomfile-unapproved-concept-"));
-  run(initScript, ["--target", target, "--privacy", "public-demo", "--json"], target);
+  const profilePath = await writeProfile(target);
+  run(
+    initScript,
+    [
+      "--target",
+      target,
+      "--privacy",
+      "public-demo",
+      "--profile",
+      profilePath,
+      "--json",
+    ],
+    target,
+  );
   const conceptDirectory = path.join(
     target,
     "roomfile",
@@ -128,7 +252,7 @@ test("validator rejects approved concepts without an approved decision", async (
     path.join(conceptDirectory, "concept.json"),
     JSON.stringify(
       {
-        schema_version: "0.1.0",
+        schema_version: "0.2.0",
         id: "quiet-modern",
         version: 1,
         status: "approved",

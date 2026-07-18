@@ -1,21 +1,15 @@
-# Roomfile v0.1.1 launch copy
+# Roomfile v0.2.0 launch copy
 
-Edit dates, links, and any generated-image notes before publishing.
+Replace the bracketed links before publishing.
 
 ## X
 
-AI can generate a beautiful room in seconds. Then it forgets the window, moves
-the radiator, loses your measurements, and rarely connects the result to
-furniture that can actually be bought.
+Design your home, together.
 
-I built Roomfile: an open-source interior-design skill for Codex.
-
-It works with any room and any style: keeping room truth and taste in a local
-project, exploring real alternatives, checking furniture fit with deterministic
-geometry, and turning the selected idea into dated regional sourcing and a
-phased plan.
-
-No subscription. Apache-2.0.
+Roomfile is an interior design skill for coding agents. Bring it the room you
+have, the references you keep saving, and the furniture you are considering.
+It works with you from the first photo to final placement—understanding,
+exploring, refining, checking, sourcing, and planning the room.
 
 `npx skills add ShaoXiangChien/roomfile`
 
@@ -23,86 +17,56 @@ No subscription. Apache-2.0.
 
 ## LinkedIn
 
-Most AI interior-design demos end with a beautiful image. Decorating an actual
-room starts after that image.
+AI can make a room look beautiful. The harder part is everything that happens
+between the first image and actually living in the result.
 
-The model has to remember the room, fixed architecture, rental restrictions,
-existing furniture, budget, and the decisions made over many rounds. It also has
-to distinguish “this looks plausible” from “this product has verified dimensions
-and fits.”
+I built Roomfile so you can design your home together with your coding agent.
+It guides one continuous project:
 
-I built Roomfile to make that workflow a project instead of a one-shot prompt.
-It is an open-source Agent Skill, tested in Codex, that:
+- understand the room and what must stay;
+- learn your taste from specific reactions, not a style quiz;
+- keep iterating without losing earlier decisions;
+- try furniture you find inside the design;
+- check measured fit separately from the image;
+- research real products and turn the final room into an actionable plan.
 
-- turns inspiration into specific taste evidence;
-- captures a canonical room once;
-- derives distinct directions from your evidence, without a fixed style catalog;
-- keeps visual rendering separate from deterministic fit checks;
-- sources dated regional candidates with identifiers, sellers, dimensions, and
-  availability evidence—the public example happens to use IKEA US and Amazon US;
-- creates a phased shopping and installation plan.
-
-Personal room files remain local and gitignored. Roomfile has no subscription;
-external model/API costs may apply.
+Roomfile v0.2.0 also asks where you live and where you prefer to shop before it
+starts sourcing. No global retailer list, no style presets.
 
 Apache-2.0: [GITHUB_URL]
 
 ## Reddit
 
-**Title:** I built an open-source Codex skill for room decorating that
-remembers the room and checks furniture fit
+**Title:** I built a coding-agent skill that works with you through an entire
+room design
 
-I kept running into the same problem with AI room generators: the first image
-looks nice, but multi-round work gets fragile. The model forgets constraints,
-you upload the room again, and the final design rarely tells you which furniture
-can actually be bought or whether it fits.
+Design your home, together.
 
-Roomfile stores the work in a private local project:
+Roomfile starts with the room you already have. It helps your agent understand
+the layout and daily needs, learn what you like from inspiration, iterate on a
+design over multiple rounds, try real furniture, verify measured fit, research
+where the pieces can be bought, and plan how to bring the room to life.
 
-1. taste evidence from links/screenshots;
-2. canonical room photos, measurements, openings, and rental constraints;
-3. three deliberately different concepts by default, with arbitrary styles and
-   additional rounds supported;
-4. refinement with locked architecture and inventory;
-5. deterministic scaled layout and collision/clearance checks;
-6. current product sourcing with IKEA article numbers, Amazon ASINs, seller,
-   dimensions, retrieval date, and ZIP-delivery evidence;
-7. phased execution and budget plan.
-
-The public demo is a completely fictional apartment. Eclectic Mid-century
-Modern, Bauhaus, and Japandi demonstrate three possible directions; they are
-examples, not presets. Renders are always labeled visual approximations; only
-the geometry checker can claim fit.
-
-It is Apache-2.0 and tested in Codex:
+The public stories follow a Mid-century Modern living room from first photo to
+final placement, plus a compact Bauhaus workspace and a quiet Japandi bedroom.
+They are projects with different needs, not a catalog of presets.
 
 `npx skills add ShaoXiangChien/roomfile`
 
 [GITHUB_URL]
 
-I’d especially value feedback on the project format, fit-check edge cases, and
-retailer verification policy.
-
 ## Hacker News
 
-**Title:** Show HN: Roomfile – an open-source interior-design skill that
-remembers constraints and checks furniture fit
+**Title:** Show HN: Roomfile – design your home together with a coding agent
 
-Roomfile is a file-based Agent Skill for long-running room decorating
-projects.
+Roomfile is an Apache-2.0 Agent Skill for a long-running interior-design
+project. It gives the agent a workflow from room capture and taste discovery
+through iterative rendering, deterministic fit checks, current product
+research, and an execution plan.
 
-The problem: existing AI tools generate attractive rooms but forget constraints
-across rounds and rarely connect the result to furniture that can actually be
-bought. Roomfile keeps taste, canonical room data, measured geometry, concepts,
-products, and decisions in a local gitignored folder.
+v0.2.0 adds preference-first sourcing: the agent asks for region, currency,
+units, delivery area, and preferred retailers before searching. The website
+shows the complete journey from first photo to final placement rather than a
+feature list or style filter.
 
-Image generation remains useful for exploration, but fit claims come from a
-dependency-free deterministic Node checker. Sourcing records IKEA article
-numbers, Amazon ASINs, seller/manufacturer distinctions, dimensions, price,
-availability, ZIP delivery result, and retrieval date.
-
-The repository includes a fictional apartment example, a static docs site, and
-no accounts, analytics, affiliate links, checkout, or subscription.
-
-Apache-2.0, Codex-first:
 [GITHUB_URL]

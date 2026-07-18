@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://roomfile.dev/schemas/profile.schema.json",
+  "title": "Roomfile initialization profile",
+  "type": "object",
+  "required": [
+    "project_name",
+    "country",
+    "currency",
+    "measurement_unit",
+    "budget",
+    "preferred_retailers",
+    "retailer_strategy",
+    "rooms"
+  ],
+  "properties": {
+    "project_name": { "type": "string", "minLength": 1 },
+    "country": { "type": "string", "minLength": 1 },
+    "region": { "type": "string" },
+    "postal_code": { "type": "string" },
+    "currency": { "type": "string", "pattern": "^[A-Z]{3}$" },
+    "measurement_unit": { "enum": ["in", "cm"] },
+    "budget": {
+      "type": "object",
+      "required": ["amount", "currency"],
+      "properties": {
+        "amount": { "type": "number", "minimum": 0 },
+        "currency": { "type": "string", "pattern": "^[A-Z]{3}$" }
+      },
+      "additionalProperties": false
+    },
+    "preferred_retailers": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "retailer_strategy": {
+      "enum": ["user-preferred", "agent-suggested"]
+    },
+    "rooms": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "name"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "name": { "type": "string", "minLength": 1 },
+          "status": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

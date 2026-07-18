@@ -7,8 +7,10 @@ room again.
 ## `status`
 
 Read the project manifest and active room. Report: completed stages, missing
-critical facts, budget committed, approved concept, product evidence freshness,
-and two or three useful next commands. Do not mutate the project.
+shopping-profile fields, critical facts, budget committed, approved concept,
+product evidence freshness, and two or three useful next commands. Recommend
+completing `setup_status: needs-profile` before sourcing. Do not mutate the
+project.
 
 ## `taste`
 
@@ -62,10 +64,14 @@ than manipulating the render to make the item appear to fit.
 
 ## `source`
 
-Translate an approved concept into roles and measurable specifications before
-searching. Search current listings for the project-configured region, favor
-preferred retailers, and retain at least one alternative for major furniture
-categories. Mark products `shortlisted`; only the user may approve them.
+Before searching, require a country or region, ISO currency, measurement unit,
+and `retailer_strategy`. Ask for any missing values and write them to
+`roomfile.json`. Request a postal code only when delivery or local availability
+is part of the current decision. Translate an approved concept into roles and
+measurable specifications. Search user-preferred retailers first, or propose
+locally available sources when the user selected `agent-suggested`. Retain at
+least one alternative for major furniture categories. Mark products
+`shortlisted`; only the user may approve them.
 
 ## `plan`
 
