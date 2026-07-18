@@ -7,6 +7,7 @@ website/.wrangler/
 *.log
 *.tgz
 tmp/
+.worktrees/
 
 # Local Roomfile projects created while testing this repository.
 /roomfile/
