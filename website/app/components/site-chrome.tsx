@@ -18,11 +18,11 @@ export function SiteHeader() {
             R
           </span>
           <span>Roomfile</span>
-          <span className="version">v0.1.0</span>
+          <span className="version">v0.1.1</span>
         </Link>
         <nav className="main-nav" aria-label="Main navigation">
           <Link href="/docs/getting-started">Docs</Link>
-          <Link href="/examples/us-apartment">Example</Link>
+          <Link href="/examples/apartment">Example</Link>
           <a
             href="https://github.com/ShaoXiangChien/roomfile"
             rel="noreferrer"
@@ -65,7 +65,7 @@ export function SiteFooter() {
           <p className="footer-label">Project</p>
           <ul>
             <li>
-              <Link href="/examples/us-apartment">US apartment example</Link>
+              <Link href="/examples/apartment">Apartment example</Link>
             </li>
             <li>
               <a href="https://github.com/ShaoXiangChien/roomfile">
@@ -107,8 +107,8 @@ export function DocsShell({
               </li>
             ))}
           </ul>
-          <Link className="case-link" href="/examples/us-apartment">
-            Fictional US apartment <span>→</span>
+          <Link className="case-link" href="/examples/apartment">
+            Fictional apartment <span>→</span>
           </Link>
         </aside>
         <article className="docs-article">

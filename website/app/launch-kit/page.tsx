@@ -13,7 +13,7 @@ const beforeAfter = [
     number: "02 / 05",
     kicker: "The taste",
     title: "A reaction is better than a label.",
-    body: "Warm wood. One sculptural light. Disciplined color. Quiet texture. Decorative clutter becomes an anti-reference.",
+    body: "Amber light. Walnut. Olive and rust. Tactile layers. Records, books, posters, and plants become specific evidence.",
     style: "source" as VisualStyle,
     footer: "Likes · dislikes · contradictions",
   },
@@ -21,7 +21,7 @@ const beforeAfter = [
     number: "03 / 05",
     kicker: "The exploration",
     title: "Three genuinely different answers.",
-    body: "Mid-century Modern, Bauhaus, and Japandi reinterpret the same evidence without altering the room.",
+    body: "Eclectic Mid-century Modern, Bauhaus, and Japandi show three possibilities. They are examples, not presets.",
     style: "bauhaus" as VisualStyle,
     footer: "Same geometry · different composition",
   },
@@ -37,7 +37,7 @@ const beforeAfter = [
     number: "05 / 05",
     kicker: "The plan",
     title: "Turn the picture into a real room.",
-    body: "Dated IKEA and Amazon evidence becomes a phased shopping, assembly, placement, styling, and reserve plan.",
+    body: "Dated regional retailer evidence becomes a phased shopping, assembly, placement, styling, and reserve plan.",
     style: "mid-century" as VisualStyle,
     footer: "Roomfile · open source · no subscription",
   },
@@ -170,11 +170,11 @@ function HeroAsset({
       <div className="launch-brandline">
         <span className="launch-r">R</span>
         <strong>Roomfile</strong>
-        <em>v0.1.0</em>
+        <em>v0.1.1</em>
       </div>
       <div className="launch-hero-grid">
         <div>
-          <p className="launch-kicker">An open Agent Skill for real apartments</p>
+          <p className="launch-kicker">An open Agent Skill for any room</p>
           <h1>Your room, remembered.</h1>
           <p className="launch-body">
             Taste. Room truth. Fit checks. Current sourcing. One plan you can
@@ -189,8 +189,8 @@ function HeroAsset({
         </div>
       </div>
       <div className="launch-bottomline">
-        <span>Mid-century Modern · Bauhaus · Japandi</span>
-        <span>IKEA + Amazon · deterministic fit</span>
+        <span>Any style · examples, not presets</span>
+        <span>Regional sourcing · deterministic fit</span>
       </div>
     </main>
   );

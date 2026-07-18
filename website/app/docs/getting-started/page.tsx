@@ -24,16 +24,17 @@ export default function GettingStarted() {
         <h2>Initialize your private project</h2>
         <CodeBlock>$roomfile init</CodeBlock>
         <p>
-          Roomfile asks for country, ZIP code, currency, budget, apartment
-          restrictions, preferred retailers, household needs, and rendering
-          preferences. A private <code>roomfile/</code> folder is created and
-          added to a delimited <code>.gitignore</code> block.
+          Roomfile asks for country or region, ZIP or postal code, currency,
+          measurement units, budget, room restrictions, preferred retailers,
+          household needs, and rendering preferences. A private{" "}
+          <code>roomfile/</code> folder is created and added to a delimited{" "}
+          <code>.gitignore</code> block.
         </p>
         <Note title="Local by default">
           <p>
-            Your room photos, ZIP code, budget, and decisions remain private and
-            gitignored. Existing files and unrelated ignore rules are never
-            overwritten.
+            Your room photos, location settings, budget, and decisions remain
+            private and gitignored. Existing files and unrelated ignore rules
+            are never overwritten.
           </p>
         </Note>
       </section>
@@ -61,8 +62,10 @@ $roomfile status`}</CodeBlock>
             room truth.
           </li>
           <li>
-            <code>$roomfile explore</code> creates three intentionally different
-            directions.
+            <code>$roomfile explore</code> creates three intentionally
+            different directions by default, derived from your evidence rather
+            than a fixed style catalog. You can request other styles or more
+            rounds.
           </li>
           <li>
             <code>$roomfile refine</code> revises a selected concept while

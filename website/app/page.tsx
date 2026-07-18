@@ -19,12 +19,13 @@ export default function Home() {
       <section className="hero">
         <div className="shell hero-grid">
           <div className="hero-copy">
-            <p className="eyebrow">An open Agent Skill for real apartments</p>
+            <p className="eyebrow">An open Agent Skill for real rooms</p>
             <h1>Your room, remembered.</h1>
             <p className="hero-lede">
               A project-based interior design skill that learns your taste,
               remembers constraints, checks fit, and turns ideas into a real
-              shopping plan.
+              shopping plan. Use it with any room, any style, and the region,
+              currency, units, and retailers that fit your project.
             </p>
             <CopyCommand />
             <div className="hero-actions">
@@ -107,15 +108,17 @@ export default function Home() {
           <h2>Explore differences that matter.</h2>
           <p>
             The geometry, viewpoint, sofa, dining table, windows, and flooring
-            stay fixed. Only the design direction changes.
+            stay fixed. Only the design direction changes. These are examples,
+            not presets: your own references can lead somewhere entirely
+            different.
           </p>
         </div>
         <div className="shell concept-grid">
           <article className="concept-card">
             <RoomVisual style="mid-century" compact />
             <p className="eyebrow">Direction 01</p>
-            <h3>Mid-century Modern</h3>
-            <p>Walnut, warm neutrals, tapered forms, sculptural light.</p>
+            <h3>Eclectic Mid-century Modern</h3>
+            <p>Amber light, walnut, olive, rust, tactile layers, collected objects.</p>
             <span className="decision selected">Selected for refinement</span>
           </article>
           <article className="concept-card">
@@ -134,8 +137,8 @@ export default function Home() {
           </article>
         </div>
         <div className="shell section-link">
-          <Link href="/examples/us-apartment">
-            See the complete fictional US apartment workflow <span>→</span>
+          <Link href="/examples/apartment">
+            See the complete fictional apartment workflow <span>→</span>
           </Link>
         </div>
       </section>
@@ -186,9 +189,11 @@ export default function Home() {
         <div className="shell sourcing-grid">
           <div>
             <p className="eyebrow">From “where can I buy it?” to evidence</p>
-            <h2>IKEA and Amazon, with receipts for every claim.</h2>
+            <h2>Regional retailers, with receipts for every claim.</h2>
             <p>
-              Roomfile records article numbers and ASINs, seller,
+              Roomfile follows your project’s region and retailer preferences.
+              This example uses IKEA US and Amazon US, recording article
+              numbers and ASINs, seller,
               manufacturer dimensions, package size, price, availability,
               ZIP-specific delivery results, and retrieval date. Changed
               sellers and stale data are flags, not footnotes.
@@ -271,7 +276,7 @@ export default function Home() {
           </div>
           <div className="limitation-list">
             <p>
-              Roomfile is for reversible apartment decorating. It does not
+              Roomfile is for reversible room decorating. It does not
               provide structural, electrical, code, contractor, or purchasing
               instructions.
             </p>

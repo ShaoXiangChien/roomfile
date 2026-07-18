@@ -1,6 +1,6 @@
 # Roomfile website
 
-The public marketing site, documentation, and fictional US apartment case study
+The public marketing site, documentation, and fictional apartment case study
 for Roomfile. It runs on the Sites React/TypeScript runtime with Vinext and
 collects no accounts, uploads, analytics, or personal data.
 

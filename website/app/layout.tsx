@@ -41,7 +41,7 @@ export const metadata: Metadata = {
         url: "/og.png",
         width: 1200,
         height: 630,
-        alt: "Roomfile concept comparison for a fictional US rental apartment",
+        alt: "Roomfile concept comparison for a fictional apartment",
       },
     ],
   },

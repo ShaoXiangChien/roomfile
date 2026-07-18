@@ -8,7 +8,7 @@ export type VisualStyle =
 
 const labels: Record<VisualStyle, string> = {
   source: "Original room",
-  "mid-century": "Mid-century Modern",
+  "mid-century": "Eclectic Mid-century Modern",
   bauhaus: "Bauhaus",
   japandi: "Japandi",
   refined: "Approved refinement",
@@ -40,7 +40,7 @@ export function RoomVisual({
       <img
         className="room-photo"
         src={images[style]}
-        alt={`${labels[style]} visual approximation of the same fictional US rental room`}
+        alt={`${labels[style]} visual approximation of the same fictional apartment room`}
       />
       <span className="room-label">{labels[style]}</span>
     </div>

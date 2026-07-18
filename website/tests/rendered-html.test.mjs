@@ -33,7 +33,8 @@ const routes = [
   ["/docs/project-files", "Project files"],
   ["/docs/rendering", "Rendering"],
   ["/docs/sourcing", "Sourcing"],
-  ["/examples/us-apartment", "A fictional US rental"],
+  ["/examples/apartment", "A fictional apartment"],
+  ["/examples/us-apartment", "A fictional apartment"],
   ["/docs/contributing", "Contributing"],
 ];
 
@@ -57,6 +58,10 @@ test("homepage states the real product contract", async () => {
 
   assert.match(html, /npx skills add ShaoXiangChien\/roomfile/);
   assert.match(html, /learns your taste, remembers constraints, checks fit/i);
+  assert.match(html, /any room/i);
+  assert.match(html, /examples, not presets/i);
+  assert.match(html, /Eclectic Mid-century Modern/);
+  assert.doesNotMatch(html, /serves US apartment renters/i);
   assert.match(html, /Mid-century Modern/);
   assert.match(html, /Bauhaus/);
   assert.match(html, /Japandi/);
@@ -99,8 +104,9 @@ test("docs preserve privacy, sourcing, safety, and command contracts", async () 
 });
 
 test("ships launch metadata and crawl files without starter residue", async () => {
-  const [layout, packageJson, hosting] = await Promise.all([
+  const [layout, sitemap, packageJson, hosting] = await Promise.all([
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/sitemap.ts", import.meta.url), "utf8"),
     readFile(new URL("../package.json", import.meta.url), "utf8"),
     readFile(new URL("../.openai/hosting.json", import.meta.url), "utf8"),
   ]);
@@ -113,6 +119,8 @@ test("ships launch metadata and crawl files without starter residue", async () =
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
   assert.match(hosting, /"d1": null/);
   assert.match(hosting, /"r2": null/);
+  assert.match(sitemap, /\/examples\/apartment/);
+  assert.doesNotMatch(sitemap, /\/examples\/us-apartment/);
 
   await Promise.all([
     access(new URL("../app/robots.ts", import.meta.url)),

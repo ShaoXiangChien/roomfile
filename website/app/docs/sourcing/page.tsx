@@ -11,13 +11,21 @@ export default function Sourcing() {
       intro="A product is more than a link. Roomfile records what was verified, where it came from, and when it may have become stale."
     >
       <section>
-        <h2>Default US priority</h2>
+        <h2>Project-configured regional priority</h2>
+        <p>
+          Roomfile follows the project region and retailer preferences. For
+          example, a project configured for the United States uses this default:
+        </p>
         <ol>
           <li>IKEA US and Amazon US.</li>
           <li>Target, Wayfair, Walmart, The Home Depot, and Lowe’s.</li>
           <li>Style-specific or independent retailers when primary sources cannot satisfy the role.</li>
         </ol>
-        <p>Retailer order remains configurable by project and category.</p>
+        <p>
+          Other regions use locally available retailers and the project’s
+          currency, units, and postal-code conventions. Retailer order remains
+          configurable by project and category.
+        </p>
       </section>
 
       <section>
@@ -55,7 +63,7 @@ export default function Sourcing() {
           <li>Archived examples never imply that their recorded prices remain current.</li>
         </ul>
         <p>
-          Roomfile uses no affiliate links in v0.1.0 and never purchases,
+          Roomfile uses no affiliate links in v0.1.1 and never purchases,
           enters checkout, contacts a retailer, or communicates externally.
         </p>
       </section>

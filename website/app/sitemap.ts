@@ -7,7 +7,7 @@ const routes = [
   "/docs/project-files",
   "/docs/rendering",
   "/docs/sourcing",
-  "/examples/us-apartment",
+  "/examples/apartment",
   "/docs/contributing",
 ];
 
