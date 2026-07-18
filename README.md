@@ -16,6 +16,8 @@ npx skills add ShaoXiangChien/roomfile
 Roomfile is tested primarily in Codex. It has no subscription; external
 model/API costs may apply.
 
+[Read the docs and explore the fictional US apartment case study](https://roomfile-shaoxiangchien.ericchien21.chatgpt.site)
+
 ## Why Roomfile
 
 General image assistants can make an attractive room, but long decorating

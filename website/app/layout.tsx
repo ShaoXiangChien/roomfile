@@ -12,7 +12,7 @@ import { SiteFooter, SiteHeader } from "./components/site-chrome";
 export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL ??
-      "https://github.com/ShaoXiangChien/roomfile",
+      "https://roomfile-shaoxiangchien.ericchien21.chatgpt.site",
   ),
   title: {
     default: "Roomfile — Your room, remembered.",
