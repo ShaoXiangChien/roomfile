@@ -24,7 +24,7 @@ cd website && npm ci && npm test`}</CodeBlock>
           <li>New deterministic fit fixtures and geometry edge cases.</li>
           <li>Retailer adapters that preserve identifiers, dated evidence, and seller distinctions.</li>
           <li>Provider-neutral rendering adapters that keep private-photo consent explicit.</li>
-          <li>Clearer documentation, accessibility, and non-US measurement normalization.</li>
+          <li>Clearer documentation, accessibility, and regional measurement normalization.</li>
         </ul>
       </section>
 

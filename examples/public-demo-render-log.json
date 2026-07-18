@@ -1,0 +1,41 @@
+{
+  "schema_version": "0.2.0",
+  "created_at": "2026-07-19",
+  "provider": "Banana",
+  "model": "gemini-3.1-flash-image",
+  "resolution": "2K",
+  "aspect_ratio": "4:3",
+  "pricing_mode": "standard_synchronous_api",
+  "estimated_image_count": 4,
+  "estimated_cost_usd": 0.404,
+  "actual_image_count": 4,
+  "actual_cost_usd": 0.404,
+  "privacy": {
+    "mode": "public-demo",
+    "fictional": true,
+    "private_reference_images_used": false
+  },
+  "outputs": [
+    {
+      "path": "website/public/examples/bauhaus-workspace/source-room.webp",
+      "operation": "generate",
+      "summary": "Fictional compact rental workspace source room"
+    },
+    {
+      "path": "website/public/examples/bauhaus-workspace/final-room.webp",
+      "operation": "edit",
+      "summary": "Same workspace and camera, Bauhaus-inspired reversible design"
+    },
+    {
+      "path": "website/public/examples/japandi-bedroom/source-room.webp",
+      "operation": "generate",
+      "summary": "Fictional compact rental bedroom source room"
+    },
+    {
+      "path": "website/public/examples/japandi-bedroom/final-room.webp",
+      "operation": "edit",
+      "summary": "Same bedroom and camera, Japandi-inspired reversible design"
+    }
+  ],
+  "delivery_note": "Banana outputs were verified at 2400×1792 and converted to high-quality WebP for the public website."
+}

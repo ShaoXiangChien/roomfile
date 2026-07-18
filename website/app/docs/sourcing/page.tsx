@@ -11,21 +11,24 @@ export default function Sourcing() {
       intro="A product is more than a link. Roomfile records what was verified, where it came from, and when it may have become stale."
     >
       <section>
-        <h2>Project-configured regional priority</h2>
+        <h2>Start with the shopping profile</h2>
         <p>
-          Roomfile follows the project region and retailer preferences. For
-          example, a project configured for the United States uses this default:
+          Before searching, Roomfile reads where you are, the currency and
+          measurement units you use, your delivery area, and the retailers you
+          already trust. If any of that is missing, <code>$roomfile source</code>{" "}
+          asks first and records the answer for later rounds.
         </p>
-        <ol>
-          <li>IKEA US and Amazon US.</li>
-          <li>Target, Wayfair, Walmart, The Home Depot, and Lowe’s.</li>
-          <li>Style-specific or independent retailers when primary sources cannot satisfy the role.</li>
-        </ol>
         <p>
-          Other regions use locally available retailers and the project’s
-          currency, units, and postal-code conventions. Retailer order remains
-          configurable by project and category.
+          You can provide favorite websites and physical stores or ask the
+          agent to suggest locally appropriate sources. Roomfile does not apply
+          a global country, currency, or retailer default.
         </p>
+        <Note title="Preference before search">
+          <p>
+            A neutral project remains <code>needs-profile</code> until the
+            location, currency, units, and retailer strategy are known.
+          </p>
+        </Note>
       </section>
 
       <section>
@@ -63,7 +66,7 @@ export default function Sourcing() {
           <li>Archived examples never imply that their recorded prices remain current.</li>
         </ul>
         <p>
-          Roomfile uses no affiliate links in v0.1.1 and never purchases,
+          Roomfile uses no affiliate links in v0.2.0 and never purchases,
           enters checkout, contacts a retailer, or communicates externally.
         </p>
       </section>

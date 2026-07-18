@@ -139,6 +139,7 @@ npm run test:skill
 npm run validate:example
 npm run check:privacy
 npm run test:website
+npm --prefix website run test:e2e
 ```
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the release workflow.

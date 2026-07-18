@@ -1,311 +1,317 @@
 import Link from "next/link";
 import { CopyCommand } from "./components/copy-command";
-import { RoomVisual } from "./components/room-visual";
+import { ProductLedger } from "./components/product-ledger";
+import { RevisionSlider } from "./components/revision-slider";
 
-const commands = [
-  ["init", "Create a private project once."],
-  ["taste", "Turn references into evidence."],
-  ["capture", "Record room truth and uncertainty."],
-  ["explore", "Compare three different directions."],
-  ["place", "Check one product against the room."],
-  ["source", "Find current, verifiable candidates."],
-  ["plan", "Sequence buying and installation."],
-  ["audit", "Catch gaps before money moves."],
-];
+const roomFacts = [
+  ["Room", "Combined living + dining"],
+  ["Keep", "Sofa · oak dining table"],
+  ["Protect", "Windows · radiator · flooring"],
+  ["Needs", "Conversation · records · dinner for four"],
+] as const;
+
+const tasteFragments = [
+  {
+    name: "Amber glow",
+    className: "fragment-light",
+    reaction: "“More pools of warm light—not one bright ceiling light.”",
+  },
+  {
+    name: "Walnut",
+    className: "fragment-walnut",
+    reaction: "“Rich wood, but keep it from feeling heavy.”",
+  },
+  {
+    name: "Olive + rust",
+    className: "fragment-color",
+    reaction: "“I keep saving this combination.”",
+  },
+  {
+    name: "Collected layers",
+    className: "fragment-pattern",
+    reaction: "“Books, records, posters, and plants make it feel lived in.”",
+  },
+] as const;
 
 export default function Home() {
   return (
     <main id="main">
-      <section className="hero">
-        <div className="shell hero-grid">
-          <div className="hero-copy">
-            <p className="eyebrow">An open Agent Skill for real rooms</p>
-            <h1>Your room, remembered.</h1>
-            <p className="hero-lede">
-              A project-based interior design skill that learns your taste,
-              remembers constraints, checks fit, and turns ideas into a real
-              shopping plan. Use it with any room, any style, and the region,
-              currency, units, and retailers that fit your project.
-            </p>
-            <CopyCommand />
-            <div className="hero-actions">
-              <Link className="button primary" href="/docs/getting-started">
-                Start your first room
-              </Link>
-              <a
-                className="button text-button"
-                href="https://github.com/ShaoXiangChien/roomfile"
-              >
-                Open on GitHub <span>↗</span>
-              </a>
-            </div>
-            <p className="microcopy">
-              Tested in Codex · local files · Apache-2.0 · no affiliate links
-            </p>
-          </div>
-          <div className="hero-visual">
-            <div className="before-card">
-              <RoomVisual style="source" compact />
-              <span>01 · Room truth</span>
-            </div>
-            <div className="after-card">
-              <RoomVisual style="refined" />
-              <span>04 · Refined direction</span>
-            </div>
-            <div className="measure-tag">
-              <strong>70⅞ × 23¼ in</strong>
-              <span>measured separately</span>
-            </div>
-          </div>
-        </div>
-      </section>
+      <nav className="chapter-progress" aria-label="Room journey">
+        <a href="#room">01 Understand</a>
+        <a href="#taste">02 Discover</a>
+        <a href="#iterate">03 Iterate</a>
+        <a href="#place">04 Try</a>
+        <a href="#source">05 Realize</a>
+      </nav>
 
-      <section className="manifesto ruled-section">
-        <div className="shell split-heading">
-          <p className="eyebrow">The missing layer</p>
-          <div>
-            <h2>Beautiful pictures forget. Projects remember.</h2>
-            <p>
-              One-shot room generators optimize the next image. Roomfile keeps
-              a durable record of what the room is, what you like, what must
-              stay, and what has actually been verified.
-            </p>
-          </div>
-        </div>
-        <div className="shell problem-grid">
-          <article>
-            <span className="step-number">01</span>
-            <h3>Taste before labels</h3>
-            <p>
-              Save links and screenshots, then record the specific wood,
-              proportion, color, or feeling you reacted to—including dislikes
-              and contradictions.
-            </p>
-          </article>
-          <article>
-            <span className="step-number">02</span>
-            <h3>One canonical room</h3>
-            <p>
-              Photos, measurements, doors, windows, fixed elements, rental
-              rules, and uncertainty live together. You stop re-uploading the
-              same context.
-            </p>
-          </article>
-          <article>
-            <span className="step-number">03</span>
-            <h3>Reality after the render</h3>
-            <p>
-              Products are dated, dimensioned, fit-checked, budgeted, and
-              sequenced into a plan. Attractive is the start—not the finish.
-            </p>
-          </article>
-        </div>
-      </section>
-
-      <section className="concepts section">
-        <div className="shell section-heading">
-          <p className="eyebrow">Three answers to the same room</p>
-          <h2>Explore differences that matter.</h2>
+      <section className="editorial-hero">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          className="hero-room"
+          src="/examples/apartment/mid-century-modern-refined.webp"
+          alt="Warm Mid-century Modern living and dining room with olive and rust rug, amber lights, walnut furniture, art, books, records, and plants"
+        />
+        <div className="hero-shade" aria-hidden="true" />
+        <div className="hero-editorial-copy">
+          <p className="eyebrow">An interior design skill for coding agents</p>
+          <h1>Design your home, together.</h1>
           <p>
-            The geometry, viewpoint, sofa, dining table, windows, and flooring
-            stay fixed. Only the design direction changes. These are examples,
-            not presets: your own references can lead somewhere entirely
-            different.
+            Roomfile helps your AI understand the space you have, discover what
+            you love, iterate on the design with you, and turn the final idea
+            into a room you can actually create.
           </p>
+          <div className="hero-actions">
+            <a className="button light" href="#install">
+              Install Roomfile
+            </a>
+            <a className="editorial-link light-link" href="#room">
+              See a room take shape <span>↓</span>
+            </a>
+          </div>
         </div>
-        <div className="shell concept-grid">
-          <article className="concept-card">
-            <RoomVisual style="mid-century" compact />
-            <p className="eyebrow">Direction 01</p>
-            <h3>Eclectic Mid-century Modern</h3>
-            <p>Amber light, walnut, olive, rust, tactile layers, collected objects.</p>
-            <span className="decision selected">Selected for refinement</span>
-          </article>
-          <article className="concept-card">
-            <RoomVisual style="bauhaus" compact />
-            <p className="eyebrow">Direction 02</p>
-            <h3>Bauhaus</h3>
-            <p>Tubular steel, primary accents, geometric functional contrast.</p>
-            <span className="decision">Held as an alternative</span>
-          </article>
-          <article className="concept-card">
-            <RoomVisual style="japandi" compact />
-            <p className="eyebrow">Direction 03</p>
-            <h3>Japandi</h3>
-            <p>Pale timber, natural texture, low visual weight, negative space.</p>
-            <span className="decision">Held as an alternative</span>
-          </article>
+        <figure className="hero-inset">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/examples/apartment/source-room.webp"
+            alt="The same fictional room before decorating"
+          />
+          <figcaption>Before · the room we started with</figcaption>
+        </figure>
+        <p className="hero-folio">Issue 02 · A room in progress</p>
+      </section>
+
+      <div className="install-strip" id="install">
+        <div className="shell install-strip-inner">
+          <span>Install in one line</span>
+          <CopyCommand />
+          <Link href="/docs/getting-started">Getting started →</Link>
         </div>
-        <div className="shell section-link">
-          <Link href="/examples/apartment">
-            See the complete fictional apartment workflow <span>→</span>
-          </Link>
+      </div>
+
+      <section className="journey-section meet-room" id="room">
+        <div className="shell">
+          <header className="editorial-heading">
+            <span className="section-folio">01</span>
+            <div>
+              <p className="eyebrow">Meet the room</p>
+              <h2>Begin with the life already happening here.</h2>
+            </div>
+            <p className="margin-intro">
+              The first conversation is not about a style. It is about the
+              room, the routines inside it, and what cannot move.
+            </p>
+          </header>
+
+          <div className="room-report">
+            <figure className="room-report-photo">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/examples/apartment/source-room.webp"
+                alt="Undecorated living and dining room with an existing gray sofa and oak dining table"
+              />
+              <figcaption>
+                Canonical view · sofa and dining table stay · radiator remains
+                clear
+              </figcaption>
+            </figure>
+            <div className="room-report-plan" aria-label="Simplified living room plan">
+              <div className="plan-window one">window</div>
+              <div className="plan-window two">window</div>
+              <div className="plan-sofa-block">existing sofa</div>
+              <div className="plan-table-block">existing table</div>
+              <div className="plan-radiator-block">radiator</div>
+              <div className="plan-door-swing">entry</div>
+              <span className="measure-line width">20 ft</span>
+              <span className="measure-line height">15 ft</span>
+            </div>
+            <dl className="room-fact-list">
+              {roomFacts.map(([term, detail]) => (
+                <div key={term}>
+                  <dt>{term}</dt>
+                  <dd>{detail}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
         </div>
       </section>
 
-      <section className="fit-section section">
-        <div className="shell fit-grid">
-          <div className="fit-copy">
-            <p className="eyebrow">Image imagination, numeric discipline</p>
-            <h2>A render can suggest. Only measurements can prove.</h2>
-            <p>
-              Roomfile separates photorealistic exploration from a deterministic
-              inch-based layout. It checks boundaries, overlaps, door swings,
-              circulation zones, and clearances without asking an image model to
-              guess.
-            </p>
-            <ul className="check-list">
-              <li>Measured facts cannot be replaced by inferred ones.</li>
-              <li>Rotations and edge-touching are evaluated consistently.</li>
-              <li>Every render carries a visual-approximation disclaimer.</li>
-            </ul>
-            <Link className="inline-link" href="/docs/project-files">
-              Read the geometry contract →
-            </Link>
-          </div>
-          <div className="floor-plan" aria-label="Scaled room layout example">
-            <div className="plan-label top-label">240 in</div>
-            <div className="plan-label side-label">180 in</div>
-            <div className="plan-room">
-              <span className="plan-sofa">existing sofa</span>
-              <span className="plan-coffee">coffee table</span>
-              <span className="plan-dining">existing table</span>
-              <span className="plan-lamp">lamp</span>
-              <span className="plan-clearance">entry swing</span>
-              <span className="plan-radiator">radiator clearance</span>
+      <section className="journey-section taste-section" id="taste">
+        <div className="shell">
+          <header className="editorial-heading">
+            <span className="section-folio">02</span>
+            <div>
+              <p className="eyebrow">Find what feels like you</p>
+              <h2>You do not need to know the style name.</h2>
             </div>
-            <div className="plan-result">
-              <span aria-hidden="true">✓</span>
-              <div>
-                <strong>Fit check passed</strong>
-                <small>Structured geometry, not pixels</small>
-              </div>
-            </div>
+            <blockquote className="pull-quote">
+              “I want it warm, expressive, and a little nostalgic—never like a
+              catalog.”
+            </blockquote>
+          </header>
+          <div className="taste-board">
+            {tasteFragments.map((fragment, index) => (
+              <article className={fragment.className} key={fragment.name}>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <div aria-hidden="true" />
+                <h3>{fragment.name}</h3>
+                <p>{fragment.reaction}</p>
+              </article>
+            ))}
+            <aside>
+              <p className="eyebrow">What the AI carries forward</p>
+              <ul>
+                <li>Layer light at three heights</li>
+                <li>Keep the palette warm and earthy</li>
+                <li>Make room for records and books</li>
+                <li>Avoid sparse beige minimalism</li>
+              </ul>
+              <strong>Direction found: Mid-century Modern</strong>
+            </aside>
           </div>
         </div>
       </section>
 
-      <section className="sourcing section">
-        <div className="shell sourcing-grid">
-          <div>
-            <p className="eyebrow">From “where can I buy it?” to evidence</p>
-            <h2>Regional retailers, with receipts for every claim.</h2>
-            <p>
-              Roomfile follows your project’s region and retailer preferences.
-              This example uses IKEA US and Amazon US, recording article
-              numbers and ASINs, seller,
-              manufacturer dimensions, package size, price, availability,
-              ZIP-specific delivery results, and retrieval date. Changed
-              sellers and stale data are flags, not footnotes.
+      <section className="journey-section revision-section" id="iterate">
+        <div className="shell">
+          <header className="editorial-heading">
+            <span className="section-folio">03</span>
+            <div>
+              <p className="eyebrow">Design it together</p>
+              <h2>Each round begins where the last one ended.</h2>
+            </div>
+            <p className="margin-intro">
+              The room stays recognizable. Your feedback becomes the next
+              revision, while approved decisions and fixed elements remain in
+              place.
             </p>
-            <Link className="inline-link" href="/docs/sourcing">
-              Read the sourcing policy →
-            </Link>
-          </div>
-          <div className="product-stack">
-            <article className="product-card approved">
-              <div className="product-index">IKEA · 702.397.10</div>
-              <h3>STOCKHOLM coffee table</h3>
+          </header>
+          <RevisionSlider />
+        </div>
+      </section>
+
+      <section className="journey-section placement-section" id="place">
+        <div className="shell placement-grid">
+          <div className="placement-copy">
+            <span className="section-folio">04</span>
+            <p className="eyebrow">Try the real thing</p>
+            <h2>See it in the room. Then check the numbers.</h2>
+            <p>
+              Found a table you love? Roomfile can place it into the current
+              design without restarting the concept, then compare its real
+              dimensions with the measured layout.
+            </p>
+            <div className="fit-result">
+              <span>Fit result</span>
+              <strong>Pass</strong>
               <dl>
                 <div>
-                  <dt>Measured</dt>
-                  <dd>70⅞ × 23¼ × 15¾ in</dd>
+                  <dt>Footprint</dt>
+                  <dd>70⅞ × 23¼ in</dd>
                 </div>
                 <div>
-                  <dt>Retrieved</dt>
-                  <dd>2026-07-18</dd>
+                  <dt>Walkway</dt>
+                  <dd>36 in clear</dd>
+                </div>
+                <div>
+                  <dt>Door + radiator</dt>
+                  <dd>Clear</dd>
                 </div>
               </dl>
-              <span>Approved for the fictional plan</span>
-            </article>
-            <article className="product-card warning">
-              <div className="product-index">Amazon · B0DPKTVQDF</div>
-              <h3>TOLEAD media console</h3>
-              <p>Unavailable; two dimension claims conflict.</p>
-              <span>Rejected pending reliable evidence</span>
-            </article>
+            </div>
           </div>
+          <figure className="placement-photo">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/examples/apartment/ikea-stockholm-placement.webp"
+              alt="The selected oval walnut coffee table tried in the Mid-century Modern living room"
+            />
+            <div className="placement-callout">
+              <span>Product trial</span>
+              <strong>STOCKHOLM coffee table</strong>
+              <small>Visual placement + separate scaled fit check</small>
+            </div>
+          </figure>
         </div>
       </section>
 
-      <section className="privacy section">
-        <div className="shell privacy-card">
-          <div>
-            <p className="eyebrow">Your home stays yours</p>
-            <h2>A project folder, not another account.</h2>
-          </div>
-          <div>
-            <p>
-              Personal photos, ZIP codes, budgets, and decisions stay in a
-              local <code>roomfile/</code> folder that private projects
-              gitignore by default. Roomfile asks before sending private images
-              to a new external renderer.
-            </p>
-            <p>
-              Roomfile has no subscription. External model/API costs may
-              apply, and current retailer research still requires network
-              access.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="commands section">
-        <div className="shell section-heading compact-heading">
-          <p className="eyebrow">One umbrella skill</p>
-          <h2>A command for every decision.</h2>
-        </div>
-        <div className="shell command-grid">
-          {commands.map(([command, description]) => (
-            <article key={command}>
-              <code>$roomfile {command}</code>
-              <p>{description}</p>
-            </article>
-          ))}
-        </div>
-        <div className="shell section-link">
-          <Link href="/docs/commands">Open the complete command reference →</Link>
-        </div>
-      </section>
-
-      <section className="limitations section">
-        <div className="shell limitation-grid">
-          <div>
-            <p className="eyebrow">Open source, honest limits</p>
-            <h2>Decorating help—not professional certification.</h2>
-          </div>
-          <div className="limitation-list">
-            <p>
-              Roomfile is for reversible room decorating. It does not
-              provide structural, electrical, code, contractor, or purchasing
-              instructions.
-            </p>
-            <p>
-              Prices, sellers, stock, shipping, and return policies change.
-              Every current claim must be dated and rechecked.
-            </p>
-            <p>
-              Codex is officially tested. Other Agent Skills environments are
-              best-effort. Contributions are welcome under Apache-2.0.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="closing-cta">
+      <section className="journey-section sourcing-ledger" id="source">
         <div className="shell">
-          <p className="eyebrow">Start with the room you already have</p>
-          <h2>Remember once. Refine without starting over.</h2>
+          <header className="editorial-heading">
+            <span className="section-folio">05</span>
+            <div>
+              <p className="eyebrow">Make it real</p>
+              <h2>The final room becomes a list you can act on.</h2>
+            </div>
+            <p className="margin-intro">
+              Each number connects the picture to a product, its real size,
+              where it was found, and the decision still needed.
+            </p>
+          </header>
+          <ProductLedger />
+        </div>
+      </section>
+
+      <section className="journey-section more-homes">
+        <div className="shell">
+          <header className="editorial-heading">
+            <span className="section-folio">06</span>
+            <div>
+              <p className="eyebrow">More rooms in progress</p>
+              <h2>Every home begins with a different conversation.</h2>
+            </div>
+          </header>
+          <div className="story-index">
+            <Link href="/examples/bauhaus-workspace" className="story-link">
+              <figure>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/examples/bauhaus-workspace/final-room.webp"
+                  alt="Compact Bauhaus-inspired workspace with primary-color accents"
+                />
+                <figcaption>Workspace · Bauhaus</figcaption>
+              </figure>
+              <div>
+                <span>Selected home 02</span>
+                <h3>A small workspace with more energy.</h3>
+                <p>Focus, reversible storage, and a disciplined use of color.</p>
+                <strong>Read the story →</strong>
+              </div>
+            </Link>
+            <Link href="/examples/japandi-bedroom" className="story-link">
+              <figure>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/examples/japandi-bedroom/final-room.webp"
+                  alt="Compact Japandi bedroom with pale wood, linen, and quiet storage"
+                />
+                <figcaption>Bedroom · Japandi</figcaption>
+              </figure>
+              <div>
+                <span>Selected home 03</span>
+                <h3>A calmer place to sleep.</h3>
+                <p>Soft texture, compact storage, and room to visually breathe.</p>
+                <strong>Read the story →</strong>
+              </div>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="editorial-closing">
+        <div className="shell">
+          <p className="eyebrow">Bring Roomfile into the conversation</p>
+          <h2>Your home will change. The conversation can keep up.</h2>
           <CopyCommand />
-          <div className="hero-actions centered-actions">
-            <Link className="button primary" href="/docs/getting-started">
-              Read getting started
+          <div className="hero-actions">
+            <Link className="button dark" href="/docs/getting-started">
+              Start your first room
             </Link>
             <a
-              className="button text-button"
+              className="editorial-link"
               href="https://github.com/ShaoXiangChien/roomfile"
             >
-              Star on GitHub ↗
+              View Roomfile on GitHub ↗
             </a>
           </div>
         </div>

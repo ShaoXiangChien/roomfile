@@ -1,45 +1,45 @@
 import { RoomVisual, type VisualStyle } from "../components/room-visual";
 
-const beforeAfter = [
+const journey = [
   {
     number: "01 / 05",
     kicker: "The room",
-    title: "Start with what cannot move.",
-    body: "One canonical view. Measured boundaries. Protected windows, radiator, flooring, entry swing, sofa, and dining table.",
+    title: "Start with the life already happening here.",
+    body: "One canonical view. Existing sofa and table. Protected windows, radiator, flooring, and entry path.",
     style: "source" as VisualStyle,
-    footer: "Capture once · reuse every round",
+    footer: "Understand the room",
   },
   {
     number: "02 / 05",
     kicker: "The taste",
-    title: "A reaction is better than a label.",
-    body: "Amber light. Walnut. Olive and rust. Tactile layers. Records, books, posters, and plants become specific evidence.",
-    style: "source" as VisualStyle,
-    footer: "Likes · dislikes · contradictions",
+    title: "You do not need to know the style name.",
+    body: "Amber light, walnut, olive, rust, records, books, posters, and plants become specific design evidence.",
+    style: "mid-century" as VisualStyle,
+    footer: "Discover what feels like you",
   },
   {
     number: "03 / 05",
-    kicker: "The exploration",
-    title: "Three genuinely different answers.",
-    body: "Eclectic Mid-century Modern, Bauhaus, and Japandi show three possibilities. They are examples, not presets.",
-    style: "bauhaus" as VisualStyle,
-    footer: "Same geometry · different composition",
+    kicker: "The revisions",
+    title: "Each round begins where the last one ended.",
+    body: "Resident feedback makes the same Mid-century Modern room warmer, more collected, and more personal.",
+    style: "refined" as VisualStyle,
+    footer: "Design it together",
   },
   {
     number: "04 / 05",
-    kicker: "The proof",
-    title: "The render suggests. Inches decide.",
-    body: "Furniture footprints are checked against boundaries, overlaps, the entry swing, radiator service, and circulation.",
-    style: "mid-century" as VisualStyle,
-    footer: "Deterministic fit · visual approximation",
+    kicker: "The product trial",
+    title: "See the real thing. Then check the numbers.",
+    body: "The selected coffee table enters the current design; its real footprint is checked in the measured layout.",
+    style: "placement" as VisualStyle,
+    footer: "Try before committing",
   },
   {
     number: "05 / 05",
     kicker: "The plan",
-    title: "Turn the picture into a real room.",
-    body: "Dated regional retailer evidence becomes a phased shopping, assembly, placement, styling, and reserve plan.",
-    style: "mid-century" as VisualStyle,
-    footer: "Roomfile · open source · no subscription",
+    title: "Turn the final room into next actions.",
+    body: "Products, dimensions, sources, alternatives, fit results, and phases make the design possible to execute.",
+    style: "placement" as VisualStyle,
+    footer: "Make it real",
   },
 ] as const;
 
@@ -47,37 +47,37 @@ const workflow = [
   {
     number: "01 / 05",
     kicker: "$roomfile capture",
-    title: "Remember the room.",
-    body: "Canonical photos, measured geometry, openings, fixed elements, rental constraints, and uncertainty live together.",
-    accent: "moss",
+    title: "Understand the room.",
+    body: "Photos, measurements, openings, fixed elements, routines, and constraints become the shared starting point.",
+    accent: "olive",
   },
   {
     number: "02 / 05",
     kicker: "$roomfile taste",
-    title: "Learn the taste.",
-    body: "Links and screenshots become specific likes, dislikes, anti-references, and productive contradictions.",
-    accent: "clay",
+    title: "Discover the taste.",
+    body: "Links, screenshots, likes, dislikes, and contradictions become concrete design evidence.",
+    accent: "rust",
   },
   {
     number: "03 / 05",
-    kicker: "$roomfile explore",
-    title: "Compare real alternatives.",
-    body: "Roomfile derives three directions by default from the same room truth and your style evidence—not a fixed catalog.",
-    accent: "brass",
+    kicker: "$roomfile refine",
+    title: "Keep the conversation moving.",
+    body: "Revise the chosen direction while preserving what the room and resident have already approved.",
+    accent: "paper",
   },
   {
     number: "04 / 05",
     kicker: "$roomfile place",
-    title: "Prove fit separately.",
-    body: "The scaled layout checks dimensions and clearances without asking an image model to guess.",
-    accent: "moss",
+    title: "Try real furniture.",
+    body: "Place a specific product into the current room, then check its measured footprint separately.",
+    accent: "olive",
   },
   {
     number: "05 / 05",
-    kicker: "$roomfile plan",
-    title: "Make it executable.",
-    body: "Current product evidence, alternatives, budget reserve, assembly, placement, and styling become one phased plan.",
-    accent: "clay",
+    kicker: "$roomfile source",
+    title: "Make the room happen.",
+    body: "Current sources, reliable dimensions, alternatives, budget, and phases become one actionable plan.",
+    accent: "rust",
   },
 ] as const;
 
@@ -116,13 +116,13 @@ export default async function LaunchKit({
         </div>
         <div className="launch-footer">
           <code>npx skills add ShaoXiangChien/roomfile</code>
-          <span>Your room, remembered.</span>
+          <span>Design your home, together.</span>
         </div>
       </main>
     );
   }
 
-  const slide = beforeAfter[slideIndex];
+  const slide = journey[slideIndex];
   return (
     <main className="launch-canvas launch-before-after">
       <div className="launch-topline">
@@ -136,25 +136,7 @@ export default async function LaunchKit({
           <p className="launch-body">{slide.body}</p>
           <div className="launch-footer-label">{slide.footer}</div>
         </div>
-        {slideIndex === 2 ? (
-          <div className="launch-three-rooms">
-            <RoomVisual style="mid-century" compact />
-            <RoomVisual style="bauhaus" compact />
-            <RoomVisual style="japandi" compact />
-          </div>
-        ) : slideIndex === 3 ? (
-          <div className="launch-fit-card">
-            <RoomVisual style={slide.style} compact />
-            <div className="mini-plan">
-              <span className="mini-sofa" />
-              <span className="mini-table" />
-              <span className="mini-dining" />
-              <strong>FIT ✓</strong>
-            </div>
-          </div>
-        ) : (
-          <RoomVisual style={slide.style} />
-        )}
+        <RoomVisual style={slide.style} />
       </div>
     </main>
   );
@@ -168,29 +150,27 @@ function HeroAsset({
   return (
     <main className={`launch-canvas launch-hero launch-${format}`}>
       <div className="launch-brandline">
-        <span className="launch-r">R</span>
         <strong>Roomfile</strong>
-        <em>v0.1.1</em>
+        <em>v0.2.0</em>
       </div>
       <div className="launch-hero-grid">
         <div>
-          <p className="launch-kicker">An open Agent Skill for any room</p>
-          <h1>Your room, remembered.</h1>
+          <p className="launch-kicker">An interior design skill for coding agents</p>
+          <h1>Design your home, together.</h1>
           <p className="launch-body">
-            Taste. Room truth. Fit checks. Current sourcing. One plan you can
-            actually execute.
+            Understand the room. Discover your taste. Iterate on the design.
+            Try real furniture. Make it happen.
           </p>
           <code>npx skills add ShaoXiangChien/roomfile</code>
         </div>
         <div className="launch-hero-rooms">
-          <RoomVisual style="source" compact />
-          <RoomVisual style="mid-century" compact />
-          <span>visual approximation</span>
+          <RoomVisual style="refined" />
+          <span>From first photo to final placement</span>
         </div>
       </div>
       <div className="launch-bottomline">
-        <span>Any style · examples, not presets</span>
-        <span>Regional sourcing · deterministic fit</span>
+        <span>One room · one evolving conversation</span>
+        <span>Open source · tested in Codex</span>
       </div>
     </main>
   );

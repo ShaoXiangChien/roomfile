@@ -15,41 +15,40 @@ export const metadata: Metadata = {
       "https://roomfile-shaoxiangchien.ericchien21.chatgpt.site",
   ),
   title: {
-    default: "Roomfile — Your room, remembered.",
+    default: "Roomfile — Design your home, together.",
     template: "%s · Roomfile",
   },
   description:
-    "A project-based interior design skill that learns your taste, remembers constraints, checks fit, and turns ideas into a real shopping plan.",
+    "An interior design skill that helps your AI understand your space, discover your taste, iterate on the design, try real furniture, and make the room happen.",
   keywords: [
     "interior design",
     "Agent Skill",
     "Codex",
-    "apartment decorating",
+    "home decorating",
     "furniture fit",
-    "IKEA",
-    "Amazon",
+    "AI interior design",
   ],
   authors: [{ name: "Roomfile contributors" }],
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
-    title: "Roomfile — Your room, remembered.",
+    title: "Roomfile — Design your home, together.",
     description:
-      "Taste, room truth, fit checks, current sourcing, and a plan you can execute.",
+      "Understand the room. Discover your taste. Iterate on the design. Make it real.",
     images: [
       {
         url: "/og.png",
         width: 1200,
         height: 630,
-        alt: "Roomfile concept comparison for a fictional apartment",
+        alt: "Roomfile turning one living room into a warm, layered Mid-century Modern home",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Roomfile — Your room, remembered.",
+    title: "Roomfile — Design your home, together.",
     description:
-      "An open-source interior design skill that remembers constraints and checks fit.",
+      "An interior design skill for the whole journey, from first photo to final placement.",
     images: ["/og.png"],
   },
   icons: {

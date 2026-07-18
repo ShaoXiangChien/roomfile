@@ -46,12 +46,26 @@ export default function ProjectFiles() {
       <section>
         <h2>Versioned structured data</h2>
         <ul>
+          <li><code>roomfile.json</code> stores profile setup status, region, ISO currency, units, budget, and retailer strategy.</li>
           <li><code>geometry.json</code> stores inch-normalized boundaries, openings, fixed elements, clearances, and footprints.</li>
           <li><code>facts.json</code> stores classification, confidence, and source.</li>
           <li><code>concept.json</code> stores version, status, locks, allowed changes, decisions, and render history.</li>
           <li><code>products.json</code> stores dimensions, identifiers, retailer evidence, retrieval date, delivery, and status.</li>
           <li><code>render-request.json</code> is the provider-neutral image contract.</li>
         </ul>
+      </section>
+
+      <section>
+        <h2>Schema 0.2.0</h2>
+        <p>
+          Version 0.2.0 adds <code>setup_status</code> and{" "}
+          <code>retailer_strategy</code>, and validates every product currency
+          as a three-letter uppercase ISO code. The validator still accepts
+          0.1.0 projects with an upgrade warning.
+        </p>
+        <CodeBlock>
+          node scripts/migrate-project.mjs --project roomfile --to 0.2.0 --json
+        </CodeBlock>
       </section>
 
       <section>

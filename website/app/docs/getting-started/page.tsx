@@ -24,10 +24,11 @@ export default function GettingStarted() {
         <h2>Initialize your private project</h2>
         <CodeBlock>$roomfile init</CodeBlock>
         <p>
-          Roomfile asks for country or region, ZIP or postal code, currency,
-          measurement units, budget, room restrictions, preferred retailers,
-          household needs, and rendering preferences. A private{" "}
-          <code>roomfile/</code> folder is created and added to a delimited{" "}
+          Roomfile interviews you first for country or region, delivery area
+          (which can be supplied later), currency, measurement units, budget,
+          room restrictions, preferred retailers, and whether the agent may
+          suggest local sources. Those answers create a private{" "}
+          <code>roomfile/</code> folder, which is added to a delimited{" "}
           <code>.gitignore</code> block.
         </p>
         <Note title="Local by default">
@@ -62,10 +63,10 @@ $roomfile status`}</CodeBlock>
             room truth.
           </li>
           <li>
-            <code>$roomfile explore</code> creates three intentionally
-            different directions by default, derived from your evidence rather
-            than a fixed style catalog. You can request other styles or more
-            rounds.
+            <code>$roomfile explore</code> creates intentionally different
+            directions derived from your evidence rather than a fixed style
+            catalog. You can request as many directions or rounds as the
+            decision needs.
           </li>
           <li>
             <code>$roomfile refine</code> revises a selected concept while
@@ -77,6 +78,18 @@ $roomfile status`}</CodeBlock>
           </li>
         </ol>
         <CodeBlock>$roomfile plan</CodeBlock>
+      </section>
+
+      <section>
+        <h2>Upgrade an existing project</h2>
+        <CodeBlock>
+          node scripts/migrate-project.mjs --project roomfile --to 0.2.0 --json
+        </CodeBlock>
+        <p>
+          Migration adds the preference-first profile state and currency
+          validation without changing existing location, product, photo,
+          price, or decision data. It is safe to run more than once.
+        </p>
       </section>
 
       <section>

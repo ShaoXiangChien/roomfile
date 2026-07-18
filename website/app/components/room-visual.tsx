@@ -8,20 +8,20 @@ export type VisualStyle =
 
 const labels: Record<VisualStyle, string> = {
   source: "Original room",
-  "mid-century": "Eclectic Mid-century Modern",
+  "mid-century": "Mid-century Modern",
   bauhaus: "Bauhaus",
   japandi: "Japandi",
-  refined: "Approved refinement",
-  placement: "IKEA product placement",
+  refined: "MCM refinement",
+  placement: "Product placement",
 };
 
 const images: Record<VisualStyle, string> = {
-  source: "/examples/us-apartment/source-room.png",
-  "mid-century": "/examples/us-apartment/mid-century-modern.png",
-  bauhaus: "/examples/us-apartment/bauhaus.png",
-  japandi: "/examples/us-apartment/japandi.png",
-  refined: "/examples/us-apartment/mid-century-modern-refined.png",
-  placement: "/examples/us-apartment/ikea-stockholm-placement.png",
+  source: "/examples/apartment/source-room.webp",
+  "mid-century": "/examples/apartment/mid-century-modern.webp",
+  bauhaus: "/examples/apartment/bauhaus.webp",
+  japandi: "/examples/apartment/japandi.webp",
+  refined: "/examples/apartment/mid-century-modern-refined.webp",
+  placement: "/examples/apartment/ikea-stockholm-placement.webp",
 };
 
 export function RoomVisual({
@@ -40,7 +40,7 @@ export function RoomVisual({
       <img
         className="room-photo"
         src={images[style]}
-        alt={`${labels[style]} visual approximation of the same fictional apartment room`}
+        alt={`${labels[style]} view of the fictional living room`}
       />
       <span className="room-label">{labels[style]}</span>
     </div>

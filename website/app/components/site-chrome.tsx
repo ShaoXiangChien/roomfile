@@ -14,15 +14,12 @@ export function SiteHeader() {
     <header className="site-header">
       <div className="shell header-inner">
         <Link className="brand" href="/" aria-label="Roomfile home">
-          <span className="brand-mark" aria-hidden="true">
-            R
-          </span>
-          <span>Roomfile</span>
-          <span className="version">v0.1.1</span>
+          <span className="masthead">Roomfile</span>
+          <span className="version">v0.2.0</span>
         </Link>
         <nav className="main-nav" aria-label="Main navigation">
+          <Link href="/examples">Selected Homes</Link>
           <Link href="/docs/getting-started">Docs</Link>
-          <Link href="/examples/apartment">Example</Link>
           <a
             href="https://github.com/ShaoXiangChien/roomfile"
             rel="noreferrer"
@@ -41,14 +38,11 @@ export function SiteFooter() {
       <div className="shell footer-grid">
         <div>
           <Link className="brand footer-brand" href="/">
-            <span className="brand-mark" aria-hidden="true">
-              R
-            </span>
-            Roomfile
+            <span className="masthead">Roomfile</span>
           </Link>
           <p>
-            Open-source, local-first interior design for real rooms and real
-            constraints.
+            An interior design skill that stays with you from the first photo
+            to the final placement.
           </p>
         </div>
         <div>
@@ -65,7 +59,7 @@ export function SiteFooter() {
           <p className="footer-label">Project</p>
           <ul>
             <li>
-              <Link href="/examples/apartment">Apartment example</Link>
+              <Link href="/examples">Selected Homes</Link>
             </li>
             <li>
               <a href="https://github.com/ShaoXiangChien/roomfile">
@@ -77,8 +71,11 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="shell legal-line">
-        <span>Roomfile never purchases or performs structural work.</span>
-        <span>Visual renders are approximations, not dimensional proof.</span>
+        <span>Apache-2.0 · v0.2.0</span>
+        <span>
+          <Link href="/docs/project-files">Privacy</Link> ·{" "}
+          <Link href="/docs/rendering">Rendering notes</Link>
+        </span>
       </div>
     </footer>
   );
@@ -108,7 +105,7 @@ export function DocsShell({
             ))}
           </ul>
           <Link className="case-link" href="/examples/apartment">
-            Fictional apartment <span>→</span>
+            Selected living room <span>→</span>
           </Link>
         </aside>
         <article className="docs-article">
