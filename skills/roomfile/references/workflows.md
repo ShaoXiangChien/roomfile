@@ -36,12 +36,14 @@ concepts.
 
 ## `explore`
 
-Create exactly three directions that differ in composition and design logic,
-not only color. For the public demo, use Mid-century Modern, Bauhaus, and
-Japandi. For personal projects, derive directions from the user's evidence.
-Write `concept.json` before rendering. Preserve canonical viewpoint and locked
-architecture. Compare directions by feeling, materials, furniture strategy,
-budget pressure, maintenance, and likely sourcing difficulty.
+Create three directions by default so the user can compare materially different
+compositions and design logic, not only color. Derive every direction from the
+user's style evidence; accept arbitrary style strings and enforce no style
+allowlist. Mid-century Modern, Bauhaus, and Japandi are public-demo examples,
+not presets. Run additional rounds or use different direction counts when the
+user asks. Write `concept.json` before rendering. Preserve canonical viewpoint
+and locked architecture. Compare directions by feeling, materials, furniture
+strategy, budget pressure, maintenance, and likely sourcing difficulty.
 
 ## `refine`
 
@@ -61,9 +63,9 @@ than manipulating the render to make the item appear to fit.
 ## `source`
 
 Translate an approved concept into roles and measurable specifications before
-searching. Search current US listings, favor preferred retailers, and retain at
-least one alternative for major furniture categories. Mark products
-`shortlisted`; only the user may approve them.
+searching. Search current listings for the project-configured region, favor
+preferred retailers, and retain at least one alternative for major furniture
+categories. Mark products `shortlisted`; only the user may approve them.
 
 ## `plan`
 

@@ -1,6 +1,8 @@
-# Fictional Oak Street Apartment
+# Fictional Apartment Example
 
-Public demonstration project for a fictional 650 sq ft US rental apartment.
+Public demonstration project for a fictional 650 sq ft apartment. Its US
+region, USD budget, and retailer list are example configuration, not Roomfile
+product limits.
 
 - Household: one adult, occasional dinner guests
 - Decorating budget: USD $3,000
@@ -10,4 +12,5 @@ Public demonstration project for a fictional 650 sq ft US rental apartment.
 - Delivery ZIP: `00000` is intentionally fictional; no example delivery result is a live promise
 - Preferred retailers: IKEA US and Amazon US, with Target and Wayfair as secondary sources
 
-All people, addresses, photographs, and availability results in this example are fictional.
+All people, addresses, photographs, and availability results in this example
+are fictional.

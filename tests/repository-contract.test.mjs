@@ -14,6 +14,10 @@ test("repository has public launch and licensing contracts", async () => {
 
   assert.match(readme, /Your room, remembered/);
   assert.match(readme, /npx skills add ShaoXiangChien\/roomfile/);
+  assert.match(readme, /any room.*any style/is);
+  assert.match(readme, /examples, not presets/i);
+  assert.match(readme, /Eclectic Mid-century Modern/);
+  assert.doesNotMatch(readme, /serves US apartment renters/i);
   assert.match(readme, /Mid-century Modern/);
   assert.match(readme, /Bauhaus/);
   assert.match(readme, /Japandi/);

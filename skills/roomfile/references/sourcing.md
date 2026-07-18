@@ -1,17 +1,22 @@
-# US product sourcing
+# Regional product sourcing
 
 Search read-only. Roomfile compares products; it never purchases, adds to cart,
 contacts sellers, or uses affiliate links.
 
 ## Retailer priority
 
-1. IKEA US and Amazon US.
-2. Target, Wayfair, Walmart, The Home Depot, and Lowe's.
-3. Independent or style-specific retailers when the preferred set cannot meet
-   the role, dimensions, budget, or material requirement.
+Use the project-configured region, currency, delivery area, and retailer
+preferences. For a project configured for the United States:
 
-Use the project ZIP code for delivery or store checks. If ZIP-specific
-availability cannot be verified, label it unknown.
+1. Prefer IKEA US and Amazon US.
+2. Then use Target, Wayfair, Walmart, The Home Depot, and Lowe's.
+3. Use independent or style-specific retailers when the preferred set cannot
+   meet the role, dimensions, budget, or material requirement.
+
+For other regions, use configured local retailers and dated regional evidence.
+
+Use the project ZIP or postal code for delivery or store checks. If
+location-specific availability cannot be verified, label it unknown.
 
 ## Evidence to capture
 

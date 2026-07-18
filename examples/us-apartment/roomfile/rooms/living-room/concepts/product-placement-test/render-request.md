@@ -18,7 +18,7 @@ Generated from `/Users/ericchien/Documents/Interior Design/examples/us-apartment
 
 Create a photorealistic interior-design visualization using the supplied canonical room image as the architectural source of truth.
 
-Goal: Place an approximate IKEA STOCKHOLM walnut veneer coffee table into the refined Mid-century Modern concept without changing anything else.
+Goal: Place an approximate IKEA STOCKHOLM walnut veneer coffee table into the refined Eclectic Mid-century Modern concept without changing anything else.
 
 Camera and composition: Phone camera at 5 ft height near southwest entry, facing north-northeast, 4:3 landscape. Keep this viewpoint, framing, perspective, lens character, and visible architecture consistent.
 
@@ -35,8 +35,9 @@ Allowed edits only:
 
 Visible style evidence to express:
 1. warm walnut veneer
-2. restrained 1960s reference
-3. calm neutral base
+2. warm amber pools of light
+3. olive, rust, burnt orange, tobacco brown, cream, and black
+4. collected 1970s-inflected Eclectic Mid-century Modern layering
 
 Product references to depict approximately, without inventing dimensional proof:
 1. IKEA STOCKHOLM coffee table, article 702.397.10, 70 7/8 × 23 1/4 inches

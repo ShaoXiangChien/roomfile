@@ -1,6 +1,6 @@
 ---
 name: roomfile
-description: Use when decorating or furnishing an apartment or room; discovering interior style preferences; preserving room photos, measurements, rental constraints, and decisions across turns; visualizing Mid-century Modern, Bauhaus, Japandi, or other concepts; checking furniture fit; comparing IKEA, Amazon, or US retailer products; or turning an approved room concept into a shopping and execution plan.
+description: Use when decorating, furnishing, or restyling any room; discovering preferences from inspiration; preserving photos, measurements, constraints, products, and decisions across turns; checking furniture fit; researching regional retailers; or turning a room concept into a shopping and execution plan.
 ---
 
 # Roomfile
@@ -8,6 +8,9 @@ description: Use when decorating or furnishing an apartment or room; discovering
 Treat interior decoration as a durable project, not a sequence of disposable
 image prompts. Keep room truth, taste evidence, concepts, products, and
 decisions in `roomfile/`.
+
+Work with any room and any style. Treat region, currency, units, retailers, and
+local restrictions as project settings, not product boundaries.
 
 ## Resolve the skill directory
 
@@ -20,7 +23,7 @@ Use `$roomfile` without arguments as `status`. Route explicit commands:
 
 | Command | Outcome |
 |---|---|
-| `init` | Initialize a private US apartment project. |
+| `init` | Initialize a private room project and collect region, units, budget, retailers, constraints, and rendering preferences. |
 | `status` | Inspect completeness and recommend the next actions. |
 | `taste` | Convert inspiration and reactions into evidence-backed preferences. |
 | `capture` | Record canonical photos, measurements, fixed elements, and uncertainty. |
@@ -68,9 +71,12 @@ node "$ROOMFILE_SKILL_DIR/scripts/init-project.mjs" \
   --json
 ```
 
-Then interview for ZIP code, budget, household, rental restrictions, rooms,
-existing furniture, preferred retailers, and external image-processing
-consent. Update only files inside `roomfile/`.
+Then interview for country or region, ZIP or postal code, currency, units,
+budget, household, local or rental restrictions, rooms, existing furniture,
+preferred retailers, and external image-processing consent. Update only files
+inside `roomfile/`.
+
+Derive every direction from style evidence and enforce no style allowlist.
 
 ## Separate imagination from proof
 
@@ -104,9 +110,10 @@ canonical image on the first render, and retain its returned interaction ID in
 
 ## Source real products carefully
 
-Prefer IKEA US and Amazon US, then Target, Wayfair, Walmart, The Home Depot,
-and Lowe's. Record dated evidence, dimensions, seller, region, delivery result,
-and retailer identifiers. Do not use affiliate links.
+Use the project-configured region and retailer preferences. For US projects,
+prefer IKEA US and Amazon US, then Target, Wayfair, Walmart, The Home Depot, and
+Lowe's. Record dated evidence, dimensions, seller, region, delivery result, and
+retailer identifiers. Do not use affiliate links.
 
 Read `references/sourcing.md` before `source`, product-backed `place`, or
 shopping-plan work. Never purchase, add to cart, contact a seller, or commit

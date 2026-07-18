@@ -1,10 +1,17 @@
 # Inspiration analysis
 
-The fictional resident reacted to references rather than selecting a style label first.
+The fictional resident reacted to references rather than selecting a style
+label first.
 
-- “I like the wood and the lamp shape” became evidence for material warmth and one sculptural light.
+- “I want the room to feel warm, expressive, and collected” became evidence for
+  amber light, walnut, olive and rust color, tactile upholstery, a graphic
+  1970s rug, mushroom and arched lamps, records, books, posters, and plants.
 - “This is colorful without feeling childish” became evidence for disciplined Bauhaus accents.
 - “This feels quiet but not beige” became evidence for texture, low visual weight, and negative space.
-- “Too staged” and “too many little objects” became anti-references.
+- “Too staged” became an anti-reference for sparse showroom styling and generic
+  beige minimalism. Collection layering is welcome when circulation and fixed
+  elements remain clear.
 
-The three concepts intentionally resolve the same evidence differently. They are alternatives, not minor palette swaps.
+The three concepts intentionally resolve the same evidence differently. They
+are examples, not presets or minor palette swaps; another project could derive
+entirely different directions.

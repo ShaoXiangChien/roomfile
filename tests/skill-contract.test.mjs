@@ -29,6 +29,9 @@ test("skill metadata and command router are complete", async () => {
   assert.match(skill, /observed.*measured.*inferred.*desired/s);
   assert.match(skill, /visual approximation/i);
   assert.match(skill, /approval/i);
+  assert.match(skill, /project-configured region/i);
+  assert.match(skill, /style evidence.*no style allowlist/is);
+  assert.doesNotMatch(skill, /Initialize a private US apartment project/);
 });
 
 test("focused references and schemas exist", async () => {

@@ -2,12 +2,13 @@
 
 ## Your room, remembered.
 
-Roomfile is an open-source Agent Skill for apartment decorating that keeps the
-room, taste, constraints, products, and decisions in one durable local project.
-It helps you explore attractive directions, then separates visual approximation
-from deterministic furniture fit and current product evidence.
+Roomfile is an open-source Agent Skill for decorating any room in any style. It
+keeps taste, constraints, products, and decisions in one durable local project,
+then separates visual approximation from deterministic furniture fit and
+current product evidence. Region, currency, units, retailers, and local rules
+are project settings.
 
-![Roomfile shows the same fictional US rental before decorating and as a refined Mid-century Modern concept.](launch/readme-hero.png)
+![Roomfile shows the same fictional apartment before decorating and as a refined Eclectic Mid-century Modern concept.](launch/readme-hero.png)
 
 ```bash
 npx skills add ShaoXiangChien/roomfile
@@ -16,7 +17,7 @@ npx skills add ShaoXiangChien/roomfile
 Roomfile is tested primarily in Codex. It has no subscription; external
 model/API costs may apply.
 
-[Read the docs and explore the fictional US apartment case study](https://roomfile-shaoxiangchien.ericchien21.chatgpt.site)
+[Read the docs and explore the fictional apartment case study](https://roomfile-shaoxiangchien.ericchien21.chatgpt.site/examples/apartment)
 
 ## Why Roomfile
 
@@ -72,15 +73,19 @@ roomfile/
 
 ## One room, three directions
 
-The included fictional 650 sq ft US rental keeps the same sofa, dining table,
-windows, radiator, flooring, entry swing, and camera across three intentionally
-different explorations:
+The included fictional apartment keeps the same sofa, dining table, windows,
+radiator, flooring, entry swing, and camera across three intentionally different
+explorations:
 
 | Direction | Material and composition |
 | --- | --- |
-| Mid-century Modern | walnut, warm neutrals, tapered forms, sculptural lighting |
+| Eclectic Mid-century Modern | amber light, walnut, olive, rust, tactile layers, collected objects |
 | Bauhaus | primary accents, tubular steel, geometric functional contrast |
 | Japandi | pale timber, textured neutrals, natural materials, negative space |
+
+These are examples, not presets. Roomfile derives exploration directions from
+each person's inspiration evidence and can explore other styles or additional
+rounds.
 
 The full example includes inspiration analysis, measurements, a scaled SVG,
 fit report, comparison matrix, dated sourcing, shopping list, and phased
@@ -106,7 +111,7 @@ node skills/roomfile/scripts/check-fit.mjs \
 
 ## Sourcing policy
 
-Default US priority:
+For this US-configured example, the retailer priority is:
 
 1. IKEA US and Amazon US.
 2. Target, Wayfair, Walmart, The Home Depot, and Lowe’s.
@@ -121,6 +126,9 @@ approval.
 
 Roomfile uses no affiliate links in v0.1.0 and never purchases, enters checkout,
 contacts a retailer, or communicates externally.
+
+Projects in other regions use their configured local retailers, currency,
+delivery area, and dated regional evidence.
 
 ## Rendering
 
@@ -169,11 +177,11 @@ estimates provider cost before a batch.
 
 ## Limitations and safety
 
-Roomfile v0.1.0 serves US apartment renters making reversible decorating
-changes. It does not provide structural, electrical, building-code, contractor,
-or purchasing instructions. It cannot guarantee color, material, comfort,
-quality, price, stock, shipping, or return policy. Recheck current retailer
-claims and real ZIP delivery before spending money.
+Roomfile v0.1.0 supports reversible decorating changes in real rooms. It does
+not provide structural, electrical, building-code, contractor, or purchasing
+instructions. It cannot guarantee color, material, comfort, quality, price,
+stock, shipping, or return policy. Recheck current retailer claims and local
+delivery before spending money.
 
 “Roomfile” has received only a preliminary collision check, not formal trademark
 clearance.

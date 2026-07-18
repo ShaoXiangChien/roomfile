@@ -18,7 +18,7 @@ Generated from `/Users/ericchien/Documents/Interior Design/examples/us-apartment
 
 Create a photorealistic interior-design visualization using the supplied canonical room image as the architectural source of truth.
 
-Goal: Explore a warm Mid-century Modern direction in the exact same fictional rental room.
+Goal: Explore an Eclectic Mid-century Modern direction in the exact same fictional apartment, translating the approved warm, collected, 1970s-inflected evidence while preserving every locked architectural and inventory fact.
 
 Camera and composition: Phone camera at 5 ft height near southwest entry, facing north-northeast, 4:3 landscape. Keep this viewpoint, framing, perspective, lens character, and visible architecture consistent.
 
@@ -30,18 +30,21 @@ You MUST preserve every locked fact exactly:
 5. same 60 × 36 inch oak dining table
 
 Allowed edits only:
-1. add walnut coffee table
-2. add sculptural floor lamp
-3. add removable oatmeal and moss textiles
-4. add freestanding decor and plants
-5. add no-drill art
+1. add reversible layered lighting with mushroom and arched lamp forms
+2. add removable tactile textiles in olive, rust, burnt orange, tobacco brown, cream, and black
+3. add a graphic 1970s rug within the measured circulation area
+4. add appropriately scaled freestanding walnut storage, records, books, decor, and plants
+5. add collected poster art using no-drill mounting
 
 Visible style evidence to express:
-1. warm wood with visible grain
-2. restrained 1960s references
-3. sculptural lighting
-4. tapered furniture
-5. calm neutral base
+1. warm amber pools of light rather than bright uniform illumination
+2. walnut and dark wood with visible grain
+3. olive green, rust, burnt orange, tobacco brown, cream, and black
+4. mushroom lamps, an arched floor lamp, and practical layered lighting
+5. tactile upholstery and a large graphic 1970s rug
+6. records, books, posters, plants, and collected personal objects
+7. Eclectic Mid-century Modern mixed with space-age, Bauhaus, and 1970s revival references
+8. intentional collected abundance with clear circulation
 
 Product references to depict approximately, without inventing dimensional proof:
 1. No product reference was supplied.
