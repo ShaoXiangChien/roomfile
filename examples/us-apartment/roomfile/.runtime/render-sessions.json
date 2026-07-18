@@ -17,7 +17,36 @@
       },
       "post_processing": "Every batch image received the same deterministic bottom-edge crop and rescale to remove an accidentally rendered disclaimer while preserving comparative geometry.",
       "completed_at": "2026-07-18T00:00:00Z",
-      "last_error": null
+      "last_error": null,
+      "revision_v0.1.1": {
+        "model": "gemini-3.1-flash-image",
+        "route": "direct-rest-fallback",
+        "status": "completed",
+        "reason": "The persistent MCP worker retained the prior free-tier credential, so the documented direct REST route used the prepaid credential with the same Banana model.",
+        "private_style_evidence": "A user-supplied inspiration image informed the generation but was not copied into the project, repository, or website.",
+        "source_chain": {
+          "eclectic-mid-century-modern": "canonical source room plus private style evidence",
+          "eclectic-mid-century-modern-refined": "exploration plus canonical source room and private style evidence",
+          "ikea-stockholm-placement": "refined concept plus archived product-shape evidence"
+        },
+        "outputs": {
+          "eclectic-mid-century-modern": {
+            "file": "assets/generated/mid-century-modern.png",
+            "sha256": "65f67e6e39a736dbd9cf7baebd867a7ba5dab54ae88882f7496880ef99d40023"
+          },
+          "eclectic-mid-century-modern-refined": {
+            "file": "assets/generated/mid-century-modern-refined.png",
+            "sha256": "ded3cffdba8b120f02f0eb5b538dbe97506e457b84987a90305472045c94a8f6"
+          },
+          "ikea-stockholm-placement": {
+            "file": "assets/generated/ikea-stockholm-placement.png",
+            "sha256": "0b84a61f1c4942151d9e0aa8db7dcccdd40120088a9083a114a0ca33440699ee"
+          }
+        },
+        "post_processing": "The placement render inherited accidental text on a lamp shade. A matching text-free lamp patch from the approved refinement was composited locally; the room and product placement were otherwise unchanged.",
+        "completed_at": "2026-07-18T00:00:00Z",
+        "last_error": null
+      }
     }
   }
 }

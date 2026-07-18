@@ -15,5 +15,18 @@
   "actual_batch_output_cost_usd": 0.606,
   "smoke_test_images": 1,
   "smoke_test_output_cost_usd": 0.067,
-  "actual_session_output_cost_usd": 0.673
+  "actual_session_output_cost_usd": 0.673,
+  "revision_batch": {
+    "release": "0.1.1",
+    "estimated_at": "2026-07-18T00:00:00Z",
+    "reason": "Correct the selected example to the approved Eclectic Mid-century Modern evidence.",
+    "planned_images": 3,
+    "estimated_cost_per_image_usd": 0.101,
+    "estimated_total_usd": 0.303,
+    "status": "completed",
+    "actual_images": 3,
+    "actual_output_cost_usd": 0.303
+  },
+  "lifetime_output_images": 10,
+  "lifetime_output_cost_usd": 0.976
 }
