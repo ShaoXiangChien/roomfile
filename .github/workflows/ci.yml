@@ -55,6 +55,9 @@ jobs:
       - name: Lint website
         run: npm run lint
         working-directory: website
+      - name: Browser interactions and responsive layouts
+        run: npm run test:e2e
+        working-directory: website
 
   links:
     name: Link check

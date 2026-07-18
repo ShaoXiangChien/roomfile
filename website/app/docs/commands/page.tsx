@@ -4,12 +4,12 @@ import { DocsShell } from "../../components/site-chrome";
 export const metadata: Metadata = { title: "Command reference" };
 
 const commands = [
-  ["init", "Collect project, privacy, budget, retailer, household, and renderer defaults."],
+  ["init", "Interview for location, units, budget, retailer strategy, household needs, privacy, and rendering preferences."],
   ["status", "Inspect completeness and recommend the next useful action."],
   ["taste", "Analyze links or screenshots into evidence, dislikes, anti-references, and contradictions."],
   ["capture", "Register canonical photos, measured geometry, fixed elements, lighting, circulation, and uncertainty."],
   ["brief", "Combine taste, needs, budget, inventory, and room truth into an approval-ready brief."],
-  ["explore", "Create three intentionally different evidence-led directions by default, with no fixed style allowlist."],
+  ["explore", "Create evidence-led design directions with no fixed style allowlist or preset catalog."],
   ["refine", "Revise the selected concept while preserving locked architecture, inventory, and decisions."],
   ["place", "Evaluate a product using verified dimensions, the scaled layout, and an approximate visual placement."],
   ["source", "Find current purchasable candidates with dated price, seller, dimensions, stock, and delivery evidence."],

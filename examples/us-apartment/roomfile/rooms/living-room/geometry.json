@@ -1,13 +1,25 @@
 {
-  "schema_version": "0.1.0",
+  "schema_version": "0.2.0",
   "unit": "in",
   "boundary": {
     "type": "polygon",
     "points": [
-      { "x": 0, "y": 0 },
-      { "x": 240, "y": 0 },
-      { "x": 240, "y": 180 },
-      { "x": 0, "y": 180 }
+      {
+        "x": 0,
+        "y": 0
+      },
+      {
+        "x": 240,
+        "y": 0
+      },
+      {
+        "x": 240,
+        "y": 180
+      },
+      {
+        "x": 0,
+        "y": 180
+      }
     ]
   },
   "openings": [
@@ -18,7 +30,12 @@
       "start": 8,
       "width": 36,
       "swing": "inward-left",
-      "clearance": { "x": 0, "y": 0, "width": 48, "depth": 48 }
+      "clearance": {
+        "x": 0,
+        "y": 0,
+        "width": 48,
+        "depth": 48
+      }
     },
     {
       "id": "north-window-a",

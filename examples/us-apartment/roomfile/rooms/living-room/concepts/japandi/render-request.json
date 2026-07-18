@@ -1,8 +1,10 @@
 {
-  "schema_version": "0.1.0",
+  "schema_version": "0.2.0",
   "concept_id": "japandi",
   "concept_version": 1,
-  "canonical_images": ["assets/source/source-room.png"],
+  "canonical_images": [
+    "assets/source/source-room.png"
+  ],
   "goal": "Explore a restrained Japandi alternative in the exact same fictional rental room.",
   "locked_facts": [
     "same 4:3 camera position and lens",

@@ -20,6 +20,7 @@ npm run validate:example
 npm run check:privacy
 npm --prefix website ci
 npm run test:website
+npm --prefix website run test:e2e
 ```
 
 ## Pull requests

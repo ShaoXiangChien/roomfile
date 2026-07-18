@@ -5,9 +5,11 @@ human-readable record; JSON files carry facts that scripts must verify.
 
 ## Project manifest
 
-Store schema version, project name, country, region, postal code, currency,
-measurement unit, budget, privacy mode, preferred retailers, rendering
-preference, and the room registry. Use US/UTC-safe ISO dates. Never store API
+Store schema version, setup status, project name, country, region, postal code,
+ISO currency, measurement unit, budget, privacy mode, preferred retailers,
+`retailer_strategy`, rendering preference, and the room registry.
+`needs-profile` projects cannot source products until location, currency,
+units, and retailer strategy are recorded. Use UTC ISO dates. Never store API
 keys, authentication tokens, precise addresses, or payment details.
 
 ## Geometry

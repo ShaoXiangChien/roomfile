@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 
-export const SCHEMA_VERSION = "0.1.0";
+export const SCHEMA_VERSION = "0.2.0";
+export const SUPPORTED_SCHEMA_VERSIONS = new Set(["0.1.0", SCHEMA_VERSION]);
 
 export function parseArgs(argv) {
   const args = {};

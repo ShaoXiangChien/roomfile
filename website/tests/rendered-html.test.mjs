@@ -27,14 +27,17 @@ async function render(pathname = "/") {
 }
 
 const routes = [
-  ["/", "Your room, remembered."],
+  ["/", "Design your home, together."],
   ["/docs/getting-started", "Getting started"],
   ["/docs/commands", "Command reference"],
   ["/docs/project-files", "Project files"],
   ["/docs/rendering", "Rendering"],
   ["/docs/sourcing", "Sourcing"],
-  ["/examples/apartment", "A fictional apartment"],
-  ["/examples/us-apartment", "A fictional apartment"],
+  ["/examples", "Selected Homes"],
+  ["/examples/apartment", "A living room that became more itself"],
+  ["/examples/bauhaus-workspace", "A small workspace with more energy"],
+  ["/examples/japandi-bedroom", "A calmer place to sleep"],
+  ["/examples/us-apartment", "A living room that became more itself"],
   ["/docs/contributing", "Contributing"],
 ];
 
@@ -57,20 +60,38 @@ test("homepage states the real product contract", async () => {
   const html = await response.text();
 
   assert.match(html, /npx skills add ShaoXiangChien\/roomfile/);
-  assert.match(html, /learns your taste, remembers constraints, checks fit/i);
-  assert.match(html, /any room/i);
-  assert.match(html, /examples, not presets/i);
-  assert.match(html, /Eclectic Mid-century Modern/);
-  assert.doesNotMatch(html, /serves US apartment renters/i);
+  assert.match(html, /understand the space you have/i);
+  assert.match(html, /Find what feels like you/);
+  assert.match(html, /Design it together/);
+  assert.match(html, /Try the real thing/);
+  assert.match(html, /Make it real/);
+  assert.match(html, /More rooms in progress/);
   assert.match(html, /Mid-century Modern/);
   assert.match(html, /Bauhaus/);
   assert.match(html, /Japandi/);
   assert.match(html, /IKEA/);
   assert.match(html, /Amazon/);
-  assert.match(html, /visual approximation/i);
-  assert.match(html, /no subscription/i);
-  assert.match(html, /external model\/API costs may apply/i);
-  assert.match(html, /Apache-2\.0/);
+  assert.match(html, /Product ledger/);
+  assert.match(html, /01/);
+  assert.match(html, /06/);
+  assert.doesNotMatch(html, /Three answers to the same room/i);
+  assert.doesNotMatch(html, /Eclectic/i);
+  assert.doesNotMatch(html, /Open source, honest limits/i);
+  assert.doesNotMatch(html, /Roomfile follows your project’s region/i);
+  assert.doesNotMatch(html, /This example uses IKEA US and Amazon US/i);
+  assert.doesNotMatch(html, /A project folder, not another account/i);
+  assert.doesNotMatch(html, /A command for every decision/i);
+});
+
+test("legacy apartment route is canonicalized and excluded from indexing", async () => {
+  const response = await render("/examples/us-apartment");
+  const html = await response.text();
+
+  assert.match(
+    html,
+    /rel="canonical" href="https:\/\/[^"]+\/examples\/apartment"/,
+  );
+  assert.match(html, /name="robots" content="noindex, follow"/);
 });
 
 test("docs preserve privacy, sourcing, safety, and command contracts", async () => {
@@ -120,6 +141,8 @@ test("ships launch metadata and crawl files without starter residue", async () =
   assert.match(hosting, /"d1": null/);
   assert.match(hosting, /"r2": null/);
   assert.match(sitemap, /\/examples\/apartment/);
+  assert.match(sitemap, /\/examples\/bauhaus-workspace/);
+  assert.match(sitemap, /\/examples\/japandi-bedroom/);
   assert.doesNotMatch(sitemap, /\/examples\/us-apartment/);
 
   await Promise.all([

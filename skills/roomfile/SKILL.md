@@ -62,19 +62,24 @@ Read `references/data-model.md` before creating or changing structured files.
 
 ## Initialize mechanically
 
-For `init`, run:
+For `init`, first interview for country or region, ZIP or postal code (which may
+remain blank until delivery checks), currency, units, budget, rooms, preferred
+retailers, and whether the user wants agent-suggested local retailers. Write
+those answers to a temporary JSON file matching
+`references/schemas/profile.schema.json`, then run:
 
 ```bash
 node "$ROOMFILE_SKILL_DIR/scripts/init-project.mjs" \
   --target ABSOLUTE_PROJECT_DIRECTORY \
   --privacy private \
+  --profile ABSOLUTE_PROFILE_JSON \
   --json
 ```
 
-Then interview for country or region, ZIP or postal code, currency, units,
-budget, household, local or rental restrictions, rooms, existing furniture,
-preferred retailers, and external image-processing consent. Update only files
-inside `roomfile/`.
+Record household needs, local or rental restrictions, existing furniture, and
+external image-processing consent in the generated project. Never assume a
+country, currency, measurement unit, retailer, or delivery area. Direct script
+use without `--profile` creates a neutral `needs-profile` scaffold.
 
 Derive every direction from style evidence and enforce no style allowlist.
 
@@ -110,10 +115,13 @@ canonical image on the first render, and retain its returned interaction ID in
 
 ## Source real products carefully
 
-Use the project-configured region and retailer preferences. For US projects,
-prefer IKEA US and Amazon US, then Target, Wayfair, Walmart, The Home Depot, and
-Lowe's. Record dated evidence, dimensions, seller, region, delivery result, and
-retailer identifiers. Do not use affiliate links.
+Use the project-configured region and retailer preferences. Before searching,
+ask for missing location, currency, units, delivery area when needed, and
+`retailer_strategy`. If the strategy is `user-preferred`, search those
+retailers first. If it is `agent-suggested`, propose locally available sources
+that fit the role and record the chosen order. Record dated evidence,
+dimensions, seller, region, delivery result, and retailer identifiers. Do not
+use affiliate links.
 
 Read `references/sourcing.md` before `source`, product-backed `place`, or
 shopping-plan work. Never purchase, add to cart, contact a seller, or commit

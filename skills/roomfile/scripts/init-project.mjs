@@ -18,6 +18,9 @@ try {
   if (!["private", "public-demo"].includes(privacy)) {
     throw new Error("--privacy must be private or public-demo");
   }
+  const profile = args.profile
+    ? normalizeProfile(JSON.parse(await readFile(path.resolve(String(args.profile)), "utf8")))
+    : null;
 
   const project = path.join(target, "roomfile");
   const manifestPath = path.join(project, "roomfile.json");
@@ -30,14 +33,21 @@ try {
     );
     printResult(payload, asJson);
   } else {
-    const room = path.join(project, "rooms", "living-room");
+    const rooms = profile?.rooms ?? [
+      { id: "living-room", name: "Living room", status: "capture-needed" },
+    ];
+    const roomDirectories = rooms.map((entry) =>
+      path.join(project, "rooms", entry.id),
+    );
     const paths = [
       project,
       path.join(project, "inspiration", "screenshots"),
-      path.join(room, "assets", "source"),
-      path.join(room, "assets", "generated"),
-      path.join(room, "concepts"),
       path.join(project, ".runtime"),
+      ...roomDirectories.flatMap((room) => [
+        path.join(room, "assets", "source"),
+        path.join(room, "assets", "generated"),
+        path.join(room, "concepts"),
+      ]),
     ];
     await Promise.all(paths.map((directory) => mkdir(directory, { recursive: true })));
 
@@ -46,28 +56,24 @@ try {
         manifestPath,
         {
           schema_version: SCHEMA_VERSION,
-          project_name: "My apartment",
-          country: "US",
-          region: "",
-          postal_code: "",
-          currency: "USD",
-          measurement_unit: "in",
-          budget: { amount: 3000, currency: "USD" },
+          setup_status: profile ? "ready" : "needs-profile",
+          project_name: profile?.project_name ?? "My home",
+          country: profile?.country ?? "",
+          region: profile?.region ?? "",
+          postal_code: profile?.postal_code ?? "",
+          currency: profile?.currency ?? "",
+          measurement_unit: profile?.measurement_unit ?? null,
+          budget: profile?.budget ?? { amount: null, currency: "" },
           privacy_mode: privacy,
-          preferred_retailers: [
-            "IKEA US",
-            "Amazon US",
-            "Target",
-            "Wayfair",
-            "Walmart",
-            "The Home Depot",
-            "Lowe's",
-          ],
+          preferred_retailers: profile?.preferred_retailers ?? [],
+          ...(profile
+            ? { retailer_strategy: profile.retailer_strategy }
+            : {}),
           rendering: {
             preferred_adapter: "banana",
             external_processing_consent: "ask-per-provider",
           },
-          rooms: [{ id: "living-room", name: "Living room", status: "capture-needed" }],
+          rooms,
         },
       ],
       [
@@ -75,37 +81,33 @@ try {
         { schema_version: SCHEMA_VERSION, sources: [] },
       ],
       [
-        path.join(room, "geometry.json"),
-        {
-          schema_version: SCHEMA_VERSION,
-          unit: "in",
-          boundary: {
-            type: "polygon",
-            points: [
-              { x: 0, y: 0 },
-              { x: 144, y: 0 },
-              { x: 144, y: 120 },
-              { x: 0, y: 120 },
-            ],
-          },
-          openings: [],
-          fixed_elements: [],
-          clearance_zones: [],
-        },
-      ],
-      [
-        path.join(room, "facts.json"),
-        { schema_version: SCHEMA_VERSION, facts: [] },
-      ],
-      [
-        path.join(room, "products.json"),
-        { schema_version: SCHEMA_VERSION, products: [] },
-      ],
-      [
         path.join(project, ".runtime", "render-sessions.json"),
         { schema_version: SCHEMA_VERSION, providers: {} },
       ],
     ]);
+    for (const [index, room] of roomDirectories.entries()) {
+      const roomProfile = rooms[index];
+      files.set(path.join(room, "geometry.json"), {
+        schema_version: SCHEMA_VERSION,
+        unit: profile?.measurement_unit ?? null,
+        boundary: {
+          type: "polygon",
+          points: [],
+        },
+        openings: [],
+        fixed_elements: [],
+        clearance_zones: [],
+      });
+      files.set(path.join(room, "facts.json"), {
+        schema_version: SCHEMA_VERSION,
+        facts: [],
+      });
+      files.set(path.join(room, "products.json"), {
+        schema_version: SCHEMA_VERSION,
+        products: [],
+      });
+      roomProfile.status ??= "capture-needed";
+    }
 
     const [
       roomfileTemplate,
@@ -146,23 +148,16 @@ try {
         path.join(project, "INVENTORY.md"),
         inventoryTemplate,
       ],
-      [
-        path.join(room, "ROOM.md"),
-        roomTemplate.replaceAll("{{ROOM_NAME}}", "Living room"),
-      ],
-      [
-        path.join(room, "DECISIONS.md"),
-        decisionsTemplate,
-      ],
-      [
-        path.join(room, "SHOPPING.md"),
-        shoppingTemplate,
-      ],
-      [
-        path.join(room, "EXECUTION.md"),
-        executionTemplate,
-      ],
     ]);
+    for (const [index, room] of roomDirectories.entries()) {
+      markdown.set(
+        path.join(room, "ROOM.md"),
+        roomTemplate.replaceAll("{{ROOM_NAME}}", rooms[index].name),
+      );
+      markdown.set(path.join(room, "DECISIONS.md"), decisionsTemplate);
+      markdown.set(path.join(room, "SHOPPING.md"), shoppingTemplate);
+      markdown.set(path.join(room, "EXECUTION.md"), executionTemplate);
+    }
 
     for (const [file, value] of files) {
       await writeFile(file, `${JSON.stringify(value, null, 2)}\n`, { flag: "wx" });
@@ -176,7 +171,12 @@ try {
     }
 
     const artifacts = [...files.keys(), ...markdown.keys()];
-    const payload = result("success", [], [], artifacts);
+    const warnings = profile
+      ? []
+      : [
+          "Shopping profile is incomplete; collect location, currency, units, and retailer strategy before sourcing.",
+        ];
+    const payload = result("success", [], warnings, artifacts);
     printResult(payload, asJson);
   }
 } catch (error) {
@@ -194,6 +194,74 @@ async function exists(file) {
 
 async function readTemplate(name) {
   return readFile(new URL(`../assets/templates/${name}`, import.meta.url), "utf8");
+}
+
+function normalizeProfile(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    throw new Error("--profile must contain a JSON object");
+  }
+  for (const field of [
+    "project_name",
+    "country",
+    "currency",
+    "measurement_unit",
+    "budget",
+    "preferred_retailers",
+    "retailer_strategy",
+    "rooms",
+  ]) {
+    if (value[field] === undefined || value[field] === null) {
+      throw new Error(`--profile is missing ${field}`);
+    }
+  }
+  if (!/^[A-Z]{3}$/.test(value.currency)) {
+    throw new Error("--profile currency must be a three-letter ISO code");
+  }
+  if (!["in", "cm"].includes(value.measurement_unit)) {
+    throw new Error("--profile measurement_unit must be in or cm");
+  }
+  if (!["user-preferred", "agent-suggested"].includes(value.retailer_strategy)) {
+    throw new Error(
+      "--profile retailer_strategy must be user-preferred or agent-suggested",
+    );
+  }
+  if (
+    !value.budget ||
+    !Number.isFinite(value.budget.amount) ||
+    value.budget.currency !== value.currency
+  ) {
+    throw new Error("--profile budget must use the project currency");
+  }
+  if (!Array.isArray(value.preferred_retailers)) {
+    throw new Error("--profile preferred_retailers must be an array");
+  }
+  if (!Array.isArray(value.rooms) || value.rooms.length === 0) {
+    throw new Error("--profile rooms must contain at least one room");
+  }
+  const rooms = value.rooms.map((room) => {
+    if (!room?.id || !room?.name || !/^[a-z0-9-]+$/.test(room.id)) {
+      throw new Error(
+        "--profile room ids must use lowercase letters, numbers, and hyphens",
+      );
+    }
+    return {
+      id: room.id,
+      name: room.name,
+      status: room.status ?? "capture-needed",
+    };
+  });
+  return {
+    project_name: value.project_name,
+    country: value.country,
+    region: value.region ?? "",
+    postal_code: value.postal_code ?? "",
+    currency: value.currency,
+    measurement_unit: value.measurement_unit,
+    budget: value.budget,
+    preferred_retailers: value.preferred_retailers,
+    retailer_strategy: value.retailer_strategy,
+    rooms,
+  };
 }
 
 async function ensureGitignore(target) {

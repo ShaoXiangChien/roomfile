@@ -5,8 +5,13 @@
   "type": "object",
   "required": ["schema_version", "unit", "boundary", "openings", "fixed_elements", "clearance_zones"],
   "properties": {
-    "schema_version": { "const": "0.1.0" },
-    "unit": { "enum": ["in", "cm"] },
+    "schema_version": { "const": "0.2.0" },
+    "unit": {
+      "anyOf": [
+        { "enum": ["in", "cm"] },
+        { "type": "null" }
+      ]
+    },
     "boundary": {
       "type": "object",
       "required": ["type", "points"],
@@ -14,7 +19,7 @@
         "type": { "const": "polygon" },
         "points": {
           "type": "array",
-          "minItems": 3,
+          "minItems": 0,
           "items": { "$ref": "#/$defs/point" }
         }
       },

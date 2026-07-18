@@ -6,14 +6,15 @@ contacts sellers, or uses affiliate links.
 ## Retailer priority
 
 Use the project-configured region, currency, delivery area, and retailer
-preferences. For a project configured for the United States:
+preferences. Before searching, require `country` or `region`, `currency`,
+`measurement_unit`, and `retailer_strategy`. Ask for missing values and record
+them in the manifest.
 
-1. Prefer IKEA US and Amazon US.
-2. Then use Target, Wayfair, Walmart, The Home Depot, and Lowe's.
-3. Use independent or style-specific retailers when the preferred set cannot
-   meet the role, dimensions, budget, or material requirement.
-
-For other regions, use configured local retailers and dated regional evidence.
+For `user-preferred`, search the named retailers first. For `agent-suggested`,
+propose a short locally available retailer order that covers the required
+category, budget, and style evidence, then record that order before continuing.
+Use independent or style-specific retailers when the preferred set cannot meet
+the role, dimensions, budget, or material requirement.
 
 Use the project ZIP or postal code for delivery or store checks. If
 location-specific availability cannot be verified, label it unknown.
@@ -25,8 +26,9 @@ retrieval date, price and currency, availability, delivery result, seller,
 manufacturer, width, depth, height, package dimensions, assembly, return
 notes, and the evidence source for dimensions.
 
-For IKEA, capture the article number. For Amazon, capture the ASIN and current
-seller. Remove affiliate and tracking parameters from URLs.
+When the selected retailer is IKEA, capture the article number. When it is
+Amazon, capture the ASIN and current seller. Remove affiliate and tracking
+parameters from URLs.
 
 ## Verification policy
 

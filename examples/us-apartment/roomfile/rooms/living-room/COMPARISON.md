@@ -4,7 +4,7 @@ All three directions preserve the same 240 × 180 in room, camera, sofa, dining 
 
 | Direction | Palette | Defining move | Existing-furniture fit | Risk | Decision |
 | --- | --- | --- | --- | --- | --- |
-| Eclectic Mid-century Modern | walnut, olive, rust, burnt orange, tobacco, cream, black | amber layered light, graphic rug, records, books, posters, and plants | strongest expressive bridge between oak and gray | collected layers must preserve circulation | selected |
+| Mid-century Modern | walnut, olive, rust, burnt orange, tobacco, cream, black | amber layered light, graphic rug, records, books, posters, and plants | strongest expressive bridge between oak and gray | collected layers must preserve circulation | selected |
 | Bauhaus | warm white, black, red, cobalt, yellow | tubular steel and disciplined primary accents | energizes the neutral sofa | visual noise in a compact rental | held as alternative |
 | Japandi | pale timber, flax, stone, charcoal | texture and negative space | calmest with existing furniture | may feel too muted | held as alternative |
 
