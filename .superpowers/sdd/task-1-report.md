@@ -67,3 +67,43 @@
 
 None. The existing public example remains at `0.2.0` deliberately so the
 upgrade-warning path is continuously exercised; `validate:example` succeeds.
+
+## Fix report — review follow-up
+
+### Changes
+
+- Replaced the partial project-side style-context check with a shared,
+  dependency-free validator equivalent to the published schema constraints:
+  exact top-level and nested properties, required nonempty identifiers,
+  RFC 3339 timestamps, signal record shapes, absolute live-research URIs, and
+  the four-image cap.
+- Made style resolution Unicode-aware with NFKC normalization, Unicode case
+  folding, and Unicode letter/number preservation. Canonical names and aliases
+  now resolve across Unicode punctuation and whitespace, while unknown Unicode
+  styles return `needs-live-research`.
+- Made the consumer and Atlas style-context schemas mechanically identical and
+  added a drift-prevention test.
+
+### RED / GREEN
+
+- RED: `node --test tests/style-atlas.test.mjs tests/validate-project.test.mjs tests/skill-contract.test.mjs`
+  failed as expected: 11 schema-invalid style-context cases were accepted,
+  three Unicode resolver cases returned exit 2, and the two schemas differed.
+- GREEN: the same focused command passed 32 tests/subtests after the minimal
+  contract checker, Unicode normalizer, and canonical schema update.
+
+### Full verification
+
+- `git diff --check` — clean.
+- `npm test` — 45 tests/subtests passed.
+- `npm run test:skill` — valid.
+- `npm run smoke:fresh` — passed.
+- `npm run validate:example` — passed with the expected v0.2 upgrade warning.
+
+### Fix implementation commit
+
+`9a991e5491f5daa34c8619c2c7ee363fa670c3f8`
+
+### Fix concerns
+
+None.
