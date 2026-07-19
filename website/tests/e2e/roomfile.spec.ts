@@ -38,9 +38,7 @@ test("homepage supports the design journey interactions", async ({
   context,
   page,
 }) => {
-  await context.grantPermissions(["clipboard-read", "clipboard-write"], {
-    origin: "http://localhost:49349",
-  });
+  await context.grantPermissions(["clipboard-read", "clipboard-write"]);
   await page.goto("/");
 
   await expect(
