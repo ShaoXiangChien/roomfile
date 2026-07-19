@@ -107,3 +107,36 @@ upgrade-warning path is continuously exercised; `validate:example` succeeds.
 ### Fix concerns
 
 None.
+
+## Second fix report — edge-case re-review
+
+### Changes
+
+- Preserved Unicode combining marks (`\p{M}`) after NFKC normalization so
+  mark-distinct style names cannot collapse into a false exact match.
+- Replaced permissive `Date.parse()` review-date checking with explicit
+  Gregorian month/day bounds and leap-year handling.
+
+### RED / GREEN
+
+- RED: `node --test tests/style-atlas.test.mjs` failed in exactly two cases:
+  Devanagari `कली` falsely matched the distinct alias `कला`, and
+  `2026-02-30` was accepted as a pack review date.
+- GREEN: the same focused command passed all 9 tests after the two narrow
+  implementation changes.
+
+### Final verification
+
+- `git diff --check` — clean.
+- `npm test` — 47 tests/subtests passed.
+- `npm run test:skill` — valid.
+- `npm run smoke:fresh` — passed.
+- `npm run validate:example` — passed with the expected v0.2 upgrade warning.
+
+### Second fix implementation commit
+
+`4c9bc77757fb18945158df631fe471437a5d7d21`
+
+### Concerns
+
+None.
