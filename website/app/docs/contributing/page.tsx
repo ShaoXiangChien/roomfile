@@ -24,8 +24,28 @@ cd website && npm ci && npm test`}</CodeBlock>
           <li>New deterministic fit fixtures and geometry edge cases.</li>
           <li>Retailer adapters that preserve identifiers, dated evidence, and seller distinctions.</li>
           <li>Provider-neutral rendering adapters that keep private-photo consent explicit.</li>
+          <li>Researched Style Atlas packs that meet the source, visual-license, citation, and cultural-context checklist.</li>
           <li>Clearer documentation, accessibility, and regional measurement normalization.</li>
         </ul>
+      </section>
+
+      <section>
+        <h2>Contribute a Style Atlas field guide</h2>
+        <p>
+          Start with the contributor checklist in{" "}
+          <code>skills/roomfile/references/style-atlas/CONTRIBUTING.md</code>.
+          A production pack needs 25–40 sources, at least eight primary or
+          authoritative records, current-practice and critical readings, and
+          12–18 local images with verified reusable licenses and complete
+          attribution.
+        </p>
+        <CodeBlock>{`node skills/roomfile/scripts/validate-style-atlas.mjs --json
+node website/scripts/sync-style-atlas.mjs
+node website/scripts/sync-style-atlas.mjs --check`}</CodeBlock>
+        <p>
+          Edit only the skill Atlas. The website field guides and public image
+          assets are deterministic synchronized output.
+        </p>
       </section>
 
       <section>

@@ -38,6 +38,19 @@ A concept has a stable ID and append-only versions. Track status, style
 direction, locked elements, allowed changes, decisions, and render results.
 Provider-specific interaction IDs belong only in `.runtime/`.
 
+## Style context
+
+Store machine-readable taste provenance in
+`inspiration/style-context.json`. `pack_refs` records a pack ID, version, and
+`read_at`; signal arrays distinguish adopted, rejected, uncertain, overridden,
+and contradictory evidence. Keep source and reason on structured signals when
+known. `live_research_sources` records cited URLs and retrieval dates.
+`reference_images` records no more than four declared Atlas visual IDs, paths,
+and selection reasons. Multiple or zero pack refs are valid.
+
+Keep `STYLE.md` as the human-editable summary. A label is a working hypothesis,
+not enough evidence to render or a machine-verifiable fact.
+
 ## Products
 
 Keep product role separate from product identity. Record retailer ID (IKEA

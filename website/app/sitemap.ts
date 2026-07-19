@@ -11,6 +11,10 @@ const routes = [
   "/examples/apartment",
   "/examples/bauhaus-workspace",
   "/examples/japandi-bedroom",
+  "/styles",
+  "/styles/mid-century-modern",
+  "/styles/bauhaus",
+  "/styles/japandi",
   "/docs/contributing",
 ];
 

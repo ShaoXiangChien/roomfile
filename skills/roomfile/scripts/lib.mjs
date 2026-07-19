@@ -1,7 +1,135 @@
 import { readFile } from "node:fs/promises";
 
-export const SCHEMA_VERSION = "0.2.0";
-export const SUPPORTED_SCHEMA_VERSIONS = new Set(["0.1.0", SCHEMA_VERSION]);
+export const SCHEMA_VERSION = "0.3.0";
+export const SUPPORTED_SCHEMA_VERSIONS = new Set(["0.1.0", "0.2.0", SCHEMA_VERSION]);
+
+export function emptyStyleContext() {
+  return {
+    schema_version: SCHEMA_VERSION,
+    pack_refs: [],
+    adopted_signals: [],
+    rejected_signals: [],
+    uncertain_signals: [],
+    user_overrides: [],
+    contradictions: [],
+    live_research_sources: [],
+    reference_images: [],
+  };
+}
+
+export function isValidStyleContext(value) {
+  const signalFields = [
+    "adopted_signals",
+    "rejected_signals",
+    "uncertain_signals",
+    "user_overrides",
+    "contradictions",
+  ];
+  const fields = [
+    "schema_version",
+    "pack_refs",
+    ...signalFields,
+    "live_research_sources",
+    "reference_images",
+  ];
+  if (!hasExactKeys(value, fields) || value.schema_version !== SCHEMA_VERSION) {
+    return false;
+  }
+  if (!fields.slice(1).every((field) => Array.isArray(value[field]))) {
+    return false;
+  }
+  if (
+    !value.pack_refs.every(
+      (ref) =>
+        hasExactKeys(ref, ["id", "version", "read_at"]) &&
+        nonemptyString(ref.id) &&
+        nonemptyString(ref.version) &&
+        validDateTime(ref.read_at),
+    )
+  ) {
+    return false;
+  }
+  if (!signalFields.every((field) => value[field].every(validSignal))) {
+    return false;
+  }
+  if (!value.live_research_sources.every(validLiveResearchSource)) {
+    return false;
+  }
+  return (
+    value.reference_images.length <= 4 &&
+    value.reference_images.every(
+      (image) =>
+        hasExactKeys(image, ["pack_id", "visual_id", "path", "reason"]) &&
+        ["pack_id", "visual_id", "path", "reason"].every((field) =>
+          nonemptyString(image[field]),
+        ),
+    )
+  );
+}
+
+function validSignal(value) {
+  if (nonemptyString(value)) return true;
+  return (
+    hasExactKeys(value, ["signal"], ["reason", "source"]) &&
+    nonemptyString(value.signal) &&
+    ["reason", "source"].every(
+      (field) => value[field] === undefined || typeof value[field] === "string",
+    )
+  );
+}
+
+function validLiveResearchSource(value) {
+  return (
+    hasExactKeys(value, ["url"], ["title", "retrieved_at"]) &&
+    validUri(value.url) &&
+    (value.title === undefined || typeof value.title === "string") &&
+    (value.retrieved_at === undefined || validDateTime(value.retrieved_at))
+  );
+}
+
+function hasExactKeys(value, required, optional = []) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return false;
+  const allowed = new Set([...required, ...optional]);
+  return (
+    required.every((field) => Object.hasOwn(value, field)) &&
+    Object.keys(value).every((field) => allowed.has(field))
+  );
+}
+
+function nonemptyString(value) {
+  return typeof value === "string" && value.length > 0;
+}
+
+function validUri(value) {
+  if (typeof value !== "string") return false;
+  try {
+    return Boolean(new URL(value).protocol);
+  } catch {
+    return false;
+  }
+}
+
+function validDateTime(value) {
+  if (typeof value !== "string") return false;
+  const match = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.\d+)?(?:Z|([+-])(\d{2}):(\d{2}))$/i.exec(value);
+  if (!match) return false;
+  const [, year, month, day, hour, minute, second, , offsetHour, offsetMinute] = match;
+  if (
+    Number(hour) > 23 ||
+    Number(minute) > 59 ||
+    Number(second) > 60 ||
+    Number(offsetHour || 0) > 23 ||
+    Number(offsetMinute || 0) > 59
+  ) {
+    return false;
+  }
+  const date = new Date(Date.UTC(Number(year), Number(month) - 1, Number(day)));
+  return (
+    date.getUTCFullYear() === Number(year) &&
+    date.getUTCMonth() === Number(month) - 1 &&
+    date.getUTCDate() === Number(day)
+  );
+}
 
 export function parseArgs(argv) {
   const args = {};

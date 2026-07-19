@@ -1,0 +1,40 @@
+{
+  "schema_version": "0.3.0",
+  "benchmark_id": "style-atlas-same-room-v0.3",
+  "privacy_mode": "public-demo",
+  "source": "source/source-room.png",
+  "locks": "locks.json",
+  "atlas_index": "../../skills/roomfile/references/style-atlas/index.json",
+  "pairs": [
+    {
+      "style_id": "mid-century-modern",
+      "pack_version": "0.3.0",
+      "baseline_request": "requests/mid-century-modern-baseline.json",
+      "guided_request": "requests/mid-century-modern-guided.json",
+      "baseline_prompt": "prompts/mid-century-modern-baseline.txt",
+      "guided_prompt": "prompts/mid-century-modern-guided.txt",
+      "baseline_output": "outputs/mid-century-modern-baseline.jpg",
+      "guided_output": "outputs/mid-century-modern-guided.jpg"
+    },
+    {
+      "style_id": "bauhaus",
+      "pack_version": "0.3.0",
+      "baseline_request": "requests/bauhaus-baseline.json",
+      "guided_request": "requests/bauhaus-guided.json",
+      "baseline_prompt": "prompts/bauhaus-baseline.txt",
+      "guided_prompt": "prompts/bauhaus-guided.txt",
+      "baseline_output": "outputs/bauhaus-baseline.jpg",
+      "guided_output": "outputs/bauhaus-guided.jpg"
+    },
+    {
+      "style_id": "japandi",
+      "pack_version": "0.3.0",
+      "baseline_request": "requests/japandi-baseline.json",
+      "guided_request": "requests/japandi-guided.json",
+      "baseline_prompt": "prompts/japandi-baseline.txt",
+      "guided_prompt": "prompts/japandi-guided.txt",
+      "baseline_output": "outputs/japandi-baseline.jpg",
+      "guided_output": "outputs/japandi-guided.jpg"
+    }
+  ]
+}

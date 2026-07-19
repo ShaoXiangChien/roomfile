@@ -25,13 +25,19 @@ test("repository has public launch and licensing contracts", async () => {
   assert.match(readme, /Amazon/);
   assert.match(readme, /privacy/i);
   assert.match(readme, /visual approximation/i);
+  assert.match(readme, /\$roomfile style/);
+  assert.match(readme, /progressive/i);
+  assert.match(readme, /live research/i);
+  assert.match(readme, /image licen[cs]/i);
+  assert.match(readme, /contribut/i);
+  assert.match(readme, /controlled benchmark/i);
   assert.match(readme, /Apache-2\.0/);
   assert.match(license, /Apache License/);
   assert.match(license, /Version 2\.0/);
 
   const pkg = JSON.parse(packageJson);
   assert.equal(pkg.name, "roomfile");
-  assert.equal(pkg.version, "0.2.0");
+  assert.equal(pkg.version, "0.3.0");
   assert.equal(pkg.license, "Apache-2.0");
   assert.equal(pkg.scripts.test.includes("node --test"), true);
 });
@@ -58,6 +64,12 @@ test("GitHub workflows and issue templates cover release risks", async () => {
   assert.match(workflow, /link/i);
   assert.match(workflow, /secret/i);
   assert.match(workflow, /fresh/i);
+  assert.match(workflow, /validate:atlas/);
+  assert.match(workflow, /sync:styles:check/);
+  assert.match(workflow, /validate:benchmark/);
+  assert.match(workflow, /validate:launch/);
+  assert.match(workflow, /roomfile-shaoxiangchien\\\.ericchien21\\\.chatgpt\\\.site/);
+  assert.match(workflow, /post-deploy production smoke/i);
 });
 
 test("social launch kit has editable copy, alt text, and required assets", async () => {
@@ -69,8 +81,11 @@ test("social launch kit has editable copy, alt text, and required assets", async
   }
   assert.match(copy, /Design your home, together/i);
   assert.match(copy, /first photo.*final placement/is);
+  assert.match(copy, /v0\.3\.0/);
+  assert.match(copy, /research behind the conversation/i);
   assert.match(alt, /before/i);
   assert.match(alt, /workflow/i);
+  assert.match(alt, /research behind the conversation/i);
 
   const assets = [
     "og-card.png",
@@ -82,4 +97,21 @@ test("social launch kit has editable copy, alt text, and required assets", async
     "workflow/05.png",
   ];
   await Promise.all(assets.map((file) => access(path.join(launch, file))));
+});
+
+test("v0.3 release notes document the Atlas, compatibility, and verification", async () => {
+  const [notes, publicNotes] = await Promise.all([
+    readFile(path.join(root, "RELEASE_NOTES_v0.3.0.md"), "utf8"),
+    readFile(path.join(root, "docs/releases/v0.3.0.md"), "utf8"),
+  ]);
+  assert.match(notes, /Hybrid Style Atlas/i);
+  assert.match(notes, /\$roomfile style/);
+  assert.match(notes, /0\.2\.0.*0\.3\.0/is);
+  assert.match(notes, /image licen[cs]/i);
+  assert.match(notes, /benchmark/i);
+  assert.match(notes, /npx skills add ShaoXiangChien\/roomfile/);
+  assert.match(notes, /verification/i);
+  assert.doesNotMatch(notes, /complete local gate|correctly return 404/i);
+  assert.match(publicNotes, /Style Atlas/i);
+  assert.match(publicNotes, /RELEASE_NOTES_v0\.3\.0\.md/);
 });

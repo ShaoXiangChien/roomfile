@@ -164,6 +164,7 @@ export default function ApartmentExample() {
       <nav className="case-next shell" aria-label="More selected homes">
         <Link href="/examples/japandi-bedroom">← Japandi bedroom</Link>
         <Link href="/examples">All selected homes</Link>
+        <Link href="/styles/mid-century-modern">MCM field guide</Link>
         <Link href="/examples/bauhaus-workspace">Bauhaus workspace →</Link>
       </nav>
     </main>

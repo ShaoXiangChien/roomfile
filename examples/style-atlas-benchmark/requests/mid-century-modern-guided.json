@@ -1,0 +1,96 @@
+{
+  "schema_version": "0.3.0",
+  "concept_id": "benchmark-mid-century-modern-guided",
+  "concept_version": 1,
+  "canonical_images": [
+    "../source/source-room.png"
+  ],
+  "goal": "Restyle the fictional living and dining room from the exact source image as a comfortable, current Mid-century Modern home shaped by the resident evidence below.",
+  "locked_facts": [
+    "Preserve the exact wall positions, ceiling height, crown profile, and room proportions.",
+    "Preserve both north-wall windows, their size, sill height, trim, view, and spacing.",
+    "Preserve the entry door, radiator, HVAC vent, outlets, and fixed ceiling light in their exact locations.",
+    "Preserve the existing wood-look rental flooring without recoloring, replacing, or covering its full field.",
+    "Preserve the existing 84 × 36 inch warm-gray sofa in its exact position, dimensions, upholstery, and orientation.",
+    "Preserve the existing 60 × 36 inch oak dining table in its exact position, dimensions, finish, and orientation.",
+    "Preserve a clear entry path and readable circulation between the living and dining zones.",
+    "Preserve the same daylight direction and late-afternoon exposure."
+  ],
+  "allowed_changes": [
+    "Add only reversible furniture, rugs, freestanding lighting, textiles, art, storage, books, ceramics, and plants.",
+    "Rearrange only newly introduced movable objects while retained furniture and architecture remain locked.",
+    "Use renter-safe, removable mounting and leave protected windows fully operable."
+  ],
+  "style_evidence": [
+    "The resident calls the direction Mid-century Modern and means a current, warm, collected home rather than a period museum.",
+    "Walnut or another dark-grained wood, amber pools of light, olive, rust, cream, and tactile textiles feel right.",
+    "Books, records, plants, art, and useful personal objects should remain visibly part of the room.",
+    "Comfortable upright seating and clear circulation outrank strict historical reconstruction or low novelty seating."
+  ],
+  "style_context": {
+    "schema_version": "0.3.0",
+    "pack_refs": [
+      {
+        "id": "mid-century-modern",
+        "version": "0.3.0",
+        "read_at": "2026-07-19T12:00:00Z"
+      }
+    ],
+    "adopted_signals": [
+      {
+        "signal": "Use low horizontal masses and readable living and dining zones without interrupting circulation.",
+        "reason": "It translates postwar spatial hierarchy into this renter's existing plan."
+      },
+      {
+        "signal": "Mix dark-grained wood, tactile upholstery, glass or metal, and layered task and ambient light according to use.",
+        "reason": "The resident adopted material contrast and amber light, not a catalog of icons."
+      },
+      {
+        "signal": "Let books, records, textiles, plants, ceramics, and art produce a lived, collected layer.",
+        "reason": "Visible belongings are explicit resident evidence."
+      }
+    ],
+    "rejected_signals": [
+      {
+        "signal": "Starburst décor, novelty atomic motifs, and replica-icon overload.",
+        "reason": "The resident wants a personal home rather than commercial shorthand."
+      },
+      {
+        "signal": "Default orange-and-teal grading or a sterile showroom.",
+        "reason": "The resident's palette and daily objects should stay specific."
+      }
+    ],
+    "uncertain_signals": [
+      {
+        "signal": "Deep 1970s lounge proportions.",
+        "reason": "Warm current expression is welcome, but comfortable upright seating remains required."
+      }
+    ],
+    "user_overrides": [
+      {
+        "signal": "Keep seating comfortable and upright and preserve visible books, records, plants, art, and useful objects.",
+        "source": "benchmark resident evidence"
+      }
+    ],
+    "contradictions": [],
+    "live_research_sources": [],
+    "reference_images": [
+      {
+        "pack_id": "mid-century-modern",
+        "visual_id": "M-V4",
+        "path": "images/m-v4.jpg",
+        "reason": "Observe the materially rich, book-lined, textile-led interior without copying its exceptional commissioned layout."
+      },
+      {
+        "pack_id": "mid-century-modern",
+        "visual_id": "M-V5",
+        "path": "images/m-v5.jpg",
+        "reason": "Observe how furniture, rug, books, plants, glass, and art build a collaborative lived environment without copying its architecture."
+      }
+    ]
+  },
+  "product_references": [],
+  "camera_view": "Phone camera at 5 ft height near the southwest entry, facing north-northeast, 4:3 landscape; preserve the exact viewpoint, framing, perspective, and lens character.",
+  "output": "../outputs/mid-century-modern-guided.jpg",
+  "disclaimer": "Visual approximation — verify dimensions, color, material, and availability before purchasing."
+}

@@ -3,6 +3,7 @@ import { access, appendFile, mkdir, readFile, writeFile } from "node:fs/promises
 import path from "node:path";
 import {
   SCHEMA_VERSION,
+  emptyStyleContext,
   failInput,
   parseArgs,
   printResult,
@@ -79,6 +80,10 @@ try {
       [
         path.join(project, "inspiration", "index.json"),
         { schema_version: SCHEMA_VERSION, sources: [] },
+      ],
+      [
+        path.join(project, "inspiration", "style-context.json"),
+        emptyStyleContext(),
       ],
       [
         path.join(project, ".runtime", "render-sessions.json"),

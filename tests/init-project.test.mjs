@@ -53,7 +53,7 @@ test("private initialization applies a non-US shopping profile and one gitignore
   const manifest = JSON.parse(
     await readFile(path.join(target, "roomfile", "roomfile.json"), "utf8"),
   );
-  assert.equal(manifest.schema_version, "0.2.0");
+  assert.equal(manifest.schema_version, "0.3.0");
   assert.equal(manifest.setup_status, "ready");
   assert.equal(manifest.country, "CA");
   assert.equal(manifest.region, "Québec");
@@ -61,6 +61,25 @@ test("private initialization applies a non-US shopping profile and one gitignore
   assert.equal(manifest.measurement_unit, "cm");
   assert.equal(manifest.retailer_strategy, "user-preferred");
   assert.deepEqual(manifest.preferred_retailers, ["EQ3", "Article"]);
+  assert.deepEqual(
+    JSON.parse(
+      await readFile(
+        path.join(target, "roomfile", "inspiration", "style-context.json"),
+        "utf8",
+      ),
+    ),
+    {
+      schema_version: "0.3.0",
+      pack_refs: [],
+      adopted_signals: [],
+      rejected_signals: [],
+      uncertain_signals: [],
+      user_overrides: [],
+      contradictions: [],
+      live_research_sources: [],
+      reference_images: [],
+    },
+  );
 
   const geometry = JSON.parse(
     await readFile(
@@ -108,12 +127,20 @@ test("initialization without a profile creates a neutral needs-profile scaffold"
   const manifest = JSON.parse(
     await readFile(path.join(target, "roomfile", "roomfile.json"), "utf8"),
   );
-  assert.equal(manifest.schema_version, "0.2.0");
+  assert.equal(manifest.schema_version, "0.3.0");
   assert.equal(manifest.setup_status, "needs-profile");
   assert.equal(manifest.country, "");
   assert.equal(manifest.currency, "");
   assert.equal(manifest.measurement_unit, null);
   assert.deepEqual(manifest.preferred_retailers, []);
+  const styleContext = JSON.parse(
+    await readFile(
+      path.join(target, "roomfile", "inspiration", "style-context.json"),
+      "utf8",
+    ),
+  );
+  assert.deepEqual(styleContext.pack_refs, []);
+  assert.deepEqual(styleContext.reference_images, []);
   assert.equal("retailer_strategy" in manifest, false);
   assert.doesNotMatch(JSON.stringify(manifest), /IKEA|Amazon|USD|United States/i);
 });

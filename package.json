@@ -1,6 +1,6 @@
 {
   "name": "roomfile",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A project-based interior design Agent Skill for real rooms, constraints, fit checks, and sourcing.",
   "private": true,
   "type": "module",
@@ -15,7 +15,12 @@
     "test:website": "npm --prefix website test",
     "validate:example": "node skills/roomfile/scripts/validate-project.mjs --project examples/us-apartment/roomfile --json",
     "smoke:fresh": "node scripts/fresh-install-smoke.mjs",
-    "check:privacy": "node scripts/privacy-scan.mjs"
+    "check:privacy": "node scripts/privacy-scan.mjs",
+    "validate:benchmark": "node scripts/validate-style-atlas-benchmark.mjs --benchmark examples/style-atlas-benchmark --json",
+    "validate:launch": "node scripts/validate-launch-assets.mjs --manifest launch/manifest.json --json",
+    "validate:atlas": "node skills/roomfile/scripts/validate-style-atlas.mjs --atlas skills/roomfile/references/style-atlas --json",
+    "sync:styles": "node website/scripts/sync-style-atlas.mjs",
+    "sync:styles:check": "node website/scripts/sync-style-atlas.mjs --check"
   },
   "engines": {
     "node": ">=20"

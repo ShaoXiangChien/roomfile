@@ -5,6 +5,7 @@ import {
   SCHEMA_VERSION,
   SUPPORTED_SCHEMA_VERSIONS,
   failInput,
+  isValidStyleContext,
   parseArgs,
   printResult,
   readJson,
@@ -24,10 +25,10 @@ try {
   const manifest = await inspectJson(manifestPath, "manifest_missing");
 
   if (manifest) {
-    if (manifest.schema_version === "0.1.0") {
+    if (manifest.schema_version !== SCHEMA_VERSION) {
       warnings.push({
         code: "schema_upgrade_available",
-        message: "Schema 0.1.0 is supported; migrate to 0.2.0 when convenient.",
+        message: `Schema ${manifest.schema_version} is supported; migrate to ${SCHEMA_VERSION} when convenient.`,
       });
     }
     if (manifest.schema_version === SCHEMA_VERSION) {
@@ -61,6 +62,18 @@ try {
           code: "manifest_field_missing",
           field,
           message: `roomfile.json is missing ${field}.`,
+        });
+      }
+    }
+    if (manifest.schema_version === SCHEMA_VERSION) {
+      const styleContext = await inspectJson(
+        path.join(project, "inspiration", "style-context.json"),
+        "style_context_missing",
+      );
+      if (styleContext && !isValidStyleContext(styleContext)) {
+        errors.push({
+          code: "invalid_style_context",
+          message: "style-context.json must use the v0.3 style-context contract.",
         });
       }
     }
@@ -165,7 +178,7 @@ try {
         errors.push({
           code: "unsupported_schema_version",
           file,
-          message: `${file} uses unsupported schema ${value.schema_version}; supported versions are 0.1.0 and ${SCHEMA_VERSION}.`,
+          message: `${file} uses unsupported schema ${value.schema_version}; supported versions are 0.1.0, 0.2.0, and ${SCHEMA_VERSION}.`,
         });
       }
       return value;

@@ -18,8 +18,24 @@ export default function Rendering() {
   "locked_facts": ["same windows", "same sofa", "same camera"],
   "allowed_changes": ["coffee table", "lamp", "textiles"],
   "style_evidence": ["warm walnut", "sculptural lighting"],
+  "style_context": {
+    "pack_refs": [{"id": "mid-century-modern", "version": "0.3.0"}],
+    "adopted_signals": ["low horizontal masses"],
+    "rejected_signals": ["generic starburst décor"],
+    "user_overrides": ["keep the deep existing sofa"]
+  },
   "output": "assets/generated/refined.png"
 }`}</CodeBlock>
+      </section>
+
+      <section>
+        <h2>Prompt priority</h2>
+        <p>
+          Room locks come first, followed by user overrides, adopted signals,
+          legacy style evidence, and pack guidance. Rejected signals and
+          clichés become negative guidance; no Atlas pack may override the
+          actual room or the resident.
+        </p>
       </section>
 
       <section>

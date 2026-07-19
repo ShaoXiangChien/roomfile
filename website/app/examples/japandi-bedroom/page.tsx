@@ -96,6 +96,7 @@ export default function JapandiBedroom() {
       <nav className="case-next shell" aria-label="More selected homes">
         <Link href="/examples/bauhaus-workspace">← Bauhaus workspace</Link>
         <Link href="/examples">All selected homes</Link>
+        <Link href="/styles/japandi">Japandi field guide</Link>
         <Link href="/examples/apartment">Living room →</Link>
       </nav>
     </main>

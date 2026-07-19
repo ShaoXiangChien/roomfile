@@ -31,6 +31,20 @@ workflow:
 5. Connect the final room to products and next actions.
 6. Continue into other rooms through editorial case stories.
 
+The taste chapter may open a quiet path into the Roomfile Style Atlas. The
+Atlas is supporting research for a better conversation: it helps the agent ask
+sharper questions while the resident’s room, references, and reactions remain
+the source of truth.
+
+## Style Atlas
+
+- Field guides are research lenses, never presets, a picker, or a support
+  boundary.
+- The public guides and the skill use one synchronized source.
+- Case stories show one application; field guides retain the broader history,
+  current expressions, misreadings, visual context, and sources.
+- Image attribution and license stay adjacent to every public plate.
+
 ## Voice
 
 - Specific, warm, observant, and collaborative.
@@ -47,5 +61,6 @@ workflow:
 - Retailer-region policy explanations on marketing pages.
 - Generic “AI is imperfect” sales copy.
 - “Three answers to the same room,” preset catalogs, or comparison grids.
+- Three equal Style Atlas cards or copy that implies an allowlist.
 - Naming the main living-room case “Eclectic.”
 - Copying user instructions into public-facing explanations.

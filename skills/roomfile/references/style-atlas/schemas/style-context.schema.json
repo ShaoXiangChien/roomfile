@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://roomfile.dev/schemas/style-context.schema.json",
+  "title": "Roomfile style context",
+  "type": "object",
+  "required": ["schema_version", "pack_refs", "adopted_signals", "rejected_signals", "uncertain_signals", "user_overrides", "contradictions", "live_research_sources", "reference_images"],
+  "properties": {
+    "schema_version": { "const": "0.3.0" },
+    "pack_refs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "version", "read_at"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "version": { "type": "string", "minLength": 1 },
+          "read_at": { "type": "string", "format": "date-time" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "adopted_signals": { "type": "array", "items": { "$ref": "#/$defs/signal" } },
+    "rejected_signals": { "type": "array", "items": { "$ref": "#/$defs/signal" } },
+    "uncertain_signals": { "type": "array", "items": { "$ref": "#/$defs/signal" } },
+    "user_overrides": { "type": "array", "items": { "$ref": "#/$defs/signal" } },
+    "contradictions": { "type": "array", "items": { "$ref": "#/$defs/signal" } },
+    "live_research_sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["url"],
+        "properties": { "url": { "type": "string", "format": "uri" }, "title": { "type": "string" }, "retrieved_at": { "type": "string", "format": "date-time" } },
+        "additionalProperties": false
+      }
+    },
+    "reference_images": {
+      "type": "array",
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "required": ["pack_id", "visual_id", "path", "reason"],
+        "properties": {
+          "pack_id": { "type": "string", "minLength": 1 },
+          "visual_id": { "type": "string", "minLength": 1 },
+          "path": { "type": "string", "minLength": 1 },
+          "reason": { "type": "string", "minLength": 1 }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "$defs": {
+    "signal": {
+      "anyOf": [
+        { "type": "string", "minLength": 1 },
+        { "type": "object", "required": ["signal"], "properties": { "signal": { "type": "string", "minLength": 1 }, "reason": { "type": "string" }, "source": { "type": "string" } }, "additionalProperties": false }
+      ]
+    }
+  },
+  "additionalProperties": false
+}

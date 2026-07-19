@@ -37,6 +37,7 @@ Calling `$roomfile` without a command resumes with `$roomfile status`.
 
 ```text
 $roomfile init
+$roomfile style MCM
 $roomfile taste
 $roomfile capture living-room
 $roomfile brief
@@ -53,6 +54,46 @@ units you use, your budget, and where you prefer to shop. If you have no
 preferred retailers, you can ask the agent to suggest locally available
 sources. These answers guide sourcing later instead of applying a global store
 list.
+
+## Style Atlas
+
+Roomfile includes research-led field guides for
+[Mid-century Modern](https://roomfile-shaoxiangchien.ericchien21.chatgpt.site/styles/mid-century-modern),
+[Bauhaus](https://roomfile-shaoxiangchien.ericchien21.chatgpt.site/styles/bauhaus),
+and
+[Japandi](https://roomfile-shaoxiangchien.ericchien21.chatgpt.site/styles/japandi).
+They are the first deep research packs, not a list of supported styles or a
+style picker.
+
+```text
+$roomfile style MCM
+$roomfile style "Compare Bauhaus and Japandi spatial logic"
+```
+
+Each pack combines a quick guide, a cited field guide, structured design
+signals, 25–40 sources, and 12–18 locally bundled visual records with reusable
+image licenses and complete attribution. Roomfile uses progressive loading:
+it reads the small index first, then the relevant quick guide and signals, and
+opens the full field guide or image records only for deeper questions. This
+keeps routine room work focused while preserving a researched path when needed.
+
+Roomfile uses the research to ask sharper
+questions; your inspiration, reactions, room facts, and overrides remain the
+source of truth. Unknown styles and under-covered variants trigger sourced
+live research instead of a guessed match.
+
+The skill Atlas is authoritative. The public
+[Roomfile Style Atlas](https://roomfile-shaoxiangchien.ericchien21.chatgpt.site/styles)
+is generated from the same records.
+
+### Controlled benchmark
+
+The [same-room Style Atlas benchmark](examples/style-atlas-benchmark/README.md)
+compares three baseline prompts with three Atlas-guided prompts while holding
+the fictional room, camera, locked architecture, retained furniture, and
+resident evidence constant. It records prompts, costs, provider metadata,
+human review, and failure modes. One stochastic sample is not treated as proof
+of objective superiority.
 
 ## Selected homes
 
@@ -120,14 +161,14 @@ sending private images to a new external renderer.
 | Other image providers | provider-neutral fallback |
 | Node.js | 20+ |
 
-Roomfile v0.2.0 includes a preference-first project profile and supports
-three-letter ISO currencies. Existing v0.1.0 projects can be validated and
-migrated:
+Roomfile v0.3.0 adds the Hybrid Style Atlas and a project-level style context
+while preserving the preference-first profile and three-letter ISO currencies.
+Existing v0.1.0 and v0.2.0 projects can be validated and migrated:
 
 ```bash
 node skills/roomfile/scripts/migrate-project.mjs \
   --project /absolute/path/to/roomfile \
-  --to 0.2.0 \
+  --to 0.3.0 \
   --json
 ```
 
@@ -138,11 +179,15 @@ npm test
 npm run test:skill
 npm run validate:example
 npm run check:privacy
+npm run validate:atlas
+npm run validate:benchmark
+npm run sync:styles:check
 npm run test:website
 npm --prefix website run test:e2e
 ```
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for the release workflow.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the release workflow. New field
+guides follow the [Style Atlas research and image-license checklist](skills/roomfile/references/style-atlas/CONTRIBUTING.md).
 
 ## License
 

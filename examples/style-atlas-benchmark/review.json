@@ -1,0 +1,138 @@
+{
+  "schema_version": "0.3.0",
+  "benchmark_id": "style-atlas-same-room-v0.3",
+  "review_status": "complete",
+  "reviewed_at": "2026-07-19T04:52:00Z",
+  "reviewer": "Roomfile release review",
+  "scale": {
+    "minimum": 1,
+    "maximum": 5,
+    "meaning": "1 = poor adherence; 5 = strong adherence"
+  },
+  "criteria": [
+    "style_depth",
+    "room_preservation",
+    "material_differentiation",
+    "cliche_avoidance",
+    "evidence_subordination"
+  ],
+  "pairs": [
+    {
+      "style_id": "mid-century-modern",
+      "baseline": {
+        "scores": {
+          "style_depth": 3,
+          "room_preservation": 4,
+          "material_differentiation": 3,
+          "cliche_avoidance": 3,
+          "evidence_subordination": 4
+        },
+        "observations": [
+          "The image keeps the two windows, radiator position, sofa, dining table, circulation aisle, and overall camera geometry readable.",
+          "Walnut storage, amber lamps, olive cushions, a rust throw, records, plants, and cane-and-chrome chairs translate most resident evidence.",
+          "The visual language leans on familiar current MCM retail signals more than a deeper spatial or production logic."
+        ],
+        "failure_modes": [
+          "The fixed ceiling light appears warmer and altered rather than exactly locked.",
+          "The room reads as tasteful generic MCM styling, with limited evidence of materially distinct zoning beyond the rug and lamps."
+        ]
+      },
+      "guided": {
+        "scores": {
+          "style_depth": 4,
+          "room_preservation": 3,
+          "material_differentiation": 4,
+          "cliche_avoidance": 4,
+          "evidence_subordination": 4
+        },
+        "observations": [
+          "Books, records, ceramics, art, plants, timber storage, textile, metal, and glass create a visibly more collected material hierarchy.",
+          "The retained sofa and table still lead the room, with standard-height comfort and a clear central route.",
+          "The output avoids starburst and replica-icon shorthand and expresses the direction through storage, task light, material contrast, and object density."
+        ],
+        "failure_modes": [
+          "A more pronounced crown detail appears at the ceiling edge, weakening strict architecture preservation.",
+          "The added storage density narrows the perceived room and may overstate what can remain comfortably clear without a fit check."
+        ]
+      }
+    },
+    {
+      "style_id": "bauhaus",
+      "baseline": {
+        "scores": {
+          "style_depth": 3,
+          "room_preservation": 4,
+          "material_differentiation": 3,
+          "cliche_avoidance": 3,
+          "evidence_subordination": 4
+        },
+        "observations": [
+          "The original camera, windows, radiator, flooring, sofa, and table remain recognizable.",
+          "Metal shelving, adjustable lamps, a red artwork, a graphic textile, books, and plants support the resident's functional brief.",
+          "The design balances soft seating with metal and glass rather than becoming a chrome-only showroom."
+        ],
+        "failure_modes": [
+          "Several framed geometric prints and the red focal artwork approach familiar Bauhaus graphic shorthand.",
+          "The functional relationship among reading, making, dining, and storage remains more implied than spatially resolved."
+        ]
+      },
+      "guided": {
+        "scores": {
+          "style_depth": 4,
+          "room_preservation": 3,
+          "material_differentiation": 5,
+          "cliche_avoidance": 4,
+          "evidence_subordination": 4
+        },
+        "observations": [
+          "A textile-led rug, pale plywood storage, black metal framing, task lights, books, and work surfaces make workshop and material logic visibly central.",
+          "The resident's one-red-accent instruction stays subordinate to the activity zones instead of becoming a primary-color theme.",
+          "Comfortable retained seating and daily books remain present, so the field guide does not erase domestic life."
+        ],
+        "failure_modes": [
+          "The floor-to-ceiling shelving is visually dominant and could be read as a built-in or exceed reversible renter-safe scope.",
+          "The sofa and left storage relationship appears compressed, so room preservation and circulation need deterministic follow-up."
+        ]
+      }
+    },
+    {
+      "style_id": "japandi",
+      "baseline": {
+        "scores": {
+          "style_depth": 2,
+          "room_preservation": 2,
+          "material_differentiation": 3,
+          "cliche_avoidance": 2,
+          "evidence_subordination": 3
+        },
+        "observations": [
+          "The sofa, table, two windows, flooring, camera, pale timber, dark ceramics, and quiet rug establish a calm room.",
+          "Standard-height retained seating remains comfortable and the center path is open."
+        ],
+        "failure_modes": [
+          "A slatted cabinet appears to cover or replace the locked radiator, a consequential room-truth failure.",
+          "The large paper lantern, pale rug, slatted wood, sparse ceramics, and near-beige palette reproduce common market shorthand.",
+          "The resident's request for selected visible books, textile, subtle pattern, and a lived layer is only weakly represented."
+        ]
+      },
+      "guided": {
+        "scores": {
+          "style_depth": 3,
+          "room_preservation": 4,
+          "material_differentiation": 4,
+          "cliche_avoidance": 4,
+          "evidence_subordination": 4
+        },
+        "observations": [
+          "The radiator, sofa, table, flooring, windows, camera, and circulation remain legible.",
+          "Pale and dark timber, woven textiles, a few books, ceramics, one plant, diffuse light, and negative space produce a quieter material relationship without a paper-lantern centerpiece.",
+          "Standard seating height and daily usability remain more important than a floor-level or empty showroom composition."
+        ],
+        "failure_modes": [
+          "The restrained result could still be read as generic Scandinavian calm; the Japanese antecedent is deliberately subtle but not especially legible.",
+          "A new curtain partly covers a protected window and should be checked for operation and radiator safety."
+        ]
+      }
+    }
+  ]
+}

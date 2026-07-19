@@ -169,6 +169,18 @@ export default function Home() {
               <strong>Direction found: Mid-century Modern</strong>
             </aside>
           </div>
+          <aside className="atlas-home-entry">
+            <p className="eyebrow">The research behind the conversation</p>
+            <h3>Sharper questions, without turning taste into a formula.</h3>
+            <p>
+              Roomfile can draw on researched field guides to notice history,
+              materials, spatial logic, and common clichés. Your references and
+              reactions remain the source of truth.
+            </p>
+            <Link className="editorial-link" href="/styles">
+              Open the Style Atlas <span>→</span>
+            </Link>
+          </aside>
         </div>
       </section>
 

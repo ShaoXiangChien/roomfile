@@ -24,6 +24,12 @@ try {
       "utf8",
     ),
   );
+  const neutralStyleContext = JSON.parse(
+    await readFile(
+      path.join(neutralTarget, "roomfile/inspiration/style-context.json"),
+      "utf8",
+    ),
+  );
   if (
     neutralManifest.setup_status !== "needs-profile" ||
     neutralManifest.country !== "" ||
@@ -32,6 +38,14 @@ try {
     neutralManifest.preferred_retailers.length !== 0
   ) {
     throw new Error("neutral scaffold invented shopping-profile defaults");
+  }
+  if (
+    neutralStyleContext.schema_version !== "0.3.0" ||
+    Object.values(neutralStyleContext).some(
+      (value) => Array.isArray(value) && value.length !== 0,
+    )
+  ) {
+    throw new Error("neutral scaffold did not create an empty v0.3 style context");
   }
 
   const neutralValidation = run(
@@ -90,6 +104,12 @@ try {
   const manifest = JSON.parse(
     await readFile(path.join(profileTarget, "roomfile/roomfile.json"), "utf8"),
   );
+  const profiledStyleContext = JSON.parse(
+    await readFile(
+      path.join(profileTarget, "roomfile/inspiration/style-context.json"),
+      "utf8",
+    ),
+  );
   if (
     manifest.setup_status !== "ready" ||
     manifest.country !== "CA" ||
@@ -98,6 +118,9 @@ try {
     manifest.retailer_strategy !== "user-preferred"
   ) {
     throw new Error("profiled fresh project lost preference-first settings");
+  }
+  if (profiledStyleContext.reference_images.length !== 0) {
+    throw new Error("profiled scaffold did not start with an empty style context");
   }
 
   const ignore = await readFile(path.join(profileTarget, ".gitignore"), "utf8");

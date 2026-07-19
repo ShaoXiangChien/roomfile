@@ -1,8 +1,9 @@
 # Roomfile website
 
-The public marketing site, documentation, and fictional apartment case study
-for Roomfile. It runs on the Sites React/TypeScript runtime with Vinext and
-collects no accounts, uploads, analytics, or personal data.
+The public marketing site, documentation, fictional case studies, and
+research-led Style Atlas for Roomfile. It runs on the Sites React/TypeScript
+runtime with Vinext and collects no accounts, uploads, analytics, or personal
+data.
 
 ## Prerequisites
 
@@ -21,7 +22,10 @@ This starter does not use `wrangler.jsonc`.
 ## Included shape
 
 - `app/` contains all public routes and the launch-asset renderer.
-- `public/` contains fictional Banana renders, social artwork, and the favicon.
+- `app/generated/style-atlas.json` is committed output synchronized from the
+  portable skill Atlas.
+- `public/` contains fictional Banana renders, synchronized licensed Atlas
+  imagery, social artwork, and the favicon.
 - `.openai/hosting.json` binds this folder to its permanent Sites project.
 - `worker/` and `build/` provide the Vinext/Sites runtime entry points.
 
@@ -30,6 +34,8 @@ This starter does not use `wrangler.jsonc`.
 - `npm run dev`: start local development
 - `npm run build`: verify the vinext build output
 - `npm test`: build every route and verify the public content contracts
+- `npm run sync:styles`: regenerate public Atlas data and images
+- `npm run sync:styles:check`: fail when public Atlas output has drifted
 
 ## Learn More
 

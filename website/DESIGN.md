@@ -27,6 +27,10 @@ in progress, not a SaaS landing-page component library.
 - Use borders and background shifts to separate chapters.
 - Product sourcing uses an annotated room beside a dense ledger.
 - Case stories use before/after spreads, not style cards.
+- The Style Atlas index uses one lead story, one offset story, and one quieter
+  continuation rather than three equal cards.
+- Field guides alternate wide annotated plates, margin interpretation,
+  compact signal ledgers, and dense source records.
 
 ## Interaction
 
@@ -47,3 +51,4 @@ in progress, not a SaaS landing-page component library.
 - Do not use a circular “R” app icon as the masthead.
 - Do not use the homepage as a command reference or policy page.
 - Do not place Bauhaus, Japandi, and MCM side by side as presets.
+- Do not detach image credit, institution, source, or license from its plate.

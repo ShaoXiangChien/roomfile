@@ -13,6 +13,10 @@ const publicRoutes = [
   "/examples/bauhaus-workspace",
   "/examples/japandi-bedroom",
   "/examples/us-apartment",
+  "/styles",
+  "/styles/mid-century-modern",
+  "/styles/bauhaus",
+  "/styles/japandi",
 ];
 
 test("all public routes render without horizontal overflow", async ({ page }) => {
@@ -34,9 +38,7 @@ test("homepage supports the design journey interactions", async ({
   context,
   page,
 }) => {
-  await context.grantPermissions(["clipboard-read", "clipboard-write"], {
-    origin: "http://localhost:49349",
-  });
+  await context.grantPermissions(["clipboard-read", "clipboard-write"]);
   await page.goto("/");
 
   await expect(
@@ -72,6 +74,7 @@ test("mobile navigation keeps the core paths visible", async ({ page }, testInfo
   await expect(
     navigation.getByRole("link", { name: "Selected Homes" }),
   ).toBeVisible();
+  await expect(navigation.getByRole("link", { name: "Style Atlas" })).toBeVisible();
   await expect(navigation.getByRole("link", { name: "GitHub ↗" })).toBeVisible();
 });
 
@@ -99,4 +102,20 @@ test("legacy example declares canonical and noindex", async ({ page }) => {
     "content",
     "noindex, follow",
   );
+});
+
+test("Style Atlas plates keep attribution adjacent and keyboard links visible", async ({ page }) => {
+  await page.goto("/styles/mid-century-modern");
+  const firstPlate = page.locator(".atlas-plate").first();
+  await expect(firstPlate.getByRole("img")).toBeVisible();
+  await expect(firstPlate.getByText("What to notice")).toBeVisible();
+  const sourceLink = firstPlate.getByRole("link", { name: /source/i });
+  await sourceLink.focus();
+  await expect(sourceLink).toBeFocused();
+  const dimensions = await firstPlate.getByRole("img").evaluate((image) => ({
+    width: image.getAttribute("width"),
+    height: image.getAttribute("height"),
+  }));
+  expect(dimensions.width).toBeTruthy();
+  expect(dimensions.height).toBeTruthy();
 });

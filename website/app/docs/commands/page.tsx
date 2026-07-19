@@ -6,6 +6,7 @@ export const metadata: Metadata = { title: "Command reference" };
 const commands = [
   ["init", "Interview for location, units, budget, retailer strategy, household needs, privacy, and rendering preferences."],
   ["status", "Inspect completeness and recommend the next useful action."],
+  ["style", "Answer a style, comparison, or research question from the built-in Atlas, with live research when coverage is missing or needs updating."],
   ["taste", "Analyze links or screenshots into evidence, dislikes, anti-references, and contradictions."],
   ["capture", "Register canonical photos, measured geometry, fixed elements, lighting, circulation, and uncertainty."],
   ["brief", "Combine taste, needs, budget, inventory, and room truth into an approval-ready brief."],

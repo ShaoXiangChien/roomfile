@@ -1,0 +1,85 @@
+{
+  "schema_version": "0.3.0",
+  "id": "japandi",
+  "user_inspiration_priority": true,
+  "lens_not_recipe": true,
+  "historical_core": [
+    "No historic Japandi movement exists.",
+    "Japanese craft, spatial, tea, mingei, domestic, and modern traditions are distinct antecedents.",
+    "Danish, Finnish, Swedish, and other Nordic design histories are distinct antecedents with documented episodes of exchange."
+  ],
+  "current_expressions": [
+    "A late-2010s/2020s commercial and editorial hybrid label.",
+    "Warm restraint, tactile material, useful objects, calm storage, and controlled light.",
+    "Named contemporary Japan–Nordic collaborations grounded in actual projects and production."
+  ],
+  "composition": [
+    "Clear thresholds, view control, proportion, and deliberate open versus enclosed storage.",
+    "Low and upright elements balanced for the user's body and sightlines.",
+    "Negative space used for movement, focus, or seasonal change rather than cultural symbolism."
+  ],
+  "furniture_forms": [
+    "Precise timber joinery, tansu storage, screens, woven or rush surfaces, and low relational forms as Japanese evidence.",
+    "Measured cabinetmaking, bent wood, woven cane or cord, supportive upholstery, and technical lighting as Nordic evidence.",
+    "Current hybrid forms assessed by scale, construction, repair, and access rather than marketing label."
+  ],
+  "materials": [
+    "Solid and bent wood, bamboo, rush, paper, plaster, stone, linen, wool, cotton, lacquer, ceramic, glass, and darkened metal.",
+    "Materials selected for local climate, touch, cleaning, sourcing, repair, and aging.",
+    "Process-based variation rather than factory distress."
+  ],
+  "palette": [
+    "Warm neutrals as one current expression, not a cultural essence.",
+    "Indigo, ink, persimmon, vermilion, moss, deep brown, glazes, pattern, and dark lacquer as possible Japanese evidence.",
+    "Strong textiles, painted pieces, dark wood, glass, and saturated color as possible Nordic evidence."
+  ],
+  "lighting": [
+    "Layer daylight control, diffuse ambient light, and precise task light.",
+    "Use screens and textiles where appropriate to soften contrast and shape views.",
+    "Treat Nordic glare-control research as technical evidence, not a sculptural accessory cue."
+  ],
+  "textiles_art": [
+    "Name textile origin, technique, maker, and date where known.",
+    "Use screens, ceramics, lacquer, baskets, and art with attribution and cultural specificity.",
+    "Preserve the user's art and objects through deliberate display rather than forced emptiness."
+  ],
+  "spatial_density": [
+    "Prefer legible density over automatic sparsity.",
+    "Protect clear paths and useful surfaces while housing books, tools, plants, and heirlooms.",
+    "Ask which visible belongings create rest and which create stress."
+  ],
+  "variants": [
+    "Pale and airy current hybrid.",
+    "Dark and earthen current hybrid.",
+    "Craft-forward, urban compact, architecturally minimal, or documented collaborative practice."
+  ],
+  "adjacent_styles": [
+    "Japanese domestic spatial traditions",
+    "Mingei and Japanese craft histories",
+    "Danish Modern",
+    "Finnish humanistic modernism",
+    "Contemporary warm minimalism"
+  ],
+  "questions": [
+    "Which specific image evidence prompted the label: space, timber, craft, palette, light, or a named object?",
+    "Does the user want the current hybrid look, one antecedent researched separately, or a documented collaboration?",
+    "What density, color, maintenance, patina, seating height, and access needs feel right?",
+    "Are any Japanese, Danish, Finnish, Swedish, or personal cultural references meaningful?"
+  ],
+  "cliches_to_avoid": [
+    "Ancient Japandi or retroactive historic Japandi claims.",
+    "Japan reduced to beige minimalism, Zen emptiness, or distressed wabi-sabi décor.",
+    "Scandinavia treated as culturally neutral blond wood and universal democracy.",
+    "Pale oak, boucle, pampas grass, black accents, token shōji, and random floor cushions as a recipe."
+  ],
+  "positive_prompt_guidance": [
+    "Name whether each signal comes from a precise Japanese antecedent, a precise Nordic antecedent, a documented collaboration, or current market usage.",
+    "Describe thresholds, storage, light, material process, seating access, and the user's retained objects.",
+    "Allow culturally specific color, pattern, textile, screen, ceramic, and craft evidence."
+  ],
+  "negative_prompt_guidance": [
+    "Avoid sterile beige moodboards, anonymous exotic tokens, fake distress, and generic shōji patterns.",
+    "Do not label historical Japanese or Nordic evidence as Japandi.",
+    "Do not remove user belongings or impose floor-level living against access needs."
+  ]
+}

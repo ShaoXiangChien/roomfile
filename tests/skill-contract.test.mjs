@@ -7,6 +7,7 @@ const skillDir = path.resolve("skills/roomfile");
 const commands = [
   "init",
   "status",
+  "style",
   "taste",
   "capture",
   "brief",
@@ -43,6 +44,7 @@ test("focused references and schemas exist", async () => {
     "workflows.md",
     "data-model.md",
     "rendering.md",
+    "style-atlas.md",
     "sourcing.md",
     "safety.md",
   ];
@@ -53,6 +55,7 @@ test("focused references and schemas exist", async () => {
     "products.schema.json",
     "render-request.schema.json",
     "profile.schema.json",
+    "style-context.schema.json",
   ];
   for (const file of references) {
     const content = await readFile(path.join(skillDir, "references", file), "utf8");
@@ -64,7 +67,7 @@ test("focused references and schemas exist", async () => {
     );
     assert.equal(schema.$schema, "https://json-schema.org/draft/2020-12/schema");
     if (schema.properties.schema_version) {
-      assert.equal(schema.properties.schema_version.const, "0.2.0");
+      assert.equal(schema.properties.schema_version.const, "0.3.0");
     }
   }
 
@@ -75,6 +78,14 @@ test("focused references and schemas exist", async () => {
     ),
   );
   assert.equal(products.properties.products.items.properties.price.properties.currency.pattern, "^[A-Z]{3}$");
+});
+
+test("published style-context schema copies remain identical", async () => {
+  const [consumer, atlas] = await Promise.all([
+    readFile(path.join(skillDir, "references", "schemas", "style-context.schema.json"), "utf8"),
+    readFile(path.join(skillDir, "references", "style-atlas", "schemas", "style-context.schema.json"), "utf8"),
+  ]);
+  assert.deepEqual(JSON.parse(atlas), JSON.parse(consumer));
 });
 
 test("portable skill ships reusable templates and a render-contract translator", async () => {
@@ -89,6 +100,8 @@ test("portable skill ships reusable templates and a render-contract translator",
     "assets/templates/EXECUTION.md",
     "scripts/build-render-brief.mjs",
     "scripts/migrate-project.mjs",
+    "scripts/resolve-style.mjs",
+    "scripts/validate-style-atlas.mjs",
   ];
 
   await Promise.all(
