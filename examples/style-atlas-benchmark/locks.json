@@ -1,0 +1,29 @@
+{
+  "schema_version": "0.3.0",
+  "benchmark_id": "style-atlas-same-room-v0.3",
+  "privacy_mode": "public-demo",
+  "source": "source/source-room.png",
+  "camera_view": "Phone camera at 5 ft height near the southwest entry, facing north-northeast, 4:3 landscape; preserve the exact viewpoint, framing, perspective, and lens character.",
+  "locked_facts": [
+    "Preserve the exact wall positions, ceiling height, crown profile, and room proportions.",
+    "Preserve both north-wall windows, their size, sill height, trim, view, and spacing.",
+    "Preserve the entry door, radiator, HVAC vent, outlets, and fixed ceiling light in their exact locations.",
+    "Preserve the existing wood-look rental flooring without recoloring, replacing, or covering its full field.",
+    "Preserve the existing 84 × 36 inch warm-gray sofa in its exact position, dimensions, upholstery, and orientation.",
+    "Preserve the existing 60 × 36 inch oak dining table in its exact position, dimensions, finish, and orientation.",
+    "Preserve a clear entry path and readable circulation between the living and dining zones.",
+    "Preserve the same daylight direction and late-afternoon exposure."
+  ],
+  "allowed_changes": [
+    "Add only reversible furniture, rugs, freestanding lighting, textiles, art, storage, books, ceramics, and plants.",
+    "Rearrange only newly introduced movable objects while retained furniture and architecture remain locked.",
+    "Use renter-safe, removable mounting and leave protected windows fully operable."
+  ],
+  "render_contract": {
+    "aspect_ratio": "4:3",
+    "output_resolution": "2K",
+    "fresh_source_edit_per_call": true,
+    "chained_edits": false,
+    "disclaimer": "Visual approximation — verify dimensions, color, material, and availability before purchasing."
+  }
+}

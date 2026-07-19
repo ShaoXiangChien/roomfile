@@ -30,6 +30,12 @@ jobs:
         run: npm test
       - name: Validate portable skill
         run: npm run test:skill
+      - name: Validate committed Style Atlas snapshot
+        run: npm run validate:atlas
+      - name: Check Style Atlas website sync
+        run: npm run sync:styles:check
+      - name: Validate controlled rendering benchmark
+        run: npm run validate:benchmark
       - name: Validate fictional example
         run: npm run validate:example
       - name: Fresh initialization smoke test

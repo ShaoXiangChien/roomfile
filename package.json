@@ -16,6 +16,8 @@
     "validate:example": "node skills/roomfile/scripts/validate-project.mjs --project examples/us-apartment/roomfile --json",
     "smoke:fresh": "node scripts/fresh-install-smoke.mjs",
     "check:privacy": "node scripts/privacy-scan.mjs",
+    "validate:benchmark": "node scripts/validate-style-atlas-benchmark.mjs --benchmark examples/style-atlas-benchmark --json",
+    "validate:atlas": "node skills/roomfile/scripts/validate-style-atlas.mjs --atlas skills/roomfile/references/style-atlas --json",
     "sync:styles": "node website/scripts/sync-style-atlas.mjs",
     "sync:styles:check": "node website/scripts/sync-style-atlas.mjs --check"
   },

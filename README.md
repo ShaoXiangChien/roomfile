@@ -72,7 +72,12 @@ $roomfile style "Compare Bauhaus and Japandi spatial logic"
 
 Each pack combines a quick guide, a cited field guide, structured design
 signals, 25–40 sources, and 12–18 locally bundled visual records with reusable
-licenses and complete attribution. Roomfile uses the research to ask sharper
+image licenses and complete attribution. Roomfile uses progressive loading:
+it reads the small index first, then the relevant quick guide and signals, and
+opens the full field guide or image records only for deeper questions. This
+keeps routine room work focused while preserving a researched path when needed.
+
+Roomfile uses the research to ask sharper
 questions; your inspiration, reactions, room facts, and overrides remain the
 source of truth. Unknown styles and under-covered variants trigger sourced
 live research instead of a guessed match.
@@ -80,6 +85,15 @@ live research instead of a guessed match.
 The skill Atlas is authoritative. The public
 [Roomfile Style Atlas](https://roomfile-shaoxiangchien.ericchien21.chatgpt.site/styles)
 is generated from the same records.
+
+### Controlled benchmark
+
+The [same-room Style Atlas benchmark](examples/style-atlas-benchmark/README.md)
+compares three baseline prompts with three Atlas-guided prompts while holding
+the fictional room, camera, locked architecture, retained furniture, and
+resident evidence constant. It records prompts, costs, provider metadata,
+human review, and failure modes. One stochastic sample is not treated as proof
+of objective superiority.
 
 ## Selected homes
 
@@ -165,12 +179,15 @@ npm test
 npm run test:skill
 npm run validate:example
 npm run check:privacy
+npm run validate:atlas
+npm run validate:benchmark
 npm run sync:styles:check
 npm run test:website
 npm --prefix website run test:e2e
 ```
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for the release workflow.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the release workflow. New field
+guides follow the [Style Atlas research and image-license checklist](skills/roomfile/references/style-atlas/CONTRIBUTING.md).
 
 ## License
 

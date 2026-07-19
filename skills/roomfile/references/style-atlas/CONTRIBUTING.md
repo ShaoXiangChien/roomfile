@@ -30,8 +30,11 @@ outrank Atlas signals. Unknown styles remain eligible for live research.
   statement. This release permits only `CC0-1.0`, `PDM-1.0`, and
   `CC-BY-4.0`. Reject NC, ND, SA, unclear, editorial-only, and
   platform-specific permissions.
-- Fetch the verified direct-original URL sequentially. Never import neighboring
-  category images merely because one file passed review.
+- Fetch the verified direct-original URL sequentially. If the host throttles a
+  large original, an authoritative derivative service from that same verified
+  file page may be used with its acquisition URL and transformation recorded.
+  Never import neighboring category images merely because one file passed
+  review.
 - Keep acquisition originals outside the repository. Create a local derivative
   capped at 1600 px on the long edge, with no unrecorded crop, retouching, or
   color reinterpretation. Record every transformation.

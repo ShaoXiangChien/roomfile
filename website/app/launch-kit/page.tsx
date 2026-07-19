@@ -11,9 +11,9 @@ const journey = [
   },
   {
     number: "02 / 05",
-    kicker: "The taste",
+    kicker: "The taste · the research",
     title: "You do not need to know the style name.",
-    body: "Amber light, walnut, olive, rust, records, books, posters, and plants become specific design evidence.",
+    body: "Your reactions lead. Field-guide research helps the agent ask sharper questions without turning a label into a preset.",
     style: "mid-century" as VisualStyle,
     footer: "Discover what feels like you",
   },
@@ -53,9 +53,9 @@ const workflow = [
   },
   {
     number: "02 / 05",
-    kicker: "$roomfile taste",
-    title: "Discover the taste.",
-    body: "Links, screenshots, likes, dislikes, and contradictions become concrete design evidence.",
+    kicker: "$roomfile taste + style",
+    title: "Research behind the conversation.",
+    body: "Links, likes, dislikes, and contradictions become evidence first; cited field guides add depth only where they help.",
     accent: "rust",
   },
   {
@@ -103,7 +103,7 @@ export default async function LaunchKit({
     return (
       <main className={`launch-canvas launch-workflow accent-${slide.accent}`}>
         <div className="launch-topline">
-          <span>Roomfile</span>
+          <span>Roomfile · v0.3.0</span>
           <span>{slide.number}</span>
         </div>
         <div className="workflow-command">{slide.kicker}</div>
@@ -126,7 +126,7 @@ export default async function LaunchKit({
   return (
     <main className="launch-canvas launch-before-after">
       <div className="launch-topline">
-        <span>Roomfile</span>
+        <span>Roomfile · v0.3.0</span>
         <span>{slide.number}</span>
       </div>
       <div className="launch-grid">
@@ -170,7 +170,7 @@ function HeroAsset({
       </div>
       <div className="launch-bottomline">
         <span>One room · one evolving conversation</span>
-        <span>Open source · tested in Codex</span>
+        <span>Research behind it · measurements beside it</span>
       </div>
     </main>
   );
