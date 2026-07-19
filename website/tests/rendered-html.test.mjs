@@ -133,19 +133,30 @@ test("each Style Atlas index image keeps its own adjacent visible attribution", 
       "utf8",
     ).then(JSON.parse),
   ]);
-  const selectedVisuals = atlas.packs.map((pack, index) => ({
-    pack,
-    visual: pack.visuals[index === 0 ? 0 : index === 1 ? 4 : 1],
+  const selectedFigures = [...index.matchAll(
+    /<figure\b([^>]*class="[^"]*\batlas-entry-plate\b[^"]*"[^>]*)>([\s\S]*?)<\/figure>/g,
+  )].map((match) => ({
+    packId: attribute(match[1], "data-pack-id"),
+    visualId: attribute(match[1], "data-visual-id"),
+    html: match[0],
   }));
 
-  for (const { pack, visual } of selectedVisuals) {
-    const figure = index.match(
-      new RegExp(
-        `<figure[^>]*data-visual-id="${visual.id}"[\\s\\S]*?</figure>`,
-      ),
-    )?.[0];
-    assert.notEqual(figure, undefined, `${pack.id}/${visual.id} figure`);
-    assert.match(figure, /<figcaption/);
+  assert.equal(selectedFigures.length, atlas.packs.length);
+  assert.deepEqual(
+    new Set(selectedFigures.map(({ packId }) => packId)),
+    new Set(atlas.packs.map(({ id }) => id)),
+  );
+
+  for (const figure of selectedFigures) {
+    const pack = atlas.packs.find(({ id }) => id === figure.packId);
+    assert.notEqual(pack, undefined, `${figure.packId} pack`);
+    const visual = pack.visuals.find(({ id }) => id === figure.visualId);
+    assert.notEqual(
+      visual,
+      undefined,
+      `${figure.packId}/${figure.visualId} visual`,
+    );
+    assert.match(figure.html, /<figcaption/);
     for (const value of [
       visual.caption,
       visual.creator,
@@ -155,15 +166,19 @@ test("each Style Atlas index image keeps its own adjacent visible attribution", 
       visual.license_url,
     ]) {
       assert.equal(
-        figure.includes(html(value)),
+        figure.html.includes(html(value)),
         true,
         `${pack.id}/${visual.id}: ${value}`,
       );
     }
   }
 
-  const japandi = selectedVisuals.find(({ pack }) => pack.id === "japandi");
-  assert.equal(japandi.visual.license, "CC-BY-4.0");
+  const japandi = selectedFigures.find(({ packId }) => packId === "japandi");
+  const japandiPack = atlas.packs.find(({ id }) => id === "japandi");
+  const japandiVisual = japandiPack.visuals.find(
+    ({ id }) => id === japandi.visualId,
+  );
+  assert.equal(japandiVisual.license, "CC-BY-4.0");
   assert.match(index, /Sherwin John Carlquist/);
 });
 
@@ -288,4 +303,10 @@ function html(value) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#x27;");
+}
+
+function attribute(attributes, name) {
+  const value = attributes.match(new RegExp(`${name}="([^"]+)"`))?.[1];
+  assert.notEqual(value, undefined, `${name} attribute`);
+  return value;
 }

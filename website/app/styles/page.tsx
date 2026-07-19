@@ -23,20 +23,36 @@ export const metadata: Metadata = {
 const sequence = [
   {
     id: "mid-century-modern",
+    visualId: "M-V1",
     number: "01",
     question: "Which postwar ideas still feel alive in the rooms people collect now?",
   },
   {
     id: "bauhaus",
+    visualId: "B-V5",
     number: "02",
     question: "What changes when Bauhaus begins with making, teaching, and use?",
   },
   {
     id: "japandi",
+    visualId: "J-S2",
     number: "03",
     question: "How can a current hybrid label keep its antecedents distinct?",
   },
 ] as const;
+
+function getEditorialPlate(
+  pack: ReturnType<typeof getPack>,
+  visualId: string,
+) {
+  const plate = pack.visuals.find((visual) => visual.id === visualId);
+  if (!plate) {
+    throw new Error(
+      `Style Atlas index visual "${visualId}" is missing from pack "${pack.id}".`,
+    );
+  }
+  return plate;
+}
 
 export default function StylesIndex() {
   return (
@@ -61,7 +77,7 @@ export default function StylesIndex() {
       <div className="atlas-reading-list shell">
         {sequence.map((story, index) => {
           const pack = getPack(story.id);
-          const plate = pack.visuals[index === 0 ? 0 : index === 1 ? 4 : 1];
+          const plate = getEditorialPlate(pack, story.visualId);
           return (
             <article
               className={`atlas-reading-entry atlas-reading-${index + 1}`}
@@ -70,6 +86,7 @@ export default function StylesIndex() {
               <span className="atlas-entry-folio">{story.number}</span>
               <figure
                 className="atlas-entry-plate"
+                data-pack-id={pack.id}
                 data-visual-id={plate.id}
               >
                 <Link href={`/styles/${pack.id}`} className="atlas-entry-image">
