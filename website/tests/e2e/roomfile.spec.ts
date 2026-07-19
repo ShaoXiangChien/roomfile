@@ -45,6 +45,20 @@ test("homepage supports the design journey interactions", async ({
     page.getByRole("heading", { level: 1, name: "Design your home, together." }),
   ).toBeVisible();
 
+  const atlasConversation = page.locator("#atlas-conversation");
+  await expect(
+    atlasConversation.getByRole("heading", {
+      name: "A deeper understanding of style leads to better design decisions.",
+    }),
+  ).toBeVisible();
+  await expect(atlasConversation.getByRole("img")).toHaveAttribute(
+    "src",
+    /m-v4-m-v4\.jpg$/,
+  );
+  await expect(
+    atlasConversation.getByRole("link", { name: /Explore the Style Atlas/ }),
+  ).toHaveAttribute("href", "/styles");
+
   const install = page.locator("#install");
   await install.getByRole("button", { name: "Copy" }).click();
   await expect(install.getByRole("button", { name: "Copied" })).toBeVisible();
