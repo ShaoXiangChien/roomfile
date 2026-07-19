@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://roomfile.dev/style-atlas/schemas/style-pack.schema.json",
+  "title": "Roomfile Style Atlas pack",
+  "type": "object",
+  "required": ["schema_version", "id", "name", "aliases", "version", "reviewed_at", "source_ids", "visual_ids"],
+  "properties": {
+    "schema_version": { "const": "0.3.0" },
+    "id": { "type": "string", "minLength": 1 },
+    "name": { "type": "string", "minLength": 1 },
+    "aliases": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+(?:[-+][0-9A-Za-z.-]+)?$" },
+    "reviewed_at": { "type": "string", "format": "date" },
+    "source_ids": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "visual_ids": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+  },
+  "additionalProperties": false
+}

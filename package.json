@@ -1,6 +1,6 @@
 {
   "name": "roomfile",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A project-based interior design Agent Skill for real rooms, constraints, fit checks, and sourcing.",
   "private": true,
   "type": "module",

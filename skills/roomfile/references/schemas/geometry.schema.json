@@ -5,7 +5,7 @@
   "type": "object",
   "required": ["schema_version", "unit", "boundary", "openings", "fixed_elements", "clearance_zones"],
   "properties": {
-    "schema_version": { "const": "0.2.0" },
+    "schema_version": { "const": "0.3.0" },
     "unit": {
       "anyOf": [
         { "enum": ["in", "cm"] },

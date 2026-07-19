@@ -67,7 +67,22 @@ test("validator accepts an initialized project and reports its artifacts", async
   assert.equal(report.artifacts.some((item) => item.endsWith("geometry.json")), true);
 });
 
-test("validator rejects a v0.2 project whose shopping profile is incomplete", async () => {
+test("validator rejects v0.3 style context with more than four reference images", async () => {
+  const target = await mkdtemp(path.join(tmpdir(), "roomfile-style-context-"));
+  const profilePath = await writeProfile(target);
+  run(initScript, ["--target", target, "--privacy", "public-demo", "--profile", profilePath, "--json"], target);
+  const contextPath = path.join(target, "roomfile", "inspiration", "style-context.json");
+  const context = JSON.parse(await readFile(contextPath, "utf8"));
+  context.reference_images = Array.from({ length: 5 }, (_, index) => ({
+    pack_id: "warm-minimal", visual_id: `visual-${index}`, path: `image-${index}.jpg`, reason: "test",
+  }));
+  await writeFile(contextPath, JSON.stringify(context, null, 2));
+  const result = run(validateScript, ["--project", path.join(target, "roomfile"), "--json"], target);
+  assert.equal(result.status, 1, result.stderr || result.stdout);
+  assert.equal(JSON.parse(result.stdout).errors.some((item) => item.code === "invalid_style_context"), true);
+});
+
+test("validator rejects a v0.3 project whose shopping profile is incomplete", async () => {
   const target = await mkdtemp(path.join(tmpdir(), "roomfile-incomplete-"));
   run(initScript, ["--target", target, "--privacy", "public-demo", "--json"], target);
 
@@ -252,7 +267,7 @@ test("validator rejects approved concepts without an approved decision", async (
     path.join(conceptDirectory, "concept.json"),
     JSON.stringify(
       {
-        schema_version: "0.2.0",
+        schema_version: "0.3.0",
         id: "quiet-modern",
         version: 1,
         status: "approved",

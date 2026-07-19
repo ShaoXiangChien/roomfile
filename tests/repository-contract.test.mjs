@@ -31,7 +31,7 @@ test("repository has public launch and licensing contracts", async () => {
 
   const pkg = JSON.parse(packageJson);
   assert.equal(pkg.name, "roomfile");
-  assert.equal(pkg.version, "0.2.0");
+  assert.equal(pkg.version, "0.3.0");
   assert.equal(pkg.license, "Apache-2.0");
   assert.equal(pkg.scripts.test.includes("node --test"), true);
 });

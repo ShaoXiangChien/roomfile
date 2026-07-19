@@ -1,9 +1,10 @@
 #!/usr/bin/env node
-import { readdir, readFile, writeFile } from "node:fs/promises";
+import { access, mkdir, readdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import {
   SCHEMA_VERSION,
   SUPPORTED_SCHEMA_VERSIONS,
+  emptyStyleContext,
   failInput,
   parseArgs,
   printResult,
@@ -24,43 +25,39 @@ try {
   if (!SUPPORTED_SCHEMA_VERSIONS.has(manifest.schema_version)) {
     throw new Error(`unsupported schema ${manifest.schema_version}`);
   }
-  if (manifest.schema_version === SCHEMA_VERSION) {
-    printResult(
-      result(
-        "success",
-        [],
-        [`Project already uses schema ${SCHEMA_VERSION}.`],
-        [manifestPath],
-      ),
-      asJson,
-    );
-  } else {
-    const jsonFiles = await collectJsonFiles(project);
-    const artifacts = [];
-    for (const file of jsonFiles) {
-      const value = JSON.parse(await readFile(file, "utf8"));
-      if (!value || typeof value !== "object" || !value.schema_version) continue;
-      if (!SUPPORTED_SCHEMA_VERSIONS.has(value.schema_version)) {
-        throw new Error(`${file} uses unsupported schema ${value.schema_version}`);
-      }
-      value.schema_version = SCHEMA_VERSION;
-      if (file === manifestPath) {
-        const ready =
-          Boolean(value.country) &&
-          Boolean(value.currency) &&
-          ["in", "cm"].includes(value.measurement_unit) &&
-          Array.isArray(value.preferred_retailers) &&
-          value.preferred_retailers.length > 0;
-        value.setup_status = ready ? "ready" : "needs-profile";
-        if (ready) value.retailer_strategy = "user-preferred";
-      }
-      await writeFile(file, `${JSON.stringify(value, null, 2)}\n`);
-      artifacts.push(file);
+  const jsonFiles = await collectJsonFiles(project);
+  const artifacts = [];
+  for (const file of jsonFiles) {
+    const value = JSON.parse(await readFile(file, "utf8"));
+    if (!value || typeof value !== "object" || !value.schema_version) continue;
+    if (!SUPPORTED_SCHEMA_VERSIONS.has(value.schema_version)) {
+      throw new Error(`${file} uses unsupported schema ${value.schema_version}`);
     }
-    printResult(result("success", [], [], artifacts), asJson);
+    if (value.schema_version === SCHEMA_VERSION) continue;
+    value.schema_version = SCHEMA_VERSION;
+    await writeFile(file, `${JSON.stringify(value, null, 2)}\n`);
+    artifacts.push(file);
   }
+  const styleContextPath = path.join(project, "inspiration", "style-context.json");
+  if (!(await exists(styleContextPath))) {
+    await mkdir(path.dirname(styleContextPath), { recursive: true });
+    await writeFile(styleContextPath, `${JSON.stringify(emptyStyleContext(), null, 2)}\n`);
+    artifacts.push(styleContextPath);
+  }
+  const warnings =
+    artifacts.length === 0 ? [`Project already uses schema ${SCHEMA_VERSION}.`] : [];
+  printResult(result("success", [], warnings, artifacts.length ? artifacts : [manifestPath]), asJson);
 } catch (error) {
   failInput(error, asJson);
+}
+
+async function exists(file) {
+  try {
+    await access(file);
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 async function collectJsonFiles(directory) {

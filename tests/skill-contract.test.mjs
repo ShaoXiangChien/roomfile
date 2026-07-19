@@ -53,6 +53,7 @@ test("focused references and schemas exist", async () => {
     "products.schema.json",
     "render-request.schema.json",
     "profile.schema.json",
+    "style-context.schema.json",
   ];
   for (const file of references) {
     const content = await readFile(path.join(skillDir, "references", file), "utf8");
@@ -64,7 +65,7 @@ test("focused references and schemas exist", async () => {
     );
     assert.equal(schema.$schema, "https://json-schema.org/draft/2020-12/schema");
     if (schema.properties.schema_version) {
-      assert.equal(schema.properties.schema_version.const, "0.2.0");
+      assert.equal(schema.properties.schema_version.const, "0.3.0");
     }
   }
 
@@ -89,6 +90,8 @@ test("portable skill ships reusable templates and a render-contract translator",
     "assets/templates/EXECUTION.md",
     "scripts/build-render-brief.mjs",
     "scripts/migrate-project.mjs",
+    "scripts/resolve-style.mjs",
+    "scripts/validate-style-atlas.mjs",
   ];
 
   await Promise.all(
