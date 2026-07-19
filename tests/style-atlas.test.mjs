@@ -18,7 +18,7 @@ async function createAtlas() {
   const packs = [
     { id: "warm-minimal", name: "Warm Minimal", aliases: ["warm-minimalism"] },
     { id: "soft-industrial", name: "Soft Industrial", aliases: ["soft industrial style"] },
-    { id: "japanese-modern", name: "和風モダン", aliases: ["和風", "Japanese modern"] },
+    { id: "japanese-modern", name: "和風モダン", aliases: ["和風", "Japanese modern", "कला"] },
   ];
   await writeFile(path.join(atlas, "index.json"), JSON.stringify({ schema_version: "0.3.0", packs }, null, 2));
   for (const pack of packs) await createPack(atlas, pack);
@@ -96,6 +96,13 @@ test("style resolver sends an unknown Unicode style to live research", async () 
   assert.equal(JSON.parse(result.stdout).status, "needs-live-research");
 });
 
+test("style resolver preserves combining marks instead of false-matching a distinct style", async () => {
+  const atlas = await createAtlas();
+  const result = run(resolveScript, ["--atlas", atlas, "--style", "कली", "--json"], atlas);
+  assert.equal(result.status, 0, result.stderr || result.stdout);
+  assert.equal(JSON.parse(result.stdout).status, "needs-live-research");
+});
+
 test("atlas validator accepts a complete three-pack atlas", async () => {
   const atlas = await createAtlas();
   const result = run(validateScript, ["--atlas", atlas, "--json"], atlas);
@@ -122,4 +129,18 @@ test("atlas validator reports invalid source count, license, hash, and reference
   for (const code of ["invalid_source_count", "invalid_license", "hash_mismatch", "unknown_source_reference"]) {
     assert.equal(codes.includes(code), true, `${code} missing`);
   }
+});
+
+test("atlas validator rejects an impossible pack review date", async () => {
+  const atlas = await createAtlas();
+  const packPath = path.join(atlas, "warm-minimal", "style-pack.json");
+  const pack = JSON.parse(await readFile(packPath, "utf8"));
+  pack.reviewed_at = "2026-02-30";
+  await writeFile(packPath, JSON.stringify(pack, null, 2));
+  const result = run(validateScript, ["--atlas", atlas, "--json"], atlas);
+  assert.equal(result.status, 1, result.stderr || result.stdout);
+  assert.equal(
+    JSON.parse(result.stdout).errors.some((item) => item.code === "invalid_review_date"),
+    true,
+  );
 });
