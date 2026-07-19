@@ -80,8 +80,8 @@ The following failures were observed before the corresponding implementation:
 - `npm --prefix website run test:e2e`: 11 passed, 1 expected skip.
 - `git diff --check`: passed.
 - Root `npm ci`: completed with 0 reported vulnerabilities.
-- Website `npm ci`: completed; the pre-existing dependency tree reports 9
-  audit findings (2 low, 1 moderate, 6 high).
+- Website tooling was upgraded to current compatible Cloudflare/Vite releases;
+  `npm audit` reports 0 vulnerabilities.
 - Local lychee command matching CI: 15 OK, 0 errors, 6 production-domain URLs
   excluded, 1 redirect.
 - `gitleaks git --redact --verbose`: no secrets found across 39 commits,
@@ -203,10 +203,6 @@ release gate; neither the report nor release notes claim that gate has passed.
 
 1. Deploy the saved site version, then run the separate production URL and
    smoke gate. No production availability claim is made before that check.
-2. The website dependency audit currently reports 9 findings (2 low, 1
-   moderate, 6 high). This did not block the existing project gate, but the
-   dependency owners should review and remediate it separately before release
-   if their policy treats audit severity as blocking.
-3. Before publishing v0.3.0, rerun the full gate against the final integrated
+2. Before publishing v0.3.0, rerun the full gate against the final integrated
    branch because this task shares a worktree history with other implementation
    work.

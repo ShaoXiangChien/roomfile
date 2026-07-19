@@ -80,6 +80,7 @@ Pre-deployment verification recorded on July 19, 2026:
 - `npm --prefix website run lint`: passed.
 - `npm --prefix website run test:e2e`: 11 tests passed and one intentionally
   skipped.
+- `npm audit --prefix website`: 0 vulnerabilities.
 - `git diff --check`: passed.
 - `gitleaks git --redact --verbose`: no committed-history secrets found.
 
