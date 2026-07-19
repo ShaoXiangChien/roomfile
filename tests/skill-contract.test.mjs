@@ -7,6 +7,7 @@ const skillDir = path.resolve("skills/roomfile");
 const commands = [
   "init",
   "status",
+  "style",
   "taste",
   "capture",
   "brief",
@@ -43,6 +44,7 @@ test("focused references and schemas exist", async () => {
     "workflows.md",
     "data-model.md",
     "rendering.md",
+    "style-atlas.md",
     "sourcing.md",
     "safety.md",
   ];

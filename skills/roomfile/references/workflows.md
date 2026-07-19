@@ -4,13 +4,36 @@ Use one active room at a time. Persist each result before moving to the next
 stage so another agent can resume without asking the user to upload the same
 room again.
 
+Apply this evidence hierarchy to every style decision:
+
+1. Measured and observed room truth, including locked architecture.
+2. The user's concrete reactions, inspiration observations, anti-references,
+   and explicit overrides.
+3. Adopted pack signals.
+4. General pack guidance.
+
+A style label alone is a hypothesis, never sufficient render evidence. User evidence
+remains authoritative when it conflicts with the Atlas.
+
 ## `status`
 
 Read the project manifest and active room. Report: completed stages, missing
 shopping-profile fields, critical facts, budget committed, approved concept,
 product evidence freshness, and two or three useful next commands. Recommend
 completing `setup_status: needs-profile` before sourcing. Do not mutate the
-project.
+project. Mention missing or incomplete style context only when it materially blocks
+the next design decision; it is not mandatory setup.
+
+## `style`
+
+Accept a style name, comparison, or research question. Follow
+`style-atlas.md`: resolve aliases against the index, progressively load the
+matched packs, and explain historical core, current expressions, misreadings,
+relevant visuals, and questions for this user's room. Compare design logic,
+composition, materials, density, use, and framing rather than palette alone.
+When coverage is unknown or insufficient, perform cited live research and save
+the note under `inspiration/research/`. Never guess the nearest pack or treat
+built-in packs as the styles Roomfile supports.
 
 ## `taste`
 
@@ -18,7 +41,11 @@ Accept public links, screenshots, saved product images, or natural-language
 reactions. For each source, ask what the user likes or dislikes when the answer
 is not obvious. Record evidence by color, material, form, era, density,
 contrast, lighting, and feeling. Maintain anti-references and contradictions.
-Summarize a working hypothesis in `STYLE.md`; do not force a single style label.
+Decompose that evidence before resolving any label. Use the Atlas to ask
+sharper questions, then write adopted, rejected, uncertain, or overridden pack
+signals with provenance to `inspiration/style-context.json`. Multiple packs
+or zero packs are valid. Summarize the result in `STYLE.md`; do not force a
+single style label.
 
 ## `capture`
 
@@ -33,26 +60,29 @@ when they materially affect the next decision.
 
 Combine purpose, household, taste evidence, inventory, rental restrictions,
 budget, geometry, and unresolved questions. Separate hard constraints from
-preferences. Run validation. Present the brief for approval before generating
-concepts.
+preferences. Summarize adopted, rejected, and uncertain signals plus user
+overrides and contradictions. A brief does not require a pack. Run validation,
+then present the brief for approval before generating concepts.
 
 ## `explore`
 
 Create three directions by default so the user can compare materially different
 compositions and design logic, not only color. Derive every direction from the
-user's style evidence; accept arbitrary style strings and enforce no style
-allowlist. Mid-century Modern, Bauhaus, and Japandi are public-demo examples,
-not presets. Run additional rounds or use different direction counts when the
-user asks. Write `concept.json` before rendering. Preserve canonical viewpoint
-and locked architecture. Compare directions by feeling, materials, furniture
-strategy, budget pressure, maintenance, and likely sourcing difficulty.
+user's evidence. Use pack knowledge to make composition, material, density, and
+use materially different, but never turn built-in packs into presets or an
+allowlist. Accept any style. Run additional rounds or use different direction
+counts when the user asks. Write `concept.json` before rendering. Preserve
+canonical viewpoint and locked architecture. Compare directions by feeling,
+materials, furniture strategy, budget pressure, maintenance, and likely
+sourcing difficulty.
 
 ## `refine`
 
 Select one concept ID and create a new version. Repeat locked architectural
 facts and retained products in the render request. Change only the requested
 elements. Record interaction continuity in `.runtime/render-sessions.json`.
-Preserve the previous version and the reason for each revision.
+Preserve the previous version and the reason for each revision. Retain pack refs and
+user overrides; change only the style signals the user requested.
 
 ## `place`
 
@@ -85,5 +115,8 @@ on-site verification checklist.
 
 Run project validation and fit checking. Inspect render locks, critical
 measurements, stale retailer evidence, seller changes, unavailable items,
-budget, alternatives, rental restrictions, and approval state. Never report
-the room ready to execute while critical errors remain.
+budget, alternatives, rental restrictions, and approval state. Also flag a
+render that used only a style label, stale pack refs, pack signals that
+overrode user evidence, unlicensed reference images, or invented historical
+or cultural claims. Never report the room ready to execute while critical
+errors remain.

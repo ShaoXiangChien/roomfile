@@ -25,6 +25,7 @@ Use `$roomfile` without arguments as `status`. Route explicit commands:
 |---|---|
 | `init` | Initialize a private room project and collect region, units, budget, retailers, constraints, and rendering preferences. |
 | `status` | Inspect completeness and recommend the next actions. |
+| `style` | Research a style, comparison, or design-history question without treating a label as the user's taste. |
 | `taste` | Convert inspiration and reactions into evidence-backed preferences. |
 | `capture` | Record canonical photos, measurements, fixed elements, and uncertainty. |
 | `brief` | Create an approval-ready room design brief. |
@@ -37,9 +38,18 @@ Use `$roomfile` without arguments as `status`. Route explicit commands:
 
 Read `references/workflows.md` for command procedures.
 
+For `style`, `taste`, `brief`, `explore`, `refine`, or style-aware rendering,
+read `references/style-atlas.md`. The Atlas sharpens the conversation; it is
+neither a preset library nor a style allowlist. Concrete user evidence always
+outranks pack guidance.
+
 ## Start from project truth
 
-Before any command except `init`:
+`style` may answer a general research question without an initialized project.
+Persist live research only when a project exists; otherwise provide cited
+results in the response and offer `init`.
+
+Before any project command except `init`:
 
 1. Locate `roomfile/roomfile.json` from the working directory or the user-given
    project path.

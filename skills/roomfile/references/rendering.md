@@ -32,6 +32,11 @@ evidence, locked architectural facts, retained inventory, allowed changes,
 product references, camera viewpoint, output path, and the mandatory visual
 approximation disclaimer.
 
+For v0.3 requests, optionally embed the complete
+`inspiration/style-context.json` as `style_context`. Requests without that
+field remain compatible. The brief builder validates the shared contract and
+loads pack guidance from the portable Atlas.
+
 Paths in a concept's `render-request.json` are relative to the active room
 directory (`rooms/<slug>/`), even though the request is stored below
 `concepts/<concept-id>/`.
@@ -39,6 +44,17 @@ directory (`rooms/<slug>/`), even though the request is stored below
 Use positive visible constraints. State that walls, windows, doors, flooring,
 ceiling, vents, outlets, fixed lighting, and camera viewpoint MUST remain
 unchanged when locked. Repeat the most important locks in every refinement.
+
+The provider-ready style prompt uses this fixed order: room locks, user
+overrides, adopted signals, legacy `style_evidence`, then general pack
+guidance. Rejected signals and pack clichés appear only in a separate negative
+guidance section. The builder resolves at most four images declared in
+`visuals.json`, rejects traversal and pack or visual mismatches, and lists
+public Atlas paths separately from private canonical room inputs. Atlas images
+do not replace consent for private room-photo processing.
+
+Every output is a visual approximation. Deterministic fit checks and structured
+measurements remain authoritative.
 
 ## Continuity
 
