@@ -7,11 +7,11 @@ dimensions, byte size, and SHA-256 are also preserved in `visuals.json`.
 
 ## J-S1 — Teahouse interior view in Katsura Imperial Villa, Japan
 
-Sherwin John Carlquist, Teahouse interior view in Katsura Imperial Villa, Japan (June 1963), Cal Poly Pomona University Library / DPLA, CC-BY-4.0, via Wikimedia Commons.
+Sherwin John Carlquist, Teahouse interior view in Katsura Imperial Villa, Japan (June 1963), Botanical Research Institute of Texas (repository); The Portal to Texas History (DPLA partner), CC-BY-4.0, via Wikimedia Commons.
 
 - Creator: Sherwin John Carlquist
 - Work/date: Teahouse interior view in Katsura Imperial Villa, Japan; June 1963
-- Institution: Cal Poly Pomona University Library / DPLA
+- Institution: Botanical Research Institute of Texas (repository); The Portal to Texas History (DPLA partner)
 - License: [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/)
 - Authoritative file page: https://commons.wikimedia.org/wiki/File:(Teahouse_interior_view_in_Katsura_Imperial_Villa,_Japan)_-_DPLA_-_5b2151951efa5b557747380894b5a813.jpg
 - Direct original: https://upload.wikimedia.org/wikipedia/commons/e/e5/%28Teahouse_interior_view_in_Katsura_Imperial_Villa%2C_Japan%29_-_DPLA_-_5b2151951efa5b557747380894b5a813.jpg
@@ -21,11 +21,11 @@ Sherwin John Carlquist, Teahouse interior view in Katsura Imperial Villa, Japan 
 
 ## J-S2 — Shōkin-tei interior view in Katsura Imperial Villa, Japan
 
-Sherwin John Carlquist, Shōkin-tei interior view in Katsura Imperial Villa, Japan (August 1963), Cal Poly Pomona University Library / DPLA, CC-BY-4.0, via Wikimedia Commons.
+Sherwin John Carlquist, Shōkin-tei interior view in Katsura Imperial Villa, Japan (August 1963), Botanical Research Institute of Texas (repository); The Portal to Texas History (DPLA partner), CC-BY-4.0, via Wikimedia Commons.
 
 - Creator: Sherwin John Carlquist
 - Work/date: Shōkin-tei interior view in Katsura Imperial Villa, Japan; August 1963
-- Institution: Cal Poly Pomona University Library / DPLA
+- Institution: Botanical Research Institute of Texas (repository); The Portal to Texas History (DPLA partner)
 - License: [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/)
 - Authoritative file page: https://commons.wikimedia.org/wiki/File:(Sh%C5%8Dkin-tei_interior_view_in_Katsura_Imperial_Villa,_Japan)_-_DPLA_-_77d770a446b47243a33147c61b107151.jpg
 - Direct original: https://upload.wikimedia.org/wikipedia/commons/8/89/%28Sh%C5%8Dkin-tei_interior_view_in_Katsura_Imperial_Villa%2C_Japan%29_-_DPLA_-_77d770a446b47243a33147c61b107151.jpg
@@ -35,11 +35,11 @@ Sherwin John Carlquist, Shōkin-tei interior view in Katsura Imperial Villa, Jap
 
 ## J-S3 — Tea ceremony preparation interior space in Katsura Imperial Villa, Japan
 
-Sherwin John Carlquist, Tea ceremony preparation interior space in Katsura Imperial Villa, Japan (August 1963), Cal Poly Pomona University Library / DPLA, CC-BY-4.0, via Wikimedia Commons.
+Sherwin John Carlquist, Tea ceremony preparation interior space in Katsura Imperial Villa, Japan (August 1963), Botanical Research Institute of Texas (repository); The Portal to Texas History (DPLA partner), CC-BY-4.0, via Wikimedia Commons.
 
 - Creator: Sherwin John Carlquist
 - Work/date: Tea ceremony preparation interior space in Katsura Imperial Villa, Japan; August 1963
-- Institution: Cal Poly Pomona University Library / DPLA
+- Institution: Botanical Research Institute of Texas (repository); The Portal to Texas History (DPLA partner)
 - License: [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/)
 - Authoritative file page: https://commons.wikimedia.org/wiki/File:(Tea_ceremony_preparation_interior_space_in_Katsura_Imperial_Villa,_Japan)_-_DPLA_-_0712ee1475c3f853f3d6098cbfc13c65.jpg
 - Direct original: https://upload.wikimedia.org/wikipedia/commons/8/81/%28Tea_ceremony_preparation_interior_space_in_Katsura_Imperial_Villa%2C_Japan%29_-_DPLA_-_0712ee1475c3f853f3d6098cbfc13c65.jpg
@@ -49,11 +49,11 @@ Sherwin John Carlquist, Tea ceremony preparation interior space in Katsura Imper
 
 ## J-S4 — Checkered wall inside Katsura Imperial Villa, Japan
 
-Sherwin John Carlquist, Checkered wall inside Katsura Imperial Villa, Japan (August 1963), Cal Poly Pomona University Library / DPLA, CC-BY-4.0, via Wikimedia Commons.
+Sherwin John Carlquist, Checkered wall inside Katsura Imperial Villa, Japan (August 1963), Botanical Research Institute of Texas (repository); The Portal to Texas History (DPLA partner), CC-BY-4.0, via Wikimedia Commons.
 
 - Creator: Sherwin John Carlquist
 - Work/date: Checkered wall inside Katsura Imperial Villa, Japan; August 1963
-- Institution: Cal Poly Pomona University Library / DPLA
+- Institution: Botanical Research Institute of Texas (repository); The Portal to Texas History (DPLA partner)
 - License: [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/)
 - Authoritative file page: https://commons.wikimedia.org/wiki/File:(Checkered_wall_inside_Katsura_Imperial_Villa,_Japan)_-_DPLA_-_552c02829b6a3d5e0c03b3be07c1343e.jpg
 - Direct original: https://upload.wikimedia.org/wikipedia/commons/2/23/%28Checkered_wall_inside_Katsura_Imperial_Villa%2C_Japan%29_-_DPLA_-_552c02829b6a3d5e0c03b3be07c1343e.jpg

@@ -97,6 +97,7 @@ async function validatePack(atlas, directory, declared, errors, artifacts) {
   let signals;
   let sources;
   let visuals;
+  let attribution;
   try {
     manifest = await readRequiredJson(files.manifest, artifacts);
     pack = await readRequiredJson(files.pack, artifacts);
@@ -105,7 +106,7 @@ async function validatePack(atlas, directory, declared, errors, artifacts) {
     signals = await readRequiredJson(files.signals, artifacts);
     sources = await readRequiredJson(files.sources, artifacts);
     visuals = await readRequiredJson(files.visuals, artifacts);
-    await readRequiredText(files.attribution, artifacts);
+    attribution = await readRequiredText(files.attribution, artifacts);
     const imageDirectory = path.join(root, "images");
     if (!(await stat(imageDirectory)).isDirectory()) throw new Error(`Required directory is missing: ${imageDirectory}`);
     artifacts.push(imageDirectory);
@@ -151,9 +152,6 @@ async function validatePack(atlas, directory, declared, errors, artifacts) {
   if (guideWordCount < 800 || guideWordCount > 1200) {
     issue(errors, "invalid_quick_guide_length", `Quick guide must contain 800 to 1200 words; found ${guideWordCount}.`, declared.id);
   }
-  if (!sourceCitation(declared.id).test(field)) {
-    issue(errors, "missing_field_guide_citations", "Field guide must cite this pack's source IDs.", declared.id);
-  }
   for (const category of requiredSignals) {
     if (!Array.isArray(signals?.[category]) || !signals[category].length) {
       issue(errors, "missing_signal_category", `signals.json needs a nonempty ${category} array.`, declared.id);
@@ -169,6 +167,35 @@ async function validatePack(atlas, directory, declared, errors, artifacts) {
   }
   const sourceIds = ids(sourceList, "source", errors, declared.id);
   const visualIds = ids(visualList, "visual", errors, declared.id);
+  if (
+    Array.isArray(pack.source_ids)
+    && Array.isArray(pack.visual_ids)
+    && (
+      !coversInventory(pack.source_ids, sourceIds)
+      || !coversInventory(pack.visual_ids, visualIds)
+    )
+  ) {
+    issue(
+      errors,
+      "incomplete_pack_references",
+      "Pack source_ids and visual_ids must cover their complete inventories exactly once.",
+      declared.id,
+    );
+  }
+  const citations = fieldGuideCitations(field);
+  if (!citations.length) {
+    issue(errors, "missing_field_guide_citations", "Field guide must cite this pack's source IDs.", declared.id);
+  }
+  for (const citation of citations) {
+    if (!sourceIds.has(citation)) {
+      issue(
+        errors,
+        "unknown_field_guide_citation",
+        `Field guide cites missing source ${citation}.`,
+        declared.id,
+      );
+    }
+  }
   const tierOne = sourceList.filter((source) => Number(source?.tier) === 1).length;
   const contemporary = sourceList.filter((source) => source?.kind === "contemporary").length;
   const critical = sourceList.filter((source) => source?.kind === "critical").length;
@@ -184,7 +211,10 @@ async function validatePack(atlas, directory, declared, errors, artifacts) {
   }
   for (const id of pack.source_ids ?? []) if (!sourceIds.has(id)) issue(errors, "unknown_source_reference", `Pack references missing source ${id}.`, declared.id);
   for (const id of pack.visual_ids ?? []) if (!visualIds.has(id)) issue(errors, "unknown_visual_reference", `Pack references missing visual ${id}.`, declared.id);
-  for (const visual of visualList) await validateVisual(root, visual, sourceIds, errors, artifacts, declared.id);
+  for (const visual of visualList) {
+    validateVisualAttribution(attribution, visual, errors, declared.id);
+    await validateVisual(root, visual, sourceIds, errors, artifacts, declared.id);
+  }
 }
 
 async function validateVisual(root, visual, sourceIds, errors, artifacts, packId) {
@@ -215,18 +245,120 @@ async function validateVisual(root, visual, sourceIds, errors, artifacts, packId
     return;
   }
   const imagePath = path.join(root, visual.path);
+  let bytes;
   try {
-    const bytes = await readFile(imagePath);
+    bytes = await readFile(imagePath);
     artifacts.push(imagePath);
-    const actual = createHash("sha256").update(bytes).digest("hex");
-    if (visual.sha256 !== actual) issue(errors, "hash_mismatch", `Visual ${id} SHA-256 does not match its image.`, packId, id);
-    if (visual.byte_size !== bytes.byteLength) issue(errors, "byte_size_mismatch", `Visual ${id} byte size does not match its image.`, packId, id);
-    if (!Number.isInteger(visual.width) || !Number.isInteger(visual.height) || visual.width < 1 || visual.height < 1 || visual.width > 1600 || visual.height > 1600) {
-      issue(errors, "invalid_image_dimensions", `Visual ${id} needs positive dimensions capped at 1600 px.`, packId, id);
-    }
   } catch {
     issue(errors, "missing_image_file", `Visual ${id} image file does not exist.`, packId, id);
+    return;
   }
+  const actual = createHash("sha256").update(bytes).digest("hex");
+  if (visual.sha256 !== actual) issue(errors, "hash_mismatch", `Visual ${id} SHA-256 does not match its image.`, packId, id);
+  if (visual.byte_size !== bytes.byteLength) issue(errors, "byte_size_mismatch", `Visual ${id} byte size does not match its image.`, packId, id);
+  const declaredDimensionsValid = (
+    Number.isInteger(visual.width)
+    && Number.isInteger(visual.height)
+    && visual.width > 0
+    && visual.height > 0
+    && visual.width <= 1600
+    && visual.height <= 1600
+  );
+  if (!declaredDimensionsValid) {
+    issue(errors, "invalid_image_dimensions", `Visual ${id} needs positive dimensions capped at 1600 px.`, packId, id);
+  }
+  let decoded;
+  try {
+    decoded = jpegDimensions(bytes);
+  } catch {
+    issue(errors, "malformed_image", `Visual ${id} is not a decodable JPEG with a valid frame.`, packId, id);
+    return;
+  }
+  if (decoded.width > 1600 || decoded.height > 1600) {
+    issue(errors, "invalid_image_dimensions", `Visual ${id} decoded dimensions exceed the 1600 px cap.`, packId, id);
+  }
+  if (
+    Number.isInteger(visual.width)
+    && Number.isInteger(visual.height)
+    && (visual.width !== decoded.width || visual.height !== decoded.height)
+  ) {
+    issue(
+      errors,
+      "image_dimension_mismatch",
+      `Visual ${id} records ${visual.width} × ${visual.height}px but decodes to ${decoded.width} × ${decoded.height}px.`,
+      packId,
+      id,
+    );
+  }
+}
+
+function validateVisualAttribution(markdown, visual, errors, packId) {
+  const id = visual?.id || "unknown";
+  const section = attributionSection(markdown, id);
+  const required = [
+    "creator",
+    "work_title",
+    "work_date",
+    "institution",
+    "license",
+    "license_url",
+    "source_page",
+    "original_url",
+    "attribution",
+  ];
+  const missing = !section
+    ? required
+    : required.filter((field) => typeof visual?.[field] !== "string" || !section.includes(visual[field]));
+  if (missing.length) {
+    issue(
+      errors,
+      "missing_visual_attribution",
+      `ATTRIBUTION.md section for ${id} is missing: ${missing.join(", ")}.`,
+      packId,
+      id,
+    );
+  }
+}
+
+function attributionSection(markdown, id) {
+  const heading = new RegExp(`^##\\s+${escapeRegExp(id)}\\b.*$`, "m");
+  const match = heading.exec(markdown);
+  if (!match) return "";
+  const rest = markdown.slice(match.index);
+  const next = rest.slice(match[0].length).search(/^##\s+/m);
+  return next < 0 ? rest : rest.slice(0, match[0].length + next);
+}
+
+function jpegDimensions(bytes) {
+  if (bytes.length < 4 || bytes[0] !== 0xff || bytes[1] !== 0xd8) {
+    throw new Error("Missing JPEG start-of-image marker.");
+  }
+  const startOfFrame = new Set([
+    0xc0, 0xc1, 0xc2, 0xc3, 0xc5, 0xc6, 0xc7,
+    0xc9, 0xca, 0xcb, 0xcd, 0xce, 0xcf,
+  ]);
+  let offset = 2;
+  while (offset < bytes.length) {
+    if (bytes[offset] !== 0xff) throw new Error("Invalid JPEG marker.");
+    while (offset < bytes.length && bytes[offset] === 0xff) offset += 1;
+    if (offset >= bytes.length) throw new Error("Truncated JPEG marker.");
+    const marker = bytes[offset];
+    offset += 1;
+    if (marker === 0xd9 || marker === 0xda) break;
+    if (marker === 0x01 || (marker >= 0xd0 && marker <= 0xd7)) continue;
+    if (offset + 2 > bytes.length) throw new Error("Truncated JPEG segment.");
+    const length = bytes.readUInt16BE(offset);
+    if (length < 2 || offset + length > bytes.length) throw new Error("Invalid JPEG segment length.");
+    if (startOfFrame.has(marker)) {
+      if (length < 7) throw new Error("Truncated JPEG frame.");
+      const height = bytes.readUInt16BE(offset + 3);
+      const width = bytes.readUInt16BE(offset + 5);
+      if (width < 1 || height < 1) throw new Error("Invalid JPEG dimensions.");
+      return { width, height };
+    }
+    offset += length;
+  }
+  throw new Error("JPEG frame not found.");
 }
 
 function ids(values, kind, errors, packId) {
@@ -284,9 +416,18 @@ function words(markdown) {
     .length;
 }
 
-function sourceCitation(packId) {
-  const prefix = packId === "mid-century-modern" ? "M" : packId === "bauhaus" ? "B" : packId === "japandi" ? "J" : "[A-Za-z0-9]";
-  return new RegExp(`\\[${prefix}-[ABC]\\d+\\]`);
+function coversInventory(references, inventory) {
+  return references.length === inventory.size && new Set(references).size === inventory.size
+    && references.every((id) => inventory.has(id));
+}
+
+function fieldGuideCitations(markdown) {
+  return [...markdown.matchAll(/\[([A-Za-z0-9]+(?:-[A-Za-z0-9]+)+)\]/g)]
+    .map((match) => match[1]);
+}
+
+function escapeRegExp(value) {
+  return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
 function validVersion(value) {

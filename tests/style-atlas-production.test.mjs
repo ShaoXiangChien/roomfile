@@ -183,6 +183,7 @@ test("all production visuals have allowlisted rights, complete provenance, and v
     const root = path.join(styleRoot, id);
     const pack = await json(path.join(root, "style-pack.json"));
     const { visuals } = await json(path.join(root, "visuals.json"));
+    const attribution = await readFile(path.join(root, "ATTRIBUTION.md"), "utf8");
     assert.equal(visuals.length, counts.visuals, `${id} visual count`);
     assert.equal(pack.visual_ids.length, counts.visuals, `${id} pack visual references`);
     assert.deepEqual(pack.visual_ids, visuals.map((visual) => visual.id));
@@ -217,10 +218,64 @@ test("all production visuals have allowlisted rights, complete provenance, and v
       assert.equal(Number.isInteger(visual.height) && visual.height > 0 && visual.height <= 1600, true);
       const local = path.join(root, visual.path);
       assert.equal((await stat(local)).size, visual.byte_size);
+      const section = attribution.match(
+        new RegExp(`^## ${visual.id}\\b[\\s\\S]*?(?=^## |(?![\\s\\S]))`, "m"),
+      )?.[0];
+      assert.notEqual(section, undefined, `${id}/${visual.id} attribution section`);
+      for (const field of [
+        "creator",
+        "work_title",
+        "work_date",
+        "institution",
+        "license",
+        "license_url",
+        "source_page",
+        "original_url",
+        "attribution",
+      ]) {
+        assert.equal(section.includes(visual[field]), true, `${id}/${visual.id} attribution ${field}`);
+      }
     }
     assert.equal((await readdir(path.join(root, "images"))).length, counts.visuals);
-    assert.match(await readFile(path.join(root, "ATTRIBUTION.md"), "utf8"), /CC BY 4\.0|public domain/i);
+    assert.match(attribution, /CC BY 4\.0|public domain/i);
   }
+});
+
+test("Carlquist Katsura records preserve creator, repository, and DPLA-partner roles", async () => {
+  const { visuals } = await json(path.join(styleRoot, "japandi/visuals.json"));
+  for (const id of ["J-S1", "J-S2", "J-S3", "J-S4"]) {
+    const visual = visuals.find((item) => item.id === id);
+    assert.equal(visual.creator, "Sherwin John Carlquist", `${id} creator`);
+    assert.equal(
+      visual.institution,
+      "Botanical Research Institute of Texas (repository); The Portal to Texas History (DPLA partner)",
+      `${id} institution`,
+    );
+    assert.match(visual.attribution, /Botanical Research Institute of Texas/);
+    assert.match(visual.attribution, /The Portal to Texas History \(DPLA partner\)/);
+  }
+});
+
+test("every production alt describes observable image content instead of repeating interpretation", async () => {
+  const interpretive = /\b(?:useful|helps? explain|supports?|evidence|context|definition|movement|style|usage|associated|relationship|path toward|reminder|complicates?|broadens?|dissemination|canonical|significant)\b/i;
+  for (const id of expected.keys()) {
+    const { visuals } = await json(path.join(styleRoot, id, "visuals.json"));
+    for (const visual of visuals) {
+      assert.equal(visual.alt.trim().split(/\s+/).length >= 8, true, `${id}/${visual.id} specific alt`);
+      assert.doesNotMatch(visual.alt, interpretive, `${id}/${visual.id} interpretive alt`);
+      assert.equal(
+        visual.alt.toLowerCase().includes(visual.what_to_notice.toLowerCase()),
+        false,
+        `${id}/${visual.id} repeats what_to_notice`,
+      );
+    }
+  }
+});
+
+test("known source publication dates are preserved", async () => {
+  const { sources } = await json(path.join(styleRoot, "mid-century-modern/sources.json"));
+  assert.equal(sources.find((source) => source.id === "M-A16").publication_date, "2013-06-17");
+  assert.equal(sources.find((source) => source.id === "M-A17").publication_date, "2017-01-10");
 });
 
 test("Bauhaus visuals cover weaving and graphic pedagogy; Japandi visuals stay culturally precise", async () => {
