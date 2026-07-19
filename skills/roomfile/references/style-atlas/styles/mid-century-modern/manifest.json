@@ -1,0 +1,34 @@
+{
+  "schema_version": "0.3.0",
+  "id": "mid-century-modern",
+  "version": "0.3.0",
+  "reviewed_at": "2026-07-19",
+  "files": [
+    "manifest.json",
+    "style-pack.json",
+    "quick-guide.md",
+    "field-guide.md",
+    "signals.json",
+    "sources.json",
+    "visuals.json",
+    "ATTRIBUTION.md"
+  ],
+  "images": [
+    "images/m-v1.jpg",
+    "images/m-v2.jpg",
+    "images/m-v3.jpg",
+    "images/m-v4.jpg",
+    "images/m-v5.jpg",
+    "images/m-v6.jpg",
+    "images/m-v7.jpg",
+    "images/m-v8.jpg",
+    "images/m-v9.jpg",
+    "images/m-v10.jpg",
+    "images/m-v11.jpg",
+    "images/m-v12.jpg"
+  ],
+  "counts": {
+    "sources": 30,
+    "visuals": 12
+  }
+}

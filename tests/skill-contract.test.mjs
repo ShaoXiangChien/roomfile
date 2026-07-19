@@ -81,7 +81,7 @@ test("focused references and schemas exist", async () => {
 test("published style-context schema copies remain identical", async () => {
   const [consumer, atlas] = await Promise.all([
     readFile(path.join(skillDir, "references", "schemas", "style-context.schema.json"), "utf8"),
-    readFile(path.resolve("references/style-atlas/schemas/style-context.schema.json"), "utf8"),
+    readFile(path.join(skillDir, "references", "style-atlas", "schemas", "style-context.schema.json"), "utf8"),
   ]);
   assert.deepEqual(JSON.parse(atlas), JSON.parse(consumer));
 });

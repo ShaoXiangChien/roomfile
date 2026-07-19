@@ -1,13 +1,16 @@
 #!/usr/bin/env node
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { failInput, parseArgs, printResult, readJson, result } from "./lib.mjs";
 
 const args = parseArgs(process.argv.slice(2));
 const asJson = Boolean(args.json);
+const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
+const defaultAtlas = path.resolve(scriptDirectory, "../references/style-atlas");
 
 try {
   if (!args.style || typeof args.style !== "string") throw new Error("--style is required");
-  const atlas = path.resolve(String(args.atlas || "references/style-atlas"));
+  const atlas = path.resolve(String(args.atlas || defaultAtlas));
   const indexPath = path.join(atlas, "index.json");
   const index = await readJson(indexPath);
   if (!Array.isArray(index?.packs)) throw new Error(`${indexPath} must contain a packs array`);

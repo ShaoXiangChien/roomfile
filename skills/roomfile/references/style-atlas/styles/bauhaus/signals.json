@@ -1,0 +1,84 @@
+{
+  "schema_version": "0.3.0",
+  "id": "bauhaus",
+  "user_inspiration_priority": true,
+  "lens_not_recipe": true,
+  "historical_core": [
+    "The 1919–1933 school across Weimar, Dessau, and Berlin changed directors, politics, pedagogy, and workshops.",
+    "Learning by making joined preliminary courses with weaving, metal, furniture, stage, photography, typography, print, architecture, and other workshops.",
+    "Closure, gendered exclusions, migration, and later reception belong inside the history."
+  ],
+  "current_expressions": [
+    "Selective use of workshop method, tubular construction, typography, color study, or modular systems.",
+    "Heritage and institutional projects extending experiment through accessibility and current use.",
+    "Material, labor, environmental, and care-centered reinterpretations."
+  ],
+  "composition": [
+    "Legible circulation, activity, storage, and service zones.",
+    "Open collective areas balanced with acoustic and visual retreat.",
+    "Modular or transformable elements only when they improve use."
+  ],
+  "furniture_forms": [
+    "Tubular or timber frames supporting planar, woven, wooden, glass, or upholstered surfaces.",
+    "Cantilever, compact cabinetry, fitted equipment, and visibly resolved joints.",
+    "Forms understood through body, production, repair, and use rather than chrome alone."
+  ],
+  "materials": [
+    "Timber, steel tube, sheet metal, glass, plaster, concrete, paper, yarn, wool, cotton, rayon, and experimental media.",
+    "Craft skill and industrial repetition treated as intertwined.",
+    "Every material should answer a tested functional or perceptual question."
+  ],
+  "palette": [
+    "Primary colors as one contextual thread, not the definition.",
+    "White, gray, black, timber, metal, muted textile mixtures, and earth tones.",
+    "Accent color used for function, hierarchy, movement, or information."
+  ],
+  "lighting": [
+    "Layer practical domestic or work light with directional and adjustable sources.",
+    "Use light to reveal movement, stage, surface, and time.",
+    "Control glare from glass, steel, paint, and screens."
+  ],
+  "textiles_art": [
+    "Weaving as technical, chromatic, acoustic, tactile, and commercial research.",
+    "Stage, photography, painting, and typography as spatial and media evidence.",
+    "Graphic work should communicate, not act as empty branding."
+  ],
+  "spatial_density": [
+    "Workshops and homes can contain tools, samples, documents, and daily objects.",
+    "Use storage systems, repeated components, and clear work surfaces to organize density.",
+    "Match density to the user's activity rather than a sparse stereotype."
+  ],
+  "variants": [
+    "Weimar early craft, expressionist, and material experiments.",
+    "Dessau purpose-built campus, production relationships, and social program changes.",
+    "Berlin final period and postwar migrations or institutional transmissions."
+  ],
+  "adjacent_styles": [
+    "De Stijl",
+    "Constructivism and New Typography",
+    "International Style",
+    "Postwar modernist systems design"
+  ],
+  "questions": [
+    "Which evidence feels Bauhaus: planning, workshop craft, construction, typography, color, stage, or a named object?",
+    "Is the goal historically informed or a contemporary translation?",
+    "What daily activity should become the room's functional experiment?",
+    "Which colors, materials, access needs, and existing belongings does the user adopt or reject?"
+  ],
+  "cliches_to_avoid": [
+    "Red-yellow-blue geometry as a complete definition.",
+    "Tubular steel or one Breuer chair standing for the whole school.",
+    "Erasing weaving, stage, photography, typography, politics, and migration.",
+    "A unified heroic school narrative without gender exclusion or political conflict."
+  ],
+  "positive_prompt_guidance": [
+    "Name the functional question, construction relationship, workshop medium, and desired perceptual effect.",
+    "Describe textiles, lighting, storage, and user movement with the same precision as furniture.",
+    "Identify whether the reference is Weimar, Dessau, Berlin, postwar legacy, or current translation."
+  ],
+  "negative_prompt_guidance": [
+    "Avoid primary-color token piles, random circles and triangles, and logo-like Bauhaus text.",
+    "Avoid chrome furniture showrooms that omit craft, domestic life, and softness.",
+    "Do not trade comfort, accessibility, privacy, or user belongings for visual rigor."
+  ]
+}

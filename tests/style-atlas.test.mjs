@@ -13,6 +13,13 @@ function run(script, args, cwd) {
   return spawnSync(process.execPath, [script, ...args], { cwd, encoding: "utf8" });
 }
 
+const requiredSignals = [
+  "historical_core", "current_expressions", "composition", "furniture_forms",
+  "materials", "palette", "lighting", "textiles_art", "spatial_density",
+  "variants", "adjacent_styles", "questions", "cliches_to_avoid",
+  "positive_prompt_guidance", "negative_prompt_guidance",
+];
+
 async function createAtlas() {
   const atlas = await mkdtemp(path.join(tmpdir(), "roomfile-atlas-"));
   const packs = [
@@ -30,9 +37,13 @@ async function createPack(atlas, pack) {
   await mkdir(path.join(directory, "images"), { recursive: true });
   const sources = Array.from({ length: 25 }, (_, index) => ({
     id: `source-${index + 1}`,
+    title: `Test source ${index + 1}`,
+    publisher: "Example Publisher",
     url: `https://example.test/${pack.id}/${index + 1}`,
     tier: index < 8 ? 1 : 2,
     kind: index < 5 ? "contemporary" : index < 8 ? "critical" : "reference",
+    supports: "A contract-test source record.",
+    retrieved_at: "2026-07-19",
   }));
   const visuals = [];
   for (let index = 0; index < 12; index += 1) {
@@ -44,6 +55,19 @@ async function createPack(atlas, pack) {
       source_id: "source-1",
       path: file,
       license: "CC0-1.0",
+      original_url: `https://upload.wikimedia.org/${pack.id}/${index + 1}.jpg`,
+      source_page: `https://commons.wikimedia.org/wiki/File:${pack.id}-${index + 1}.jpg`,
+      creator: "Test creator",
+      work_title: `Test image ${index + 1}`,
+      work_date: "2026",
+      institution: "Test institution",
+      license_url: "https://creativecommons.org/publicdomain/zero/1.0/",
+      attribution: "Test creator, CC0-1.0.",
+      retrieved_at: "2026-07-19",
+      derivative: "Synthetic test fixture.",
+      byte_size: Buffer.byteLength(bytes),
+      width: 1,
+      height: 1,
       sha256: createHash("sha256").update(bytes).digest("hex"),
       alt: `Alt ${index + 1}`,
       caption: `Caption ${index + 1}`,
@@ -55,8 +79,24 @@ async function createPack(atlas, pack) {
     schema_version: "0.3.0", id: pack.id, name: pack.name, aliases: pack.aliases,
     version: "0.3.0", reviewed_at: "2026-07-19", source_ids: ["source-1"], visual_ids: ["visual-1"],
   }, null, 2));
+  await writeFile(path.join(directory, "manifest.json"), JSON.stringify({
+    schema_version: "0.3.0",
+    id: pack.id,
+    files: [
+      "manifest.json", "style-pack.json", "quick-guide.md", "field-guide.md",
+      "signals.json", "sources.json", "visuals.json", "ATTRIBUTION.md",
+    ],
+  }, null, 2));
+  await writeFile(path.join(directory, "quick-guide.md"), Array.from({ length: 800 }, (_, index) => `word${index}`).join(" "));
+  await writeFile(path.join(directory, "field-guide.md"), "# Field guide\n\nEvidence [X-A1].");
+  await writeFile(path.join(directory, "signals.json"), JSON.stringify({
+    schema_version: "0.3.0",
+    id: pack.id,
+    ...Object.fromEntries(requiredSignals.map((key) => [key, ["fixture"]])),
+  }, null, 2));
   await writeFile(path.join(directory, "sources.json"), JSON.stringify({ schema_version: "0.3.0", sources }, null, 2));
   await writeFile(path.join(directory, "visuals.json"), JSON.stringify({ schema_version: "0.3.0", visuals }, null, 2));
+  await writeFile(path.join(directory, "ATTRIBUTION.md"), "# Attribution\n\nCC0-1.0 test fixtures.");
 }
 
 test("style resolver returns exact metadata for an alias and normalizes punctuation", async () => {

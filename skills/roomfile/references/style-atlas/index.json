@@ -1,0 +1,29 @@
+{
+  "schema_version": "0.3.0",
+  "purpose": "Researched lenses for interpreting user-requested styles; never an allowlist or a fixed recipe.",
+  "user_inspiration_priority": true,
+  "unknown_styles": "needs-live-research",
+  "packs": [
+    {
+      "id": "mid-century-modern",
+      "name": "Mid-century Modern",
+      "aliases": ["MCM", "midcentury modern", "mid-century"],
+      "path": "styles/mid-century-modern",
+      "version": "0.3.0"
+    },
+    {
+      "id": "bauhaus",
+      "name": "Bauhaus",
+      "aliases": ["Bauhaus-inspired"],
+      "path": "styles/bauhaus",
+      "version": "0.3.0"
+    },
+    {
+      "id": "japandi",
+      "name": "Japandi",
+      "aliases": ["Japan–Nordic hybrid", "Japanese Scandinavian hybrid"],
+      "path": "styles/japandi",
+      "version": "0.3.0"
+    }
+  ]
+}

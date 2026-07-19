@@ -1,0 +1,84 @@
+{
+  "schema_version": "0.3.0",
+  "id": "mid-century-modern",
+  "user_inspiration_priority": true,
+  "lens_not_recipe": true,
+  "historical_core": [
+    "Plural postwar modernisms centered roughly on the mid-1940s through mid-1960s.",
+    "Material and production experiments joined craft, industry, architecture, communication, and everyday use.",
+    "Good Design programs, Case Study housing, tract development, corporate planning, and collaborative total environments are distinct evidence threads."
+  ],
+  "current_expressions": [
+    "Warm, layered, collected rooms combining vintage and contemporary pieces.",
+    "Dark woods, deeper upholstery, oversized art, and richer textiles.",
+    "Explicitly labeled late-1960s or 1970s-adjacent earth tones and lounge forms."
+  ],
+  "composition": [
+    "Readable circulation with low horizontal masses and activity zones.",
+    "Indoor–outdoor sightlines where the actual architecture supports them.",
+    "Rugs, storage, hearths, screens, or lighting used to zone open space."
+  ],
+  "furniture_forms": [
+    "Shaped plywood, upholstered rectilinear volumes, wire shells, slender metal frames, and component storage.",
+    "Human scale and visible construction matter more than iconic silhouette.",
+    "Mix authentic vintage, licensed production, and well-made compatible contemporary pieces."
+  ],
+  "materials": [
+    "Plywood, solid wood, fiberglass, metal, wire, glass, brick, stone, cork, terrazzo, laminate, and textiles.",
+    "Contrast soft and hard or opaque and transparent according to use.",
+    "Prefer repairable construction over disposable decorative veneer."
+  ],
+  "palette": [
+    "Neutral architectural fields with saturated or textile-led color.",
+    "Pale and dark woods, black frames, brick, cork, and multi-color pattern.",
+    "Olive, rust, ochre, tobacco, and cream belong to current or 1970s-adjacent expressions when named."
+  ],
+  "lighting": [
+    "Daylight and landscape views organize space where available.",
+    "Layer pendants, adjustable task lights, wall light, and low pools of warm illumination.",
+    "Control glare and meet actual reading, screen, work, and safety needs."
+  ],
+  "textiles_art": [
+    "Use rugs, upholstery, curtains, art, ceramics, books, plants, and personal collections as lived layers.",
+    "Let textiles provide zoning, acoustics, pattern, or the strongest color.",
+    "Contextualize non-Western objects rather than using them as anonymous cosmopolitan markers."
+  ],
+  "spatial_density": [
+    "Keep furniture hierarchy and clear movement while allowing meaningful collection.",
+    "Use closed storage to support calm without erasing hobbies or work.",
+    "Ask the user which belongings should remain visible."
+  ],
+  "variants": [
+    "California Case Study and desert modernism.",
+    "Tract-house modernism and corporate Planning Unit interiors.",
+    "Regional and international modernisms; Danish Modern and high modernism remain distinct overlaps."
+  ],
+  "adjacent_styles": [
+    "Danish Modern",
+    "International Style and high modernism",
+    "Late-1960s and 1970s lounge modernism",
+    "Contemporary collected modern"
+  ],
+  "questions": [
+    "Do the references indicate historical postwar design or a warmer current collected usage?",
+    "Which signals matter most: low proportion, material contrast, art, glazing, color, or particular objects?",
+    "Are 1970s-adjacent colors and lounge forms welcome, uncertain, or rejected?",
+    "Which existing furniture, access needs, and activities must lead?"
+  ],
+  "cliches_to_avoid": [
+    "Tapered legs, walnut, starbursts, and Mad Men as a sufficient definition.",
+    "A white affluent male-designer canon that erases race, gender, labor, and marketing.",
+    "Sterile showrooms or replica-icon overload.",
+    "Calling every warm-wood current room historically exact."
+  ],
+  "positive_prompt_guidance": [
+    "Describe spatial hierarchy, human scale, production logic, material contrast, lighting, and chosen current-versus-historical register.",
+    "Name the user's retained objects and desired level of collection.",
+    "Specify one or two evidence-led signals instead of stacking retro tokens."
+  ],
+  "negative_prompt_guidance": [
+    "Avoid generic Mad Men sets, starburst décor, logo-like icon piles, and default orange-and-teal grading.",
+    "Avoid empty luxury staging that removes books, art, work, and personal evidence.",
+    "Do not replace user requirements with low seating or period replicas."
+  ]
+}

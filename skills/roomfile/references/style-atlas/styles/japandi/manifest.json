@@ -1,0 +1,34 @@
+{
+  "schema_version": "0.3.0",
+  "id": "japandi",
+  "version": "0.3.0",
+  "reviewed_at": "2026-07-19",
+  "files": [
+    "manifest.json",
+    "style-pack.json",
+    "quick-guide.md",
+    "field-guide.md",
+    "signals.json",
+    "sources.json",
+    "visuals.json",
+    "ATTRIBUTION.md"
+  ],
+  "images": [
+    "images/j-s1.jpg",
+    "images/j-s2.jpg",
+    "images/j-s3.jpg",
+    "images/j-s4.jpg",
+    "images/j-s5.jpg",
+    "images/j-s6.jpg",
+    "images/j-s7.jpg",
+    "images/j-s8.jpg",
+    "images/j-s9.jpg",
+    "images/j-v1.jpg",
+    "images/j-v7.jpg",
+    "images/j-v11.jpg"
+  ],
+  "counts": {
+    "sources": 33,
+    "visuals": 12
+  }
+}
