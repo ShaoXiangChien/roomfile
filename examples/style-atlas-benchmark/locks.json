@@ -22,6 +22,10 @@
   "render_contract": {
     "aspect_ratio": "4:3",
     "output_resolution": "2K",
+    "output_dimensions": {
+      "width": 2400,
+      "height": 1792
+    },
     "fresh_source_edit_per_call": true,
     "chained_edits": false,
     "disclaimer": "Visual approximation — verify dimensions, color, material, and availability before purchasing."

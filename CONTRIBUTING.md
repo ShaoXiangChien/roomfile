@@ -24,12 +24,18 @@ npm run smoke:fresh
 npm run check:privacy
 npm run validate:atlas
 npm run validate:benchmark
+npm run validate:launch
 npm run sync:styles:check
 npm --prefix website ci
 npm run test:website
 npm --prefix website run lint
 npm --prefix website run test:e2e
 ```
+
+The website test renders every internal route, including the Style Atlas.
+External link checking excludes only the production Sites domain before
+deployment. A release owner must run production URL and smoke checks after
+deploying the saved Sites version; pre-deployment CI does not claim that gate.
 
 ## Style Atlas contributions
 

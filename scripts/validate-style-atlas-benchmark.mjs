@@ -1,6 +1,8 @@
 #!/usr/bin/env node
+import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
+import { inspectImage } from "../skills/roomfile/scripts/image-validation.mjs";
 
 const args = parseArgs(process.argv.slice(2));
 const asJson = Boolean(args.json);
@@ -12,7 +14,8 @@ try {
   if (!args.benchmark) throw new Error("--benchmark is required");
   const root = path.resolve(String(args.benchmark));
   const benchmark = await json(path.join(root, "benchmark.json"));
-  const locks = await json(path.join(root, "locks.json"));
+  const locksPath = path.join(root, "locks.json");
+  const locks = await json(locksPath);
   const estimate = await json(path.join(root, "cost-estimate.json"));
   const generation = await json(path.join(root, "generation-log.json"));
   const review = await json(path.join(root, "review.json"));
@@ -60,6 +63,30 @@ try {
       guidedPrompt,
     });
 
+    await validateCallProvenance({
+      root,
+      generation,
+      benchmark,
+      locks,
+      locksPath,
+      pair,
+      packRoot: path.resolve(atlasRoot, pack.path),
+      variants: [
+        {
+          name: "baseline",
+          request: baseline,
+          requestPath: baselinePath,
+          promptPath: baselinePromptPath,
+        },
+        {
+          name: "guided",
+          request: guided,
+          requestPath: guidedPath,
+          promptPath: guidedPromptPath,
+        },
+      ],
+    });
+
     for (const [variant, output] of [
       ["baseline", pair.baseline_output],
       ["guided", pair.guided_output],
@@ -70,6 +97,14 @@ try {
         outputPath,
         "missing_output",
         `${pair.style_id} ${variant}`,
+        true,
+        {
+          formats: ["JPEG"],
+          width: locks.render_contract?.output_dimensions?.width,
+          height: locks.render_contract?.output_dimensions?.height,
+          minByteSize: 100_000,
+          minScanBytes: 10_000,
+        },
       );
       const call = generation.calls?.find(
         (item) => normalize(item.output) === normalize(output),
@@ -87,6 +122,8 @@ try {
     internal(root, benchmark.source, "source"),
     "missing_source",
     "canonical source",
+    true,
+    { minByteSize: 100_000 },
   );
   validateGeneration(generation, estimate, expectedOutputs);
   validateReview(review, benchmark.pairs || []);
@@ -132,6 +169,19 @@ function validateTopLevel(benchmark, locks, estimate) {
   }
   if (!Array.isArray(locks.locked_facts) || locks.locked_facts.length < 8) {
     issue("incomplete_locks", "locks.json must preserve complete room and inventory truth.");
+  }
+  if (
+    locks.render_contract?.fresh_source_edit_per_call !== true
+    || locks.render_contract?.chained_edits !== false
+    || locks.render_contract?.aspect_ratio !== "4:3"
+    || locks.render_contract?.output_resolution !== "2K"
+    || locks.render_contract?.output_dimensions?.width !== 2400
+    || locks.render_contract?.output_dimensions?.height !== 1792
+  ) {
+    issue(
+      "generation_provenance_mismatch",
+      "Render contract must require independent fresh-source edits at 2400 × 1792 (2K, 4:3).",
+    );
   }
   if (estimate.planned_calls !== 6) {
     issue("cost_estimate_mismatch", "Cost estimate must cover exactly six calls.");
@@ -231,8 +281,11 @@ async function validatePair({
       `${pair.style_id} guided prompt is missing its exact pack/version marker.`,
     );
   }
-  if (!Array.isArray(guided.style_context?.reference_images)) {
-    issue("guided_pack_mismatch", `${pair.style_id} guided request lacks reference images.`);
+  if (
+    !Array.isArray(guided.style_context?.reference_images)
+    || guided.style_context.reference_images.length < 1
+  ) {
+    issue("guided_pack_mismatch", `${pair.style_id} guided request needs at least one reference image.`);
   } else {
     const visuals = await json(path.join(packRoot, "visuals.json"));
     for (const reference of guided.style_context.reference_images) {
@@ -270,6 +323,92 @@ async function validatePair({
     || guidedExpected !== internal(root, pair.guided_output, "guided output")
   ) {
     issue("generation_log_mismatch", `${pair.style_id} request outputs do not match the matrix.`);
+  }
+}
+
+async function validateCallProvenance({
+  root,
+  generation,
+  benchmark,
+  locks,
+  locksPath,
+  pair,
+  packRoot,
+  variants,
+}) {
+  const sourcePath = internal(root, benchmark.source, "canonical source");
+  const sourceSha = await fileHash(sourcePath);
+  const locksSha = await fileHash(locksPath);
+  if (
+    generation.source !== benchmark.source
+    || generation.source_sha256 !== sourceSha
+    || generation.route !== "fresh_source_edit"
+    || locks.source !== benchmark.source
+  ) {
+    issue(
+      "generation_provenance_mismatch",
+      "Generation must bind the canonical source and fresh-source route.",
+    );
+  }
+
+  const visuals = await json(path.join(packRoot, "visuals.json"));
+  for (const variant of variants) {
+    const output = variant.name === "baseline" ? pair.baseline_output : pair.guided_output;
+    const call = generation.calls?.find(
+      (item) => item.run_id === `${pair.style_id}-${variant.name}`,
+    );
+    const requestRelative = normalize(path.relative(root, variant.requestPath));
+    const promptRelative = normalize(path.relative(root, variant.promptPath));
+    const expectedReferences = [];
+    for (const reference of variant.request.style_context?.reference_images || []) {
+      const visual = visuals.visuals?.find((item) => item.id === reference.visual_id);
+      if (!visual) continue;
+      const imagePath = path.resolve(packRoot, visual.path);
+      const actualSha = await fileHash(imagePath);
+      if (actualSha !== visual.sha256) {
+        issue(
+          "generation_provenance_mismatch",
+          `${pair.style_id} reference ${visual.id} does not match its pack hash.`,
+        );
+      }
+      expectedReferences.push({
+        pack_id: pair.style_id,
+        visual_id: visual.id,
+        path: visual.path,
+        sha256: visual.sha256,
+      });
+    }
+    const outputPath = internal(root, output, `${variant.name} output`);
+    const outputSha = await optionalFileHash(outputPath);
+    const valid = (
+      call
+      && call.style_id === pair.style_id
+      && call.variant === variant.name
+      && normalize(call.output) === normalize(output)
+      && call.fresh_source_edit === true
+      && call.parent_interaction_id === null
+      && equal(call.source, { path: benchmark.source, sha256: sourceSha })
+      && equal(call.request, {
+        path: requestRelative,
+        sha256: await fileHash(variant.requestPath),
+      })
+      && equal(call.prompt, {
+        path: promptRelative,
+        sha256: await fileHash(variant.promptPath),
+      })
+      && equal(call.locks, { path: "locks.json", sha256: locksSha })
+      && outputSha !== null
+      && call.output_sha256 === outputSha
+      && equal(call.attached_reference_visuals, expectedReferences)
+      && (variant.name !== "guided" || expectedReferences.length > 0)
+      && (variant.name !== "baseline" || expectedReferences.length === 0)
+    );
+    if (!valid) {
+      issue(
+        "generation_provenance_mismatch",
+        `${pair.style_id} ${variant.name} does not reconcile immutable inputs or independent-call state.`,
+      );
+    }
   }
 }
 
@@ -392,7 +531,7 @@ function validatePublicMetadata(value) {
   }
 }
 
-async function validateImage(file, missingCode, label, record = true) {
+async function validateImage(file, missingCode, label, record = true, options = {}) {
   let bytes;
   try {
     bytes = await readFile(file);
@@ -401,162 +540,30 @@ async function validateImage(file, missingCode, label, record = true) {
     return;
   }
   try {
-    const parsed = imageStructure(bytes);
+    const parsed = inspectImage(bytes, options);
     if (record) artifacts.push(file);
     return parsed;
   } catch (error) {
-    issue("malformed_image", `${label} is not a structurally valid image: ${error.message}`, file);
+    const code = (
+      options.width
+      && options.height
+      && /Expected (?:width|height)/.test(error.message)
+    ) ? "output_contract_mismatch" : "malformed_image";
+    issue(code, `${label} is not a valid image: ${error.message}`, file);
     return null;
   }
 }
 
-function imageStructure(bytes) {
-  const png = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
-  if (bytes.subarray(0, 8).equals(png)) return pngStructure(bytes);
-  if (bytes[0] === 0xff && bytes[1] === 0xd8) return jpegStructure(bytes);
-  throw new Error("unsupported signature");
+async function fileHash(file) {
+  return createHash("sha256").update(await readFile(file)).digest("hex");
 }
 
-function jpegStructure(bytes) {
-  if (bytes.length < 16 || bytes[0] !== 0xff || bytes[1] !== 0xd8) {
-    throw new Error("missing JPEG start");
+async function optionalFileHash(file) {
+  try {
+    return await fileHash(file);
+  } catch {
+    return null;
   }
-  const startOfFrame = new Set([
-    0xc0, 0xc1, 0xc2, 0xc3, 0xc5, 0xc6, 0xc7,
-    0xc9, 0xca, 0xcb, 0xcd, 0xce, 0xcf,
-  ]);
-  let offset = 2;
-  let sawFrame = false;
-  let sawScan = false;
-  let sawEntropy = false;
-  let sawEnd = false;
-  let frameWidth = 0;
-  let frameHeight = 0;
-
-  while (offset < bytes.length) {
-    if (bytes[offset] !== 0xff) throw new Error("invalid JPEG marker");
-    while (bytes[offset] === 0xff) offset += 1;
-    if (offset >= bytes.length) throw new Error("truncated JPEG marker");
-    const marker = bytes[offset];
-    offset += 1;
-
-    if (marker === 0xd9) {
-      sawEnd = true;
-      break;
-    }
-    if (marker === 0x01 || (marker >= 0xd0 && marker <= 0xd7)) continue;
-    if (marker === 0xd8 || marker === 0x00 || offset + 2 > bytes.length) {
-      throw new Error("invalid JPEG segment");
-    }
-
-    const length = bytes.readUInt16BE(offset);
-    if (length < 2 || offset + length > bytes.length) {
-      throw new Error("truncated JPEG segment");
-    }
-    if (startOfFrame.has(marker)) {
-      if (length < 11) throw new Error("invalid JPEG frame");
-      const height = bytes.readUInt16BE(offset + 3);
-      const width = bytes.readUInt16BE(offset + 5);
-      const components = bytes[offset + 7];
-      if (!width || !height || !components || length !== 8 + components * 3) {
-        throw new Error("invalid JPEG frame");
-      }
-      frameWidth = width;
-      frameHeight = height;
-      sawFrame = true;
-    }
-    if (marker === 0xda) {
-      if (!sawFrame || length < 8) throw new Error("invalid JPEG scan");
-      sawScan = true;
-      offset += length;
-      const entropy = scanJpegEntropy(bytes, offset);
-      sawEntropy ||= entropy.hasData;
-      offset = entropy.offset;
-      if (entropy.ended) {
-        sawEnd = true;
-        break;
-      }
-      continue;
-    }
-    offset += length;
-  }
-
-  if (!sawFrame || !sawScan || !sawEntropy || !sawEnd) {
-    throw new Error("incomplete JPEG frame, scan, or end marker");
-  }
-  if (offset !== bytes.length && !(offset === bytes.length - 2 && bytes[offset] === 0xff)) {
-    throw new Error("unexpected JPEG trailing data");
-  }
-  return { format: "JPEG", width: frameWidth, height: frameHeight };
-}
-
-function scanJpegEntropy(bytes, start) {
-  let offset = start;
-  let hasData = false;
-  while (offset < bytes.length) {
-    if (bytes[offset] !== 0xff) {
-      hasData = true;
-      offset += 1;
-      continue;
-    }
-    if (offset + 1 >= bytes.length) throw new Error("truncated JPEG scan");
-    let markerOffset = offset + 1;
-    while (bytes[markerOffset] === 0xff) markerOffset += 1;
-    if (markerOffset >= bytes.length) throw new Error("truncated JPEG scan marker");
-    const marker = bytes[markerOffset];
-    if (marker === 0x00) {
-      hasData = true;
-      offset = markerOffset + 1;
-      continue;
-    }
-    if (marker >= 0xd0 && marker <= 0xd7) {
-      offset = markerOffset + 1;
-      continue;
-    }
-    if (marker === 0xd9) {
-      if (markerOffset + 1 !== bytes.length) {
-        throw new Error("unexpected JPEG trailing data");
-      }
-      return { offset: bytes.length, hasData, ended: true };
-    }
-    return { offset, hasData, ended: false };
-  }
-  throw new Error("truncated JPEG scan");
-}
-
-function pngStructure(bytes) {
-  let offset = 8;
-  let sawHeader = false;
-  let sawData = false;
-  let sawEnd = false;
-  let imageWidth = 0;
-  let imageHeight = 0;
-  while (offset + 12 <= bytes.length) {
-    const length = bytes.readUInt32BE(offset);
-    const type = bytes.subarray(offset + 4, offset + 8).toString("ascii");
-    const end = offset + 12 + length;
-    if (end > bytes.length) throw new Error("truncated PNG chunk");
-    if (!sawHeader && (type !== "IHDR" || length !== 13)) {
-      throw new Error("missing PNG header");
-    }
-    if (type === "IHDR") {
-      const width = bytes.readUInt32BE(offset + 8);
-      const height = bytes.readUInt32BE(offset + 12);
-      if (!width || !height) throw new Error("invalid PNG dimensions");
-      imageWidth = width;
-      imageHeight = height;
-      sawHeader = true;
-    }
-    if (type === "IDAT" && length > 0) sawData = true;
-    if (type === "IEND") {
-      if (length !== 0 || end !== bytes.length) throw new Error("invalid PNG end");
-      sawEnd = true;
-      break;
-    }
-    offset = end;
-  }
-  if (!sawHeader || !sawData || !sawEnd) throw new Error("incomplete PNG");
-  return { format: "PNG", width: imageWidth, height: imageHeight };
 }
 
 async function json(file) {

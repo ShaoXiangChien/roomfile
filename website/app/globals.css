@@ -2529,6 +2529,27 @@ h3 {
   grid-template-rows: auto minmax(0, 1fr) auto;
 }
 
+.launch-hero-rooms {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.launch-hero-rooms > span {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  z-index: 2;
+  padding: 6px 9px;
+  background: var(--cream);
+  font-family: var(--mono);
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
 .launch-og .launch-brandline,
 .launch-repository .launch-brandline {
   padding: 18px 46px;
@@ -2582,10 +2603,18 @@ h3 {
   height: 640px;
 }
 
+.launch-repository .launch-hero-rooms > .room-visual {
+  width: min(100%, 626px);
+}
+
 .launch-readme {
   width: 1600px;
   min-height: 900px;
   height: 900px;
+}
+
+.launch-readme .launch-hero-rooms > .room-visual {
+  width: min(100%, 800px);
 }
 
 @media (max-width: 1180px) {

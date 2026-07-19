@@ -3,6 +3,7 @@ import { access, readFile, stat } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { inspectImage } from "./image-validation.mjs";
 import { failInput, parseArgs, printResult, result } from "./lib.mjs";
 
 const args = parseArgs(process.argv.slice(2));
@@ -267,7 +268,11 @@ async function validateVisual(root, visual, sourceIds, errors, artifacts, packId
   }
   let parsed;
   try {
-    parsed = jpegStructure(bytes);
+    parsed = inspectImage(bytes, {
+      formats: ["JPEG"],
+      minByteSize: 4096,
+      minScanBytes: 512,
+    });
   } catch {
     issue(
       errors,
@@ -331,176 +336,6 @@ function attributionSection(markdown, id) {
   const rest = markdown.slice(match.index);
   const next = rest.slice(match[0].length).search(/^##\s+/m);
   return next < 0 ? rest : rest.slice(0, match[0].length + next);
-}
-
-function jpegStructure(bytes) {
-  if (bytes.length < 4 || bytes[0] !== 0xff || bytes[1] !== 0xd8) {
-    throw new Error("Missing JPEG start-of-image marker.");
-  }
-  const startOfFrame = new Set([
-    0xc0, 0xc1, 0xc2, 0xc3, 0xc5, 0xc6, 0xc7,
-    0xc9, 0xca, 0xcb, 0xcd, 0xce, 0xcf,
-  ]);
-  let offset = 2;
-  let frame;
-  let sawScan = false;
-  let sawEndOfImage = false;
-  while (offset < bytes.length) {
-    const parsedMarker = jpegMarker(bytes, offset);
-    const marker = parsedMarker.marker;
-    offset = parsedMarker.afterMarker;
-    if (marker === 0xd9) {
-      if (!frame || !sawScan) throw new Error("JPEG ended before its frame and scan.");
-      sawEndOfImage = true;
-      break;
-    }
-    if (marker === 0xd8 || marker === 0x00) throw new Error("Unexpected JPEG marker.");
-    if (marker >= 0xd0 && marker <= 0xd7) throw new Error("Restart marker outside scan data.");
-    if (marker === 0x01) continue;
-    const segment = jpegSegment(bytes, offset);
-    if (startOfFrame.has(marker)) {
-      if (frame) throw new Error("JPEG contains multiple frames.");
-      frame = jpegFrame(bytes, offset, segment.length, marker);
-      offset = segment.end;
-      continue;
-    }
-    if (marker === 0xda) {
-      if (!frame) throw new Error("JPEG scan precedes its frame.");
-      validateJpegScan(bytes, offset, segment.length, frame);
-      const entropy = jpegEntropyData(bytes, segment.end);
-      if (!entropy.hasData) throw new Error("JPEG scan has no entropy-coded payload.");
-      sawScan = true;
-      offset = entropy.nextMarker;
-      continue;
-    }
-    offset = segment.end;
-  }
-  if (!frame) throw new Error("JPEG frame not found.");
-  if (!sawScan) throw new Error("JPEG scan not found.");
-  if (!sawEndOfImage) throw new Error("JPEG end-of-image marker not found after scan data.");
-  return { width: frame.width, height: frame.height };
-}
-
-function jpegMarker(bytes, offset) {
-  const markerStart = offset;
-  if (bytes[offset] !== 0xff) throw new Error("Invalid JPEG marker.");
-  while (offset < bytes.length && bytes[offset] === 0xff) offset += 1;
-  if (offset >= bytes.length) throw new Error("Truncated JPEG marker.");
-  return { marker: bytes[offset], markerStart, afterMarker: offset + 1 };
-}
-
-function jpegSegment(bytes, offset) {
-  if (offset + 2 > bytes.length) throw new Error("Truncated JPEG segment.");
-  const length = bytes.readUInt16BE(offset);
-  if (length < 2 || offset + length > bytes.length) throw new Error("Invalid JPEG segment length.");
-  return { length, end: offset + length };
-}
-
-function jpegFrame(bytes, offset, length, marker) {
-  if (length < 11) throw new Error("JPEG frame lacks a component table.");
-  const precision = bytes[offset + 2];
-  const height = bytes.readUInt16BE(offset + 3);
-  const width = bytes.readUInt16BE(offset + 5);
-  const componentCount = bytes[offset + 7];
-  if (![8, 12].includes(precision) || width < 1 || height < 1) {
-    throw new Error("Invalid JPEG frame dimensions or precision.");
-  }
-  if (componentCount < 1 || componentCount > 4 || length !== 8 + (3 * componentCount)) {
-    throw new Error("Invalid JPEG frame component table.");
-  }
-  const components = new Set();
-  for (let index = 0; index < componentCount; index += 1) {
-    const start = offset + 8 + (index * 3);
-    const id = bytes[start];
-    const sampling = bytes[start + 1];
-    const horizontalSampling = sampling >> 4;
-    const verticalSampling = sampling & 0x0f;
-    const quantizationTable = bytes[start + 2];
-    if (
-      components.has(id)
-      || horizontalSampling < 1
-      || horizontalSampling > 4
-      || verticalSampling < 1
-      || verticalSampling > 4
-      || quantizationTable > 3
-    ) {
-      throw new Error("Invalid JPEG frame component.");
-    }
-    components.add(id);
-  }
-  return { marker, width, height, components };
-}
-
-function validateJpegScan(bytes, offset, length, frame) {
-  if (length < 8) throw new Error("JPEG scan lacks a component table.");
-  const componentCount = bytes[offset + 2];
-  if (
-    componentCount < 1
-    || componentCount > frame.components.size
-    || length !== 6 + (2 * componentCount)
-  ) {
-    throw new Error("Invalid JPEG scan component table.");
-  }
-  const selectors = new Set();
-  for (let index = 0; index < componentCount; index += 1) {
-    const start = offset + 3 + (index * 2);
-    const id = bytes[start];
-    const tables = bytes[start + 1];
-    if (
-      !frame.components.has(id)
-      || selectors.has(id)
-      || (tables >> 4) > 3
-      || (tables & 0x0f) > 3
-    ) {
-      throw new Error("Invalid JPEG scan component selector.");
-    }
-    selectors.add(id);
-  }
-  const parameters = offset + 3 + (2 * componentCount);
-  const spectralStart = bytes[parameters];
-  const spectralEnd = bytes[parameters + 1];
-  const approximation = bytes[parameters + 2];
-  if (
-    spectralStart > spectralEnd
-    || spectralEnd > 63
-    || (approximation >> 4) > 13
-    || (approximation & 0x0f) > 13
-  ) {
-    throw new Error("Invalid JPEG scan parameters.");
-  }
-  if (
-    frame.marker !== 0xc2
-    && (spectralStart !== 0 || spectralEnd !== 63 || approximation !== 0)
-  ) {
-    throw new Error("Invalid sequential JPEG scan parameters.");
-  }
-}
-
-function jpegEntropyData(bytes, offset) {
-  let hasData = false;
-  while (offset < bytes.length) {
-    if (bytes[offset] !== 0xff) {
-      hasData = true;
-      offset += 1;
-      continue;
-    }
-    const markerStart = offset;
-    offset += 1;
-    while (offset < bytes.length && bytes[offset] === 0xff) offset += 1;
-    if (offset >= bytes.length) throw new Error("Truncated JPEG scan marker.");
-    const marker = bytes[offset];
-    if (marker === 0x00) {
-      hasData = true;
-      offset += 1;
-      continue;
-    }
-    if (marker >= 0xd0 && marker <= 0xd7) {
-      offset += 1;
-      continue;
-    }
-    return { hasData, nextMarker: markerStart };
-  }
-  throw new Error("JPEG scan is truncated.");
 }
 
 function ids(values, kind, errors, packId) {

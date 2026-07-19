@@ -2,20 +2,40 @@
   "schema_version": "0.3.0",
   "benchmark_id": "style-atlas-same-room-v0.3",
   "provider": "Gemini via Banana",
-  "route": "Banana MCP fresh source edit",
+  "route": "fresh_source_edit",
   "model": "gemini-3.1-flash-image",
   "model_alias": "flash",
   "resolution": "2K",
   "aspect_ratio": "4:3",
   "source": "source/source-room.png",
+  "source_sha256": "b59e5c6b471440f0b94be1bab9589a5757c8e479e43c8ec3e0b88c123faee461",
   "generated_at": "2026-07-19T12:49:09+08:00",
   "calls": [
     {
       "run_id": "mid-century-modern-baseline",
       "style_id": "mid-century-modern",
       "variant": "baseline",
-      "prompt": "prompts/mid-century-modern-baseline.txt",
+      "source": {
+        "path": "source/source-room.png",
+        "sha256": "b59e5c6b471440f0b94be1bab9589a5757c8e479e43c8ec3e0b88c123faee461"
+      },
+      "request": {
+        "path": "requests/mid-century-modern-baseline.json",
+        "sha256": "71ea242b219369118143d0545491de16e2e01d5e1147fb517d0708e51cf22e1c"
+      },
+      "prompt": {
+        "path": "prompts/mid-century-modern-baseline.txt",
+        "sha256": "aef70d1c7d42afc9f574472aea9af0cd7f27db3803d3b9f499d9f8d43dee9c0c"
+      },
+      "locks": {
+        "path": "locks.json",
+        "sha256": "41c7d73bd67842ca15f4821f3d295f38e165d2387e4dc47f6f7651e78bb8d53c"
+      },
+      "attached_reference_visuals": [],
+      "fresh_source_edit": true,
+      "parent_interaction_id": null,
       "output": "outputs/mid-century-modern-baseline.jpg",
+      "output_sha256": "d7914e81e7072823849fd607f549652377a87864184bc848f2f3db19fa5fa164",
       "status": "completed",
       "timestamp": "2026-07-19T12:44:35+08:00",
       "provider_interaction_id": "v1_ChdMbFpjYXJEdUdwbV92cjBQak51ZDRBRRIXTGxaY2FyRHVHcG1fdnIwUGpOdWQ0QUU",
@@ -31,8 +51,40 @@
       "run_id": "mid-century-modern-guided",
       "style_id": "mid-century-modern",
       "variant": "guided",
-      "prompt": "prompts/mid-century-modern-guided.txt",
+      "source": {
+        "path": "source/source-room.png",
+        "sha256": "b59e5c6b471440f0b94be1bab9589a5757c8e479e43c8ec3e0b88c123faee461"
+      },
+      "request": {
+        "path": "requests/mid-century-modern-guided.json",
+        "sha256": "baf2132c25db36f8453aad1c265bd634637e370092c5a6553cd8c4bce861e40a"
+      },
+      "prompt": {
+        "path": "prompts/mid-century-modern-guided.txt",
+        "sha256": "6d96f288fb73a3a46fdf344f25219eae6bec0a9e681f53ee681d1b0abba7dd18"
+      },
+      "locks": {
+        "path": "locks.json",
+        "sha256": "41c7d73bd67842ca15f4821f3d295f38e165d2387e4dc47f6f7651e78bb8d53c"
+      },
+      "attached_reference_visuals": [
+        {
+          "pack_id": "mid-century-modern",
+          "visual_id": "M-V4",
+          "path": "images/m-v4.jpg",
+          "sha256": "a53ee48266fc4f2ed5f018b85ef3e58f8b84494503c997761ec874386ba0c633"
+        },
+        {
+          "pack_id": "mid-century-modern",
+          "visual_id": "M-V5",
+          "path": "images/m-v5.jpg",
+          "sha256": "0bac8779cd8fb34d3fc2ce4e7e2c720112f1186256b7404a5aa3d05d30e5a082"
+        }
+      ],
+      "fresh_source_edit": true,
+      "parent_interaction_id": null,
       "output": "outputs/mid-century-modern-guided.jpg",
+      "output_sha256": "53cb22bfd554e575d3e259116bf03e55f4e555fd7555083e7766012c49162f47",
       "status": "completed",
       "timestamp": "2026-07-19T12:45:33+08:00",
       "provider_interaction_id": "v1_ChdhRlpjYXJqVUliUG4xZThQa01IS3VRNBIXYUZaY2FyalVJYlBuMWU4UGtNSEt1UTQ",
@@ -48,8 +100,27 @@
       "run_id": "bauhaus-baseline",
       "style_id": "bauhaus",
       "variant": "baseline",
-      "prompt": "prompts/bauhaus-baseline.txt",
+      "source": {
+        "path": "source/source-room.png",
+        "sha256": "b59e5c6b471440f0b94be1bab9589a5757c8e479e43c8ec3e0b88c123faee461"
+      },
+      "request": {
+        "path": "requests/bauhaus-baseline.json",
+        "sha256": "40ba6ed0e1dcf0783c2332e48c5f2663af8323ae7bf0060e4f02fbee5f0e1a79"
+      },
+      "prompt": {
+        "path": "prompts/bauhaus-baseline.txt",
+        "sha256": "8de0e54a3c2eed9ef35bad58c7086f6dafc4acb2b9bd4dbcdda979f5002c6a7f"
+      },
+      "locks": {
+        "path": "locks.json",
+        "sha256": "41c7d73bd67842ca15f4821f3d295f38e165d2387e4dc47f6f7651e78bb8d53c"
+      },
+      "attached_reference_visuals": [],
+      "fresh_source_edit": true,
+      "parent_interaction_id": null,
       "output": "outputs/bauhaus-baseline.jpg",
+      "output_sha256": "491d8803746d1092741c877feca44853afb4c86c8dd6cb0e176ee70ad5b5dd13",
       "status": "completed",
       "timestamp": "2026-07-19T12:46:25+08:00",
       "provider_interaction_id": "v1_ChdtMVpjYW92S0tZS3p2cjBQd3B1cnNRNBIXbTFaY2FvdktLWUt6dnIwUHdwdXJzUTQ",
@@ -65,8 +136,46 @@
       "run_id": "bauhaus-guided",
       "style_id": "bauhaus",
       "variant": "guided",
-      "prompt": "prompts/bauhaus-guided.txt",
+      "source": {
+        "path": "source/source-room.png",
+        "sha256": "b59e5c6b471440f0b94be1bab9589a5757c8e479e43c8ec3e0b88c123faee461"
+      },
+      "request": {
+        "path": "requests/bauhaus-guided.json",
+        "sha256": "6a2e630548b799fe1f2f56b12be1722c379b97301e750aff6d10d90b146367b7"
+      },
+      "prompt": {
+        "path": "prompts/bauhaus-guided.txt",
+        "sha256": "a939ebc9b0efe265245c0c3cbd39438efad870fd80797afcdb481426416a9eee"
+      },
+      "locks": {
+        "path": "locks.json",
+        "sha256": "41c7d73bd67842ca15f4821f3d295f38e165d2387e4dc47f6f7651e78bb8d53c"
+      },
+      "attached_reference_visuals": [
+        {
+          "pack_id": "bauhaus",
+          "visual_id": "B-V3",
+          "path": "images/b-v3.jpg",
+          "sha256": "73ed7bccbf61360ae7e5d89f56be601165d4b0e760a2cedb1a42228fdf284543"
+        },
+        {
+          "pack_id": "bauhaus",
+          "visual_id": "B-V9",
+          "path": "images/b-v9.jpg",
+          "sha256": "1df182a3cd6b0c3b3c25a22a192bdc156bbb0936c7d984382e6abcae0ff9a41e"
+        },
+        {
+          "pack_id": "bauhaus",
+          "visual_id": "B-V11",
+          "path": "images/b-v11.jpg",
+          "sha256": "28319149c2a1df2a68dc2b8f0612c01041c4422b00e31c3fc26e413504615c0a"
+        }
+      ],
+      "fresh_source_edit": true,
+      "parent_interaction_id": null,
       "output": "outputs/bauhaus-guided.jpg",
+      "output_sha256": "31132ff634f527fe48bd2c93aa85e96a6cd8f702dee4e336caea40920fe78242",
       "status": "completed",
       "timestamp": "2026-07-19T12:47:13+08:00",
       "provider_interaction_id": "v1_Chd6RlpjYXRfTUM5SEgxZThQdUtYVmlRNBIXekZaY2F0X01DOUhIMWU4UHVLWFZpUTQ",
@@ -82,8 +191,27 @@
       "run_id": "japandi-baseline",
       "style_id": "japandi",
       "variant": "baseline",
-      "prompt": "prompts/japandi-baseline.txt",
+      "source": {
+        "path": "source/source-room.png",
+        "sha256": "b59e5c6b471440f0b94be1bab9589a5757c8e479e43c8ec3e0b88c123faee461"
+      },
+      "request": {
+        "path": "requests/japandi-baseline.json",
+        "sha256": "7f1e200986d977907e4396585419f7d0895f0efa4b87a9405f2ef1df2fe52002"
+      },
+      "prompt": {
+        "path": "prompts/japandi-baseline.txt",
+        "sha256": "c0cf9bbecba15d4df8b36020b979a5f0f573e7bd62452b78e4069d0d9eb7a934"
+      },
+      "locks": {
+        "path": "locks.json",
+        "sha256": "41c7d73bd67842ca15f4821f3d295f38e165d2387e4dc47f6f7651e78bb8d53c"
+      },
+      "attached_reference_visuals": [],
+      "fresh_source_edit": true,
+      "parent_interaction_id": null,
       "output": "outputs/japandi-baseline.jpg",
+      "output_sha256": "4385cfd46720e6c6a8983c804c8e424daff2539a3a147e64e5e12ef825e6946e",
       "status": "completed",
       "timestamp": "2026-07-19T12:47:55+08:00",
       "provider_interaction_id": "v1_Chc5MVpjYW96UUJvS3p2cjBQd3B1cnNRNBIXOTFaY2FvelFCb0t6dnIwUHdwdXJzUTQ",
@@ -99,8 +227,46 @@
       "run_id": "japandi-guided",
       "style_id": "japandi",
       "variant": "guided",
-      "prompt": "prompts/japandi-guided.txt",
+      "source": {
+        "path": "source/source-room.png",
+        "sha256": "b59e5c6b471440f0b94be1bab9589a5757c8e479e43c8ec3e0b88c123faee461"
+      },
+      "request": {
+        "path": "requests/japandi-guided.json",
+        "sha256": "bf9ea0de3be81c5920a2c7283fceb8131ee175e0c05e6ee68795912a6c8c8e29"
+      },
+      "prompt": {
+        "path": "prompts/japandi-guided.txt",
+        "sha256": "d8a28fae190e6b9a863d34f235ae6813a680892c511df6e098006e9383f937e5"
+      },
+      "locks": {
+        "path": "locks.json",
+        "sha256": "41c7d73bd67842ca15f4821f3d295f38e165d2387e4dc47f6f7651e78bb8d53c"
+      },
+      "attached_reference_visuals": [
+        {
+          "pack_id": "japandi",
+          "visual_id": "J-S1",
+          "path": "images/j-s1.jpg",
+          "sha256": "9d1a1be509c1e069db76243e52562606d40b497547c290f4b353bd940893ef87"
+        },
+        {
+          "pack_id": "japandi",
+          "visual_id": "J-V1",
+          "path": "images/j-v1.jpg",
+          "sha256": "da98b11aaf0107faf9d5a8feb8bdbd8952a0b7a941e1026ea7f37fa42e439879"
+        },
+        {
+          "pack_id": "japandi",
+          "visual_id": "J-V7",
+          "path": "images/j-v7.jpg",
+          "sha256": "9adb659a3874a89cacd8cdbcce3b68018f7f58f2249bad53c4b1581636507d0f"
+        }
+      ],
+      "fresh_source_edit": true,
+      "parent_interaction_id": null,
       "output": "outputs/japandi-guided.jpg",
+      "output_sha256": "505057f87d5b50be0d84367946438767107857bc461adaf5f3af3fc4a34c1c04",
       "status": "completed",
       "timestamp": "2026-07-19T12:49:09+08:00",
       "provider_interaction_id": "v1_ChdRRmRjYXU2ckJleTR2cjBQdmZxRC1BMBIXUUZkY2F1NnJCZXk0dnIwUHZmcUQtQTA",

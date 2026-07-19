@@ -67,6 +67,9 @@ test("GitHub workflows and issue templates cover release risks", async () => {
   assert.match(workflow, /validate:atlas/);
   assert.match(workflow, /sync:styles:check/);
   assert.match(workflow, /validate:benchmark/);
+  assert.match(workflow, /validate:launch/);
+  assert.match(workflow, /roomfile-shaoxiangchien\\\.ericchien21\\\.chatgpt\\\.site/);
+  assert.match(workflow, /post-deploy production smoke/i);
 });
 
 test("social launch kit has editable copy, alt text, and required assets", async () => {
@@ -108,6 +111,7 @@ test("v0.3 release notes document the Atlas, compatibility, and verification", a
   assert.match(notes, /benchmark/i);
   assert.match(notes, /npx skills add ShaoXiangChien\/roomfile/);
   assert.match(notes, /verification/i);
+  assert.doesNotMatch(notes, /complete local gate|correctly return 404/i);
   assert.match(publicNotes, /Style Atlas/i);
   assert.match(publicNotes, /RELEASE_NOTES_v0\.3\.0\.md/);
 });

@@ -17,6 +17,7 @@
     "smoke:fresh": "node scripts/fresh-install-smoke.mjs",
     "check:privacy": "node scripts/privacy-scan.mjs",
     "validate:benchmark": "node scripts/validate-style-atlas-benchmark.mjs --benchmark examples/style-atlas-benchmark --json",
+    "validate:launch": "node scripts/validate-launch-assets.mjs --manifest launch/manifest.json --json",
     "validate:atlas": "node skills/roomfile/scripts/validate-style-atlas.mjs --atlas skills/roomfile/references/style-atlas --json",
     "sync:styles": "node website/scripts/sync-style-atlas.mjs",
     "sync:styles:check": "node website/scripts/sync-style-atlas.mjs --check"

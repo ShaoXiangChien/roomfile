@@ -35,7 +35,9 @@ credential is included.
 - `source/` contains the shared fictional room.
 - `outputs/` contains the six generated images.
 - `cost-estimate.json` records the preflight estimate.
-- `generation-log.json` reconciles each call with its output and reported cost.
+- `generation-log.json` reconciles each independent call with immutable hashes
+  for its source, request, prompt, locks, output, and attached Atlas visuals,
+  plus its parent/continuation state and reported cost.
 - `review.json` and `REVIEW.md` record the human comparison.
 
 ## Review rubric
@@ -53,6 +55,10 @@ Each image is reviewed from 1 (poor) to 5 (strong) on:
 
 Review notes identify concrete visible evidence and failure modes. Scores are
 editorial judgments, not measurements or model rankings.
+
+Baselines attach no Atlas visuals; guided runs attach at least one visual from
+the exact pack snapshot. All outputs must decode as JPEG and match the declared
+2400 × 1792 (`2K`, `4:3`) provider contract.
 
 ## Limitations
 

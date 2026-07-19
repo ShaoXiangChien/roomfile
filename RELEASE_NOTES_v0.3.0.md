@@ -64,10 +64,9 @@ repository.
 
 ## Verification
 
-The committed release snapshot passed the complete local gate on July 19,
-2026:
+Pre-deployment verification recorded on July 19, 2026:
 
-- `npm test`: 100 tests passed.
+- `npm test`: 105 tests passed.
 - `npm run test:skill`: portable skill validation passed.
 - `npm run validate:example`: passed with the expected v0.2 upgrade warning.
 - `npm run smoke:fresh`: fresh-install smoke test passed.
@@ -75,6 +74,8 @@ The committed release snapshot passed the complete local gate on July 19,
 - `npm run validate:atlas`: the committed Atlas snapshot passed.
 - `npm run sync:styles:check`: no website content drift.
 - `npm run validate:benchmark`: all six benchmark outputs and records passed.
+- `npm run validate:launch`: all 13 launch rasters matched their dimensions and
+  per-asset alt contracts.
 - `npm --prefix website test`: 9 tests passed.
 - `npm --prefix website run lint`: passed.
 - `npm --prefix website run test:e2e`: 11 tests passed and one intentionally
@@ -82,6 +83,8 @@ The committed release snapshot passed the complete local gate on July 19,
 - `git diff --check`: passed.
 - `gitleaks git --redact --verbose`: no committed-history secrets found.
 
-The workflow repeats the root gate on Node 20 and 22. Link checking should be
-repeated after the new Style Atlas routes are deployed; before deployment,
-their four production URLs correctly return 404.
+The workflow repeats the root gate on Node 20 and 22. Built-route tests validate
+the internal Style Atlas links before deployment; the external link check
+temporarily excludes only the production Sites domain. Production URL and
+smoke checks remain a separate required post-deploy release gate and are not
+claimed here.

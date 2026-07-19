@@ -36,6 +36,8 @@ jobs:
         run: npm run sync:styles:check
       - name: Validate controlled rendering benchmark
         run: npm run validate:benchmark
+      - name: Validate launch raster and alt-text contract
+        run: npm run validate:launch
       - name: Validate fictional example
         run: npm run validate:example
       - name: Fresh initialization smoke test
@@ -70,15 +72,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Check repository and website links
+      - name: Check external repository and website links
         uses: lycheeverse/lychee-action@v2
         with:
           args: >-
             --no-progress
             --exclude-path website/node_modules
             --exclude-path website/dist
+            --exclude '^https://roomfile-shaoxiangchien\.ericchien21\.chatgpt\.site(?:/.*)?$'
             README.md CONTRIBUTING.md website/app/**/*.tsx
           fail: true
+      # Internal routes, including /styles, are exercised against the built site
+      # in the website job. Post-deploy production smoke is a separate release
+      # gate, so this external checker excludes only the production Sites domain.
 
   secrets:
     name: Secret scan
