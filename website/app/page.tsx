@@ -169,18 +169,125 @@ export default function Home() {
               <strong>Direction found: Mid-century Modern</strong>
             </aside>
           </div>
-          <aside className="atlas-home-entry">
+        </div>
+      </section>
+
+      <section
+        className="journey-section atlas-conversation"
+        id="atlas-conversation"
+      >
+        <div className="shell">
+          <header className="atlas-conversation-heading">
             <p className="eyebrow">The research behind the conversation</p>
-            <h3>Sharper questions, without turning taste into a formula.</h3>
-            <p>
-              Roomfile can draw on researched field guides to notice history,
-              materials, spatial logic, and common clichés. Your references and
-              reactions remain the source of truth.
-            </p>
-            <Link className="editorial-link" href="/styles">
-              Open the Style Atlas <span>→</span>
-            </Link>
-          </aside>
+            <h2>
+              A deeper understanding of style leads to better design decisions.
+            </h2>
+            <div className="atlas-conversation-intro">
+              <p>
+                Roomfile draws from researched field guides—history, materials,
+                spatial logic, current expressions, and common
+                misreadings—then interprets them through what you actually
+                respond to.
+              </p>
+              <p>
+                <strong>Your references come first.</strong> The Atlas helps the
+                conversation go deeper.
+              </p>
+            </div>
+          </header>
+
+          <div className="atlas-conversation-spread">
+            <figure className="atlas-conversation-plate">
+              <div className="atlas-conversation-image">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/styles/mid-century-modern/m-v4-m-v4.jpg"
+                  width="1600"
+                  height="1074"
+                  alt="Color living room with a pale floral rug, low table covered with glass paperweights, upholstered lounge chairs, a wooden rocking chair, and floor-to-ceiling bookcases"
+                />
+                <span className="atlas-pin pin-one" aria-hidden="true">
+                  01
+                </span>
+                <span className="atlas-pin pin-two" aria-hidden="true">
+                  02
+                </span>
+                <span className="atlas-pin pin-three" aria-hidden="true">
+                  03
+                </span>
+                <span className="atlas-pin pin-four" aria-hidden="true">
+                  04
+                </span>
+              </div>
+              <figcaption>
+                <span>
+                  Reference plate · Miller House interior · circa 2000
+                </span>
+                <span>
+                  Marsh Davis · Indiana Landmarks / DPLA ·{" "}
+                  <a
+                    href="https://commons.wikimedia.org/wiki/File:Miller_House_interior,_c2000_(Columbus,_Ind.)_-_DPLA_-_35947909314af82961d036a37975f3fd.jpg"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Source ↗
+                  </a>{" "}
+                  ·{" "}
+                  <a
+                    href="https://creativecommons.org/licenses/by/4.0/"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    CC BY 4.0 ↗
+                  </a>
+                </span>
+              </figcaption>
+            </figure>
+
+            <aside className="atlas-conversation-notes">
+              <dl>
+                <div>
+                  <dt>
+                    <span>01</span> What the agent notices
+                  </dt>
+                  <dd>
+                    Layered textiles, color, storage, and seating—not a
+                    checklist of walnut legs.
+                  </dd>
+                </div>
+                <div>
+                  <dt>
+                    <span>02</span> What it does not generalize
+                  </dt>
+                  <dd>
+                    One exceptional commissioned house is not the definition of
+                    every Mid-century Modern room.
+                  </dd>
+                </div>
+                <div>
+                  <dt>
+                    <span>03</span> How it translates into your room
+                  </dt>
+                  <dd>
+                    Layered lighting, warm wood, collected objects, and a
+                    denser, more social layout.
+                  </dd>
+                </div>
+                <div>
+                  <dt>
+                    <span>04</span> Which clichés it avoids
+                  </dt>
+                  <dd>
+                    A token orange rug, empty staging, and furniture chosen only
+                    because it has tapered legs.
+                  </dd>
+                </div>
+              </dl>
+              <Link className="editorial-link" href="/styles">
+                Explore the Style Atlas <span>→</span>
+              </Link>
+            </aside>
+          </div>
         </div>
       </section>
 

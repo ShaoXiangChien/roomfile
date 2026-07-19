@@ -77,7 +77,20 @@ test("homepage states the real product contract", async () => {
   assert.match(html, /Amazon/);
   assert.match(html, /Product ledger/);
   assert.match(html, /The research behind the conversation/);
-  assert.match(html, /reactions remain the source of truth/i);
+  assert.match(
+    html,
+    /A deeper understanding of style leads to better design decisions/,
+  );
+  assert.match(html, /Your references come first/);
+  assert.match(html, /What the agent notices/);
+  assert.match(html, /What it does not generalize/);
+  assert.match(html, /How it translates into your room/);
+  assert.match(html, /Which clichés it avoids/);
+  assert.match(html, /Explore the Style Atlas/);
+  assert.match(
+    html,
+    /Find what feels like you[\s\S]*The research behind the conversation[\s\S]*Design it together/,
+  );
   assert.match(html, /01/);
   assert.match(html, /06/);
   assert.doesNotMatch(html, /Three answers to the same room/i);
