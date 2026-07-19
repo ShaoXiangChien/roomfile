@@ -56,7 +56,13 @@ $roomfile status`}</CodeBlock>
         <ol>
           <li>
             <code>$roomfile taste</code> turns references into likes, dislikes,
-            anti-references, and contradictions.
+            anti-references, and contradictions. The Style Atlas can sharpen
+            the follow-up questions without turning a label into your whole
+            preference.
+          </li>
+          <li>
+            <code>$roomfile style &lt;query&gt;</code> opens a researched style
+            guide, comparison, or targeted research question at any point.
           </li>
           <li>
             <code>$roomfile brief</code> aligns needs, inventory, budget, and
@@ -81,14 +87,31 @@ $roomfile status`}</CodeBlock>
       </section>
 
       <section>
+        <h2>Use the Style Atlas when a label needs more depth</h2>
+        <CodeBlock>{`$roomfile style MCM
+$roomfile style "Compare Bauhaus and Japandi spatial logic"`}</CodeBlock>
+        <p>
+          Roomfile first loads the relevant quick guide and design signals. It
+          reads the deeper field guide and visual records only when the question
+          needs them. Unknown directions, regional variants, and current trends
+          trigger sourced live research rather than a guessed nearest match.
+        </p>
+        <p>
+          Your inspiration and reactions still lead. Atlas signals can be
+          adopted, rejected, left uncertain, or overridden in{" "}
+          <code>inspiration/style-context.json</code>.
+        </p>
+      </section>
+
+      <section>
         <h2>Upgrade an existing project</h2>
         <CodeBlock>
-          node scripts/migrate-project.mjs --project roomfile --to 0.2.0 --json
+          node scripts/migrate-project.mjs --project roomfile --to 0.3.0 --json
         </CodeBlock>
         <p>
-          Migration adds the preference-first profile state and currency
-          validation without changing existing location, product, photo,
-          price, or decision data. It is safe to run more than once.
+          Migration adds an empty style context without changing existing
+          location, profile, inspiration, product, photo, price, concept, or
+          decision data. It is safe to run more than once.
         </p>
       </section>
 

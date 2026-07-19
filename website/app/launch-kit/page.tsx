@@ -151,7 +151,7 @@ function HeroAsset({
     <main className={`launch-canvas launch-hero launch-${format}`}>
       <div className="launch-brandline">
         <strong>Roomfile</strong>
-        <em>v0.2.0</em>
+        <em>v0.3.0</em>
       </div>
       <div className="launch-hero-grid">
         <div>

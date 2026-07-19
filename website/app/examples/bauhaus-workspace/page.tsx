@@ -96,6 +96,7 @@ export default function BauhausWorkspace() {
       <nav className="case-next shell" aria-label="More selected homes">
         <Link href="/examples/apartment">← Living room</Link>
         <Link href="/examples">All selected homes</Link>
+        <Link href="/styles/bauhaus">Bauhaus field guide</Link>
         <Link href="/examples/japandi-bedroom">Japandi bedroom →</Link>
       </nav>
     </main>

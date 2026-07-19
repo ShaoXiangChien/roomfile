@@ -15,10 +15,11 @@ export function SiteHeader() {
       <div className="shell header-inner">
         <Link className="brand" href="/" aria-label="Roomfile home">
           <span className="masthead">Roomfile</span>
-          <span className="version">v0.2.0</span>
+          <span className="version">v0.3.0</span>
         </Link>
         <nav className="main-nav" aria-label="Main navigation">
           <Link href="/examples">Selected Homes</Link>
+          <Link href="/styles">Style Atlas</Link>
           <Link href="/docs/getting-started">Docs</Link>
           <a
             href="https://github.com/ShaoXiangChien/roomfile"
@@ -62,6 +63,9 @@ export function SiteFooter() {
               <Link href="/examples">Selected Homes</Link>
             </li>
             <li>
+              <Link href="/styles">Style Atlas</Link>
+            </li>
+            <li>
               <a href="https://github.com/ShaoXiangChien/roomfile">
                 Source on GitHub
               </a>
@@ -71,7 +75,7 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="shell legal-line">
-        <span>Apache-2.0 · v0.2.0</span>
+        <span>Apache-2.0 · v0.3.0</span>
         <span>
           <Link href="/docs/project-files">Privacy</Link> ·{" "}
           <Link href="/docs/rendering">Rendering notes</Link>

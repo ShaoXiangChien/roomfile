@@ -66,7 +66,7 @@ export default function Sourcing() {
           <li>Archived examples never imply that their recorded prices remain current.</li>
         </ul>
         <p>
-          Roomfile uses no affiliate links in v0.2.0 and never purchases,
+          Roomfile uses no affiliate links in v0.3.0 and never purchases,
           enters checkout, contacts a retailer, or communicates externally.
         </p>
       </section>
