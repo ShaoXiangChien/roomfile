@@ -31,9 +31,11 @@ Accept a style name, comparison, or research question. Follow
 matched packs, and explain historical core, current expressions, misreadings,
 relevant visuals, and questions for this user's room. Compare design logic,
 composition, materials, density, use, and framing rather than palette alone.
-When coverage is unknown or insufficient, perform cited live research and save
-the note under `inspiration/research/`. Never guess the nearest pack or treat
-built-in packs as the styles Roomfile supports.
+When coverage is unknown or insufficient, perform cited live research. If an
+initialized project exists, save the note under `inspiration/research/`.
+Without a project, return cited results in the response and do not write a
+research note. Never guess the nearest pack or treat built-in packs as the
+styles Roomfile supports.
 
 ## `taste`
 

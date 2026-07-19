@@ -19,16 +19,34 @@ test("style command resolves known packs through progressive loading", async () 
   assert.match(skill, /\|\s*`style`\s*\|/);
   assert.match(workflows, /## `style`/);
   assert.match(atlas, /resolve-style\.mjs/);
-  assert.match(atlas, /index\.json[\s\S]*quick-guide\.md[\s\S]*signals\.json/i);
   assert.match(
     atlas,
-    /field-guide\.md[\s\S]*visuals\.json[\s\S]*sources\.json[\s\S]*(deep|conflict|comparison|render)/i,
+    /index\.json[\s\S]*style-pack\.json[\s\S]*quick-guide\.md[\s\S]*signals\.json[\s\S]*visuals\.json/i,
+  );
+  assert.match(
+    atlas,
+    /reviewed_at[\s\S]*six calendar months[\s\S]*current date[\s\S]*needs-live-research/i,
+  );
+  assert.match(
+    atlas,
+    /visuals\.json.*metadata[\s\S]*visual IDs.*captions.*attribution/is,
+  );
+  assert.match(
+    atlas,
+    /do not load.*image files[\s\S]*(asks to see|render-reference selection)/is,
+  );
+  assert.match(
+    atlas,
+    /field-guide\.md[\s\S]*sources\.json[\s\S]*(deep|conflict|comparison|cultural|historical)/i,
   );
   assert.match(skill, /`style`.*without an initialized project/is);
 });
 
 test("style command persists cited live research without downloading unverified images", async () => {
-  const atlas = await read("references/style-atlas.md");
+  const [atlas, workflows] = await Promise.all([
+    read("references/style-atlas.md"),
+    read("references/workflows.md"),
+  ]);
 
   for (const trigger of [
     /no pack resolves/i,
@@ -45,6 +63,14 @@ test("style command persists cited live research without downloading unverified 
   assert.match(atlas, /inspiration\/research\//);
   assert.match(atlas, /cited/i);
   assert.match(atlas, /Do not download[\s\S]*allowlisted license/i);
+  assert.match(
+    atlas,
+    /if\s+(?:an\s+initialized\s+)?project\s+exists[\s\S]*inspiration\/research\/[\s\S]*without a project[\s\S]*cited[\s\S]*results[\s\S]*(do not write|without writing)/i,
+  );
+  assert.match(
+    workflows,
+    /if\s+(?:an\s+initialized\s+)?project\s+exists[\s\S]*inspiration\/research\/[\s\S]*without a project[\s\S]*cited[\s\S]*results[\s\S]*(do not write|without writing)/i,
+  );
 });
 
 test("taste applies the evidence hierarchy and persists style provenance", async () => {

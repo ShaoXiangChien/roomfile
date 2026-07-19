@@ -17,11 +17,14 @@ Resolve `ROOMFILE_SKILL_DIR`, then:
      --json
    ```
 
-3. For each resolved pack, read only `quick-guide.md` and `signals.json` for a
-   normal `style`, `taste`, or `explore` request.
-4. Read `field-guide.md`, `visuals.json`, and `sources.json` only for a deep
-   question, conflict, comparison, cultural or historical claim, or
-   render-reference selection.
+3. For each resolved pack, read `style-pack.json` metadata, `quick-guide.md`,
+   and `signals.json` for a normal `style`, `taste`, or `explore` request.
+4. For an ordinary known-style `style` response, also read `visuals.json`
+   metadata so the answer can cite relevant visual IDs, captions, and
+   attribution. Do not load the image files unless the user asks to see them
+   or the workflow reaches render-reference selection.
+5. Read `field-guide.md` and `sources.json` only for a deep question, conflict,
+   comparison, cultural or historical claim, or source-level verification.
 
 For a known style, explain its historical core, current expressions,
 misreadings, and relevant visuals, then ask questions that reveal what the
@@ -40,14 +43,22 @@ Return `needs-live-research` and research before interpreting when:
 - the pack's contemporary layer is older than six months;
 - the evidence cannot be explained without guessing.
 
+Evaluate freshness from `style-pack.json.reviewed_at`: add six calendar months
+to that date (clamping to the last valid day when the target month is shorter)
+and compare it with the current date. If the current date is later than that
+due date, return `needs-live-research`. A missing or invalid review date is
+insufficient coverage and also requires live research.
+
 Research in this order:
 
 1. museums, official archives, designer foundations, and original works;
 2. academic or curatorial work and practitioner interviews;
 3. design media, social sources, and retailers only as evidence of present-day usage.
 
-Save an original, cited note under `roomfile/inspiration/research/`. Add the
-URLs and retrieval dates used to `style-context.json.live_research_sources`.
+If an initialized project exists, save an original, cited note under
+`roomfile/inspiration/research/` and add its URLs and retrieval dates to
+`style-context.json.live_research_sources`. Without a project, return the cited
+results in the response and do not write a research note.
 Do not download a remote image until an allowlisted license has been
 individually verified. A link or screenshot can remain private user
 inspiration without being republished.
