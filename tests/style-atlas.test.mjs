@@ -18,7 +18,7 @@ async function createAtlas() {
   const packs = [
     { id: "warm-minimal", name: "Warm Minimal", aliases: ["warm-minimalism"] },
     { id: "soft-industrial", name: "Soft Industrial", aliases: ["soft industrial style"] },
-    { id: "coastal-modern", name: "Coastal Modern", aliases: ["coastal"] },
+    { id: "japanese-modern", name: "和風モダン", aliases: ["和風", "Japanese modern"] },
   ];
   await writeFile(path.join(atlas, "index.json"), JSON.stringify({ schema_version: "0.3.0", packs }, null, 2));
   for (const pack of packs) await createPack(atlas, pack);
@@ -71,6 +71,27 @@ test("style resolver returns exact metadata for an alias and normalizes punctuat
 test("style resolver does not fuzzy match unknown styles", async () => {
   const atlas = await createAtlas();
   const result = run(resolveScript, ["--atlas", atlas, "--style", "warm minimalish", "--json"], atlas);
+  assert.equal(result.status, 0, result.stderr || result.stdout);
+  assert.equal(JSON.parse(result.stdout).status, "needs-live-research");
+});
+
+test("style resolver matches a Unicode canonical name", async () => {
+  const atlas = await createAtlas();
+  const result = run(resolveScript, ["--atlas", atlas, "--style", "和風 モダン", "--json"], atlas);
+  assert.equal(result.status, 0, result.stderr || result.stdout);
+  assert.equal(JSON.parse(result.stdout).pack.id, "japanese-modern");
+});
+
+test("style resolver matches a Unicode alias", async () => {
+  const atlas = await createAtlas();
+  const result = run(resolveScript, ["--atlas", atlas, "--style", "《和風》", "--json"], atlas);
+  assert.equal(result.status, 0, result.stderr || result.stdout);
+  assert.equal(JSON.parse(result.stdout).pack.id, "japanese-modern");
+});
+
+test("style resolver sends an unknown Unicode style to live research", async () => {
+  const atlas = await createAtlas();
+  const result = run(resolveScript, ["--atlas", atlas, "--style", "侘寂未来派", "--json"], atlas);
   assert.equal(result.status, 0, result.stderr || result.stdout);
   assert.equal(JSON.parse(result.stdout).status, "needs-live-research");
 });

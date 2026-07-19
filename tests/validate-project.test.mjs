@@ -82,6 +82,43 @@ test("validator rejects v0.3 style context with more than four reference images"
   assert.equal(JSON.parse(result.stdout).errors.some((item) => item.code === "invalid_style_context"), true);
 });
 
+test("validator enforces every constrained style-context record", async (t) => {
+  const validPackRef = {
+    id: "warm-minimal",
+    version: "0.3.0",
+    read_at: "2026-07-19T12:00:00Z",
+  };
+  const cases = [
+    ["top-level additional properties", (context) => { context.private_provider_state = {}; }],
+    ["pack-ref additional properties", (context) => { context.pack_refs = [{ ...validPackRef, extra: true }]; }],
+    ["blank pack IDs", (context) => { context.pack_refs = [{ ...validPackRef, id: "" }]; }],
+    ["blank pack versions", (context) => { context.pack_refs = [{ ...validPackRef, version: "" }]; }],
+    ["invalid pack timestamps", (context) => { context.pack_refs = [{ ...validPackRef, read_at: "yesterday" }]; }],
+    ["malformed signal strings", (context) => { context.adopted_signals = [""]; }],
+    ["malformed signal records", (context) => { context.user_overrides = [{ reason: "missing signal" }]; }],
+    ["malformed live source URLs", (context) => { context.live_research_sources = [{ url: "not a URI" }]; }],
+    ["malformed live source timestamps", (context) => { context.live_research_sources = [{ url: "https://example.test", retrieved_at: "soon" }]; }],
+    ["live source additional properties", (context) => { context.live_research_sources = [{ url: "https://example.test", provider_state: "private" }]; }],
+    ["reference-image additional properties", (context) => { context.reference_images = [{ pack_id: "p", visual_id: "v", path: "v.jpg", reason: "fit", extra: true }]; }],
+    ["blank reference-image fields", (context) => { context.reference_images = [{ pack_id: "", visual_id: "v", path: "v.jpg", reason: "fit" }]; }],
+  ];
+
+  for (const [name, mutate] of cases) {
+    await t.test(`rejects ${name}`, async () => {
+      const target = await mkdtemp(path.join(tmpdir(), "roomfile-style-contract-"));
+      const profilePath = await writeProfile(target);
+      run(initScript, ["--target", target, "--privacy", "public-demo", "--profile", profilePath, "--json"], target);
+      const contextPath = path.join(target, "roomfile", "inspiration", "style-context.json");
+      const context = JSON.parse(await readFile(contextPath, "utf8"));
+      mutate(context);
+      await writeFile(contextPath, JSON.stringify(context, null, 2));
+      const result = run(validateScript, ["--project", path.join(target, "roomfile"), "--json"], target);
+      assert.equal(result.status, 1, result.stderr || result.stdout);
+      assert.equal(JSON.parse(result.stdout).errors.some((item) => item.code === "invalid_style_context"), true);
+    });
+  }
+});
+
 test("validator rejects a v0.3 project whose shopping profile is incomplete", async () => {
   const target = await mkdtemp(path.join(tmpdir(), "roomfile-incomplete-"));
   run(initScript, ["--target", target, "--privacy", "public-demo", "--json"], target);

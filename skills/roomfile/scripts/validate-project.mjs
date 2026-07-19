@@ -5,6 +5,7 @@ import {
   SCHEMA_VERSION,
   SUPPORTED_SCHEMA_VERSIONS,
   failInput,
+  isValidStyleContext,
   parseArgs,
   printResult,
   readJson,
@@ -69,7 +70,7 @@ try {
         path.join(project, "inspiration", "style-context.json"),
         "style_context_missing",
       );
-      if (styleContext && !validStyleContext(styleContext)) {
+      if (styleContext && !isValidStyleContext(styleContext)) {
         errors.push({
           code: "invalid_style_context",
           message: "style-context.json must use the v0.3 style-context contract.",
@@ -203,34 +204,4 @@ try {
   }
 } catch (error) {
   failInput(error, asJson);
-}
-
-function validStyleContext(value) {
-  if (value?.schema_version !== SCHEMA_VERSION) return false;
-  for (const field of [
-    "pack_refs",
-    "adopted_signals",
-    "rejected_signals",
-    "uncertain_signals",
-    "user_overrides",
-    "contradictions",
-    "live_research_sources",
-    "reference_images",
-  ]) {
-    if (!Array.isArray(value[field])) return false;
-  }
-  if (value.reference_images.length > 4) return false;
-  return value.pack_refs.every(
-    (ref) =>
-      ref &&
-      typeof ref.id === "string" &&
-      typeof ref.version === "string" &&
-      typeof ref.read_at === "string",
-  ) && value.reference_images.every(
-    (image) =>
-      image &&
-      ["pack_id", "visual_id", "path", "reason"].every(
-        (field) => typeof image[field] === "string" && image[field].trim(),
-      ),
-  );
 }

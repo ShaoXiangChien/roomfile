@@ -78,6 +78,14 @@ test("focused references and schemas exist", async () => {
   assert.equal(products.properties.products.items.properties.price.properties.currency.pattern, "^[A-Z]{3}$");
 });
 
+test("published style-context schema copies remain identical", async () => {
+  const [consumer, atlas] = await Promise.all([
+    readFile(path.join(skillDir, "references", "schemas", "style-context.schema.json"), "utf8"),
+    readFile(path.resolve("references/style-atlas/schemas/style-context.schema.json"), "utf8"),
+  ]);
+  assert.deepEqual(JSON.parse(atlas), JSON.parse(consumer));
+});
+
 test("portable skill ships reusable templates and a render-contract translator", async () => {
   const required = [
     "assets/templates/ROOMFILE.md",

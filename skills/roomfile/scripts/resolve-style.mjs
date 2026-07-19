@@ -30,5 +30,8 @@ try {
 }
 
 function normalize(value) {
-  return String(value || "").toLowerCase().replaceAll(/[^a-z0-9]+/g, "");
+  return String(value || "")
+    .normalize("NFKC")
+    .toLowerCase()
+    .replaceAll(/[^\p{L}\p{N}]+/gu, "");
 }
