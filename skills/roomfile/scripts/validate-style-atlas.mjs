@@ -182,19 +182,17 @@ async function validatePack(atlas, directory, declared, errors, artifacts) {
       declared.id,
     );
   }
-  const citations = fieldGuideCitations(field);
-  if (!citations.length) {
+  const citations = fieldGuideCitations(field, sourceIds);
+  if (!citations.known.size) {
     issue(errors, "missing_field_guide_citations", "Field guide must cite this pack's source IDs.", declared.id);
   }
-  for (const citation of citations) {
-    if (!sourceIds.has(citation)) {
-      issue(
-        errors,
-        "unknown_field_guide_citation",
-        `Field guide cites missing source ${citation}.`,
-        declared.id,
-      );
-    }
+  for (const citation of citations.unknown) {
+    issue(
+      errors,
+      "unknown_field_guide_citation",
+      `Field guide cites missing source ${citation}.`,
+      declared.id,
+    );
   }
   const tierOne = sourceList.filter((source) => Number(source?.tier) === 1).length;
   const contemporary = sourceList.filter((source) => source?.kind === "contemporary").length;
@@ -267,25 +265,31 @@ async function validateVisual(root, visual, sourceIds, errors, artifacts, packId
   if (!declaredDimensionsValid) {
     issue(errors, "invalid_image_dimensions", `Visual ${id} needs positive dimensions capped at 1600 px.`, packId, id);
   }
-  let decoded;
+  let parsed;
   try {
-    decoded = jpegDimensions(bytes);
+    parsed = jpegStructure(bytes);
   } catch {
-    issue(errors, "malformed_image", `Visual ${id} is not a decodable JPEG with a valid frame.`, packId, id);
+    issue(
+      errors,
+      "malformed_image",
+      `Visual ${id} is not a structurally valid JPEG with a frame, scan data, and EOI marker.`,
+      packId,
+      id,
+    );
     return;
   }
-  if (decoded.width > 1600 || decoded.height > 1600) {
-    issue(errors, "invalid_image_dimensions", `Visual ${id} decoded dimensions exceed the 1600 px cap.`, packId, id);
+  if (parsed.width > 1600 || parsed.height > 1600) {
+    issue(errors, "invalid_image_dimensions", `Visual ${id} JPEG frame dimensions exceed the 1600 px cap.`, packId, id);
   }
   if (
     Number.isInteger(visual.width)
     && Number.isInteger(visual.height)
-    && (visual.width !== decoded.width || visual.height !== decoded.height)
+    && (visual.width !== parsed.width || visual.height !== parsed.height)
   ) {
     issue(
       errors,
       "image_dimension_mismatch",
-      `Visual ${id} records ${visual.width} × ${visual.height}px but decodes to ${decoded.width} × ${decoded.height}px.`,
+      `Visual ${id} records ${visual.width} × ${visual.height}px but its JPEG frame is ${parsed.width} × ${parsed.height}px.`,
       packId,
       id,
     );
@@ -329,7 +333,7 @@ function attributionSection(markdown, id) {
   return next < 0 ? rest : rest.slice(0, match[0].length + next);
 }
 
-function jpegDimensions(bytes) {
+function jpegStructure(bytes) {
   if (bytes.length < 4 || bytes[0] !== 0xff || bytes[1] !== 0xd8) {
     throw new Error("Missing JPEG start-of-image marker.");
   }
@@ -338,27 +342,165 @@ function jpegDimensions(bytes) {
     0xc9, 0xca, 0xcb, 0xcd, 0xce, 0xcf,
   ]);
   let offset = 2;
+  let frame;
+  let sawScan = false;
+  let sawEndOfImage = false;
   while (offset < bytes.length) {
-    if (bytes[offset] !== 0xff) throw new Error("Invalid JPEG marker.");
-    while (offset < bytes.length && bytes[offset] === 0xff) offset += 1;
-    if (offset >= bytes.length) throw new Error("Truncated JPEG marker.");
-    const marker = bytes[offset];
-    offset += 1;
-    if (marker === 0xd9 || marker === 0xda) break;
-    if (marker === 0x01 || (marker >= 0xd0 && marker <= 0xd7)) continue;
-    if (offset + 2 > bytes.length) throw new Error("Truncated JPEG segment.");
-    const length = bytes.readUInt16BE(offset);
-    if (length < 2 || offset + length > bytes.length) throw new Error("Invalid JPEG segment length.");
-    if (startOfFrame.has(marker)) {
-      if (length < 7) throw new Error("Truncated JPEG frame.");
-      const height = bytes.readUInt16BE(offset + 3);
-      const width = bytes.readUInt16BE(offset + 5);
-      if (width < 1 || height < 1) throw new Error("Invalid JPEG dimensions.");
-      return { width, height };
+    const parsedMarker = jpegMarker(bytes, offset);
+    const marker = parsedMarker.marker;
+    offset = parsedMarker.afterMarker;
+    if (marker === 0xd9) {
+      if (!frame || !sawScan) throw new Error("JPEG ended before its frame and scan.");
+      sawEndOfImage = true;
+      break;
     }
-    offset += length;
+    if (marker === 0xd8 || marker === 0x00) throw new Error("Unexpected JPEG marker.");
+    if (marker >= 0xd0 && marker <= 0xd7) throw new Error("Restart marker outside scan data.");
+    if (marker === 0x01) continue;
+    const segment = jpegSegment(bytes, offset);
+    if (startOfFrame.has(marker)) {
+      if (frame) throw new Error("JPEG contains multiple frames.");
+      frame = jpegFrame(bytes, offset, segment.length, marker);
+      offset = segment.end;
+      continue;
+    }
+    if (marker === 0xda) {
+      if (!frame) throw new Error("JPEG scan precedes its frame.");
+      validateJpegScan(bytes, offset, segment.length, frame);
+      const entropy = jpegEntropyData(bytes, segment.end);
+      if (!entropy.hasData) throw new Error("JPEG scan has no entropy-coded payload.");
+      sawScan = true;
+      offset = entropy.nextMarker;
+      continue;
+    }
+    offset = segment.end;
   }
-  throw new Error("JPEG frame not found.");
+  if (!frame) throw new Error("JPEG frame not found.");
+  if (!sawScan) throw new Error("JPEG scan not found.");
+  if (!sawEndOfImage) throw new Error("JPEG end-of-image marker not found after scan data.");
+  return { width: frame.width, height: frame.height };
+}
+
+function jpegMarker(bytes, offset) {
+  const markerStart = offset;
+  if (bytes[offset] !== 0xff) throw new Error("Invalid JPEG marker.");
+  while (offset < bytes.length && bytes[offset] === 0xff) offset += 1;
+  if (offset >= bytes.length) throw new Error("Truncated JPEG marker.");
+  return { marker: bytes[offset], markerStart, afterMarker: offset + 1 };
+}
+
+function jpegSegment(bytes, offset) {
+  if (offset + 2 > bytes.length) throw new Error("Truncated JPEG segment.");
+  const length = bytes.readUInt16BE(offset);
+  if (length < 2 || offset + length > bytes.length) throw new Error("Invalid JPEG segment length.");
+  return { length, end: offset + length };
+}
+
+function jpegFrame(bytes, offset, length, marker) {
+  if (length < 11) throw new Error("JPEG frame lacks a component table.");
+  const precision = bytes[offset + 2];
+  const height = bytes.readUInt16BE(offset + 3);
+  const width = bytes.readUInt16BE(offset + 5);
+  const componentCount = bytes[offset + 7];
+  if (![8, 12].includes(precision) || width < 1 || height < 1) {
+    throw new Error("Invalid JPEG frame dimensions or precision.");
+  }
+  if (componentCount < 1 || componentCount > 4 || length !== 8 + (3 * componentCount)) {
+    throw new Error("Invalid JPEG frame component table.");
+  }
+  const components = new Set();
+  for (let index = 0; index < componentCount; index += 1) {
+    const start = offset + 8 + (index * 3);
+    const id = bytes[start];
+    const sampling = bytes[start + 1];
+    const horizontalSampling = sampling >> 4;
+    const verticalSampling = sampling & 0x0f;
+    const quantizationTable = bytes[start + 2];
+    if (
+      components.has(id)
+      || horizontalSampling < 1
+      || horizontalSampling > 4
+      || verticalSampling < 1
+      || verticalSampling > 4
+      || quantizationTable > 3
+    ) {
+      throw new Error("Invalid JPEG frame component.");
+    }
+    components.add(id);
+  }
+  return { marker, width, height, components };
+}
+
+function validateJpegScan(bytes, offset, length, frame) {
+  if (length < 8) throw new Error("JPEG scan lacks a component table.");
+  const componentCount = bytes[offset + 2];
+  if (
+    componentCount < 1
+    || componentCount > frame.components.size
+    || length !== 6 + (2 * componentCount)
+  ) {
+    throw new Error("Invalid JPEG scan component table.");
+  }
+  const selectors = new Set();
+  for (let index = 0; index < componentCount; index += 1) {
+    const start = offset + 3 + (index * 2);
+    const id = bytes[start];
+    const tables = bytes[start + 1];
+    if (
+      !frame.components.has(id)
+      || selectors.has(id)
+      || (tables >> 4) > 3
+      || (tables & 0x0f) > 3
+    ) {
+      throw new Error("Invalid JPEG scan component selector.");
+    }
+    selectors.add(id);
+  }
+  const parameters = offset + 3 + (2 * componentCount);
+  const spectralStart = bytes[parameters];
+  const spectralEnd = bytes[parameters + 1];
+  const approximation = bytes[parameters + 2];
+  if (
+    spectralStart > spectralEnd
+    || spectralEnd > 63
+    || (approximation >> 4) > 13
+    || (approximation & 0x0f) > 13
+  ) {
+    throw new Error("Invalid JPEG scan parameters.");
+  }
+  if (
+    frame.marker !== 0xc2
+    && (spectralStart !== 0 || spectralEnd !== 63 || approximation !== 0)
+  ) {
+    throw new Error("Invalid sequential JPEG scan parameters.");
+  }
+}
+
+function jpegEntropyData(bytes, offset) {
+  let hasData = false;
+  while (offset < bytes.length) {
+    if (bytes[offset] !== 0xff) {
+      hasData = true;
+      offset += 1;
+      continue;
+    }
+    const markerStart = offset;
+    offset += 1;
+    while (offset < bytes.length && bytes[offset] === 0xff) offset += 1;
+    if (offset >= bytes.length) throw new Error("Truncated JPEG scan marker.");
+    const marker = bytes[offset];
+    if (marker === 0x00) {
+      hasData = true;
+      offset += 1;
+      continue;
+    }
+    if (marker >= 0xd0 && marker <= 0xd7) {
+      offset += 1;
+      continue;
+    }
+    return { hasData, nextMarker: markerStart };
+  }
+  throw new Error("JPEG scan is truncated.");
 }
 
 function ids(values, kind, errors, packId) {
@@ -421,9 +563,19 @@ function coversInventory(references, inventory) {
     && references.every((id) => inventory.has(id));
 }
 
-function fieldGuideCitations(markdown) {
-  return [...markdown.matchAll(/\[([A-Za-z0-9]+(?:-[A-Za-z0-9]+)+)\]/g)]
-    .map((match) => match[1]);
+function fieldGuideCitations(markdown, sourceIds) {
+  const known = new Set();
+  const unknown = new Set();
+  for (const match of markdown.matchAll(/\[([^\]\r\n]+)\]/g)) {
+    if (match.index > 0 && markdown[match.index - 1] === "!") continue;
+    let cursor = match.index + match[0].length;
+    while (cursor < markdown.length && /[ \t]/.test(markdown[cursor])) cursor += 1;
+    if (markdown[cursor] === "(" || markdown[cursor] === "[") continue;
+    const citation = match[1].trim();
+    if (!citation) continue;
+    (sourceIds.has(citation) ? known : unknown).add(citation);
+  }
+  return { known, unknown };
 }
 
 function escapeRegExp(value) {

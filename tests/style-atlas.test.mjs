@@ -35,6 +35,38 @@ function rewriteJpegFrame(bytes, width, height) {
   throw new Error("Test fixture does not contain a JPEG frame.");
 }
 
+function truncateAfterFirstJpegFrame(bytes) {
+  let offset = 2;
+  const startOfFrame = new Set([
+    0xc0, 0xc1, 0xc2, 0xc3, 0xc5, 0xc6, 0xc7,
+    0xc9, 0xca, 0xcb, 0xcd, 0xce, 0xcf,
+  ]);
+  while (offset < bytes.length) {
+    while (bytes[offset] === 0xff) offset += 1;
+    const marker = bytes[offset];
+    offset += 1;
+    const length = bytes.readUInt16BE(offset);
+    if (startOfFrame.has(marker)) return bytes.subarray(0, offset + length);
+    offset += length;
+  }
+  throw new Error("Test fixture does not contain a JPEG frame.");
+}
+
+async function replaceFirstVisualImage(atlas, bytes, dimensions) {
+  const pack = path.join(atlas, "warm-minimal");
+  const visualsPath = path.join(pack, "visuals.json");
+  const document = JSON.parse(await readFile(visualsPath, "utf8"));
+  const visual = document.visuals[0];
+  await writeFile(path.join(pack, visual.path), bytes);
+  visual.byte_size = bytes.byteLength;
+  visual.sha256 = createHash("sha256").update(bytes).digest("hex");
+  if (dimensions) {
+    visual.width = dimensions.width;
+    visual.height = dimensions.height;
+  }
+  await writeFile(visualsPath, JSON.stringify(document, null, 2));
+}
+
 const requiredSignals = [
   "historical_core", "current_expressions", "composition", "furniture_forms",
   "materials", "palette", "lighting", "textiles_art", "spatial_density",
@@ -196,14 +228,8 @@ test("atlas validator accepts a complete three-pack atlas", async () => {
 
 test("atlas validator rejects a malformed JPEG even when its hash and byte count match", async () => {
   const atlas = await createAtlas();
-  const pack = path.join(atlas, "warm-minimal");
-  const visualsPath = path.join(pack, "visuals.json");
-  const { visuals, ...document } = JSON.parse(await readFile(visualsPath, "utf8"));
   const bytes = Buffer.from("not actually a JPEG");
-  await writeFile(path.join(pack, visuals[0].path), bytes);
-  visuals[0].byte_size = bytes.byteLength;
-  visuals[0].sha256 = createHash("sha256").update(bytes).digest("hex");
-  await writeFile(visualsPath, JSON.stringify({ ...document, visuals }, null, 2));
+  await replaceFirstVisualImage(atlas, bytes);
 
   const result = run(validateScript, ["--atlas", atlas, "--json"], atlas);
   assert.equal(result.status, 1, result.stderr || result.stdout);
@@ -213,7 +239,52 @@ test("atlas validator rejects a malformed JPEG even when its hash and byte count
   );
 });
 
-test("atlas validator compares decoded JPEG dimensions with visual metadata", async () => {
+test("atlas validator rejects an 11-byte SOI and forged SOF without component data or a scan", async () => {
+  const atlas = await createAtlas();
+  const bytes = Buffer.from([
+    0xff, 0xd8,
+    0xff, 0xc0, 0x00, 0x07, 0x08, 0x00, 0x01, 0x00, 0x01,
+  ]);
+  await replaceFirstVisualImage(atlas, bytes, { width: 1, height: 1 });
+
+  const result = run(validateScript, ["--atlas", atlas, "--json"], atlas);
+  assert.equal(result.status, 1, result.stderr || result.stdout);
+  assert.equal(
+    JSON.parse(result.stdout).errors.some((item) => item.code === "malformed_image"),
+    true,
+  );
+});
+
+test("atlas validator rejects a JPEG truncated immediately after its SOF component table", async () => {
+  const atlas = await createAtlas();
+  const imagePath = path.join(atlas, "warm-minimal", "images/1.jpg");
+  const bytes = truncateAfterFirstJpegFrame(await readFile(imagePath));
+  await replaceFirstVisualImage(atlas, bytes);
+
+  const result = run(validateScript, ["--atlas", atlas, "--json"], atlas);
+  assert.equal(result.status, 1, result.stderr || result.stdout);
+  assert.equal(
+    JSON.parse(result.stdout).errors.some((item) => item.code === "malformed_image"),
+    true,
+  );
+});
+
+test("atlas validator rejects a JPEG truncated before its EOI marker", async () => {
+  const atlas = await createAtlas();
+  const imagePath = path.join(atlas, "warm-minimal", "images/1.jpg");
+  const original = await readFile(imagePath);
+  assert.deepEqual([...original.subarray(-2)], [0xff, 0xd9]);
+  await replaceFirstVisualImage(atlas, original.subarray(0, -2));
+
+  const result = run(validateScript, ["--atlas", atlas, "--json"], atlas);
+  assert.equal(result.status, 1, result.stderr || result.stdout);
+  assert.equal(
+    JSON.parse(result.stdout).errors.some((item) => item.code === "malformed_image"),
+    true,
+  );
+});
+
+test("atlas validator compares parsed JPEG frame dimensions with visual metadata", async () => {
   const atlas = await createAtlas();
   const visualsPath = path.join(atlas, "warm-minimal", "visuals.json");
   const document = JSON.parse(await readFile(visualsPath, "utf8"));
@@ -228,7 +299,7 @@ test("atlas validator compares decoded JPEG dimensions with visual metadata", as
   );
 });
 
-test("atlas validator enforces the 1600px cap against decoded JPEG dimensions", async () => {
+test("atlas validator enforces the 1600px cap against parsed JPEG frame dimensions", async () => {
   const atlas = await createAtlas();
   const pack = path.join(atlas, "warm-minimal");
   const visualsPath = path.join(pack, "visuals.json");
@@ -293,6 +364,43 @@ test("atlas validator reconciles field-guide citations to source IDs", async () 
     JSON.parse(result.stdout).errors.some((item) => item.code === "unknown_field_guide_citation"),
     true,
   );
+});
+
+test("atlas validator ignores ordinary Markdown link labels when reconciling citations", async () => {
+  const atlas = await createAtlas();
+  await writeFile(
+    path.join(atlas, "warm-minimal", "field-guide.md"),
+    "# Field guide\n\nEvidence [source-1]. Read the [field-guide](https://example.test/guide).",
+  );
+
+  const result = run(validateScript, ["--atlas", atlas, "--json"], atlas);
+  assert.equal(result.status, 0, result.stderr || result.stdout);
+  assert.equal(JSON.parse(result.stdout).status, "success");
+});
+
+test("atlas validator recognizes unhyphenated source IDs in field-guide citations", async () => {
+  const atlas = await createAtlas();
+  const packRoot = path.join(atlas, "warm-minimal");
+  const sourcesPath = path.join(packRoot, "sources.json");
+  const sources = JSON.parse(await readFile(sourcesPath, "utf8"));
+  sources.sources[0].id = "source1";
+  await writeFile(sourcesPath, JSON.stringify(sources, null, 2));
+  const packPath = path.join(packRoot, "style-pack.json");
+  const pack = JSON.parse(await readFile(packPath, "utf8"));
+  pack.source_ids[0] = "source1";
+  await writeFile(packPath, JSON.stringify(pack, null, 2));
+  const visualsPath = path.join(packRoot, "visuals.json");
+  const visuals = JSON.parse(await readFile(visualsPath, "utf8"));
+  for (const visual of visuals.visuals) visual.source_id = "source1";
+  await writeFile(visualsPath, JSON.stringify(visuals, null, 2));
+  await writeFile(
+    path.join(packRoot, "field-guide.md"),
+    "# Field guide\n\nEvidence [source1].",
+  );
+
+  const result = run(validateScript, ["--atlas", atlas, "--json"], atlas);
+  assert.equal(result.status, 0, result.stderr || result.stdout);
+  assert.equal(JSON.parse(result.stdout).status, "success");
 });
 
 test("atlas validator reports invalid source count, license, hash, and references", async () => {

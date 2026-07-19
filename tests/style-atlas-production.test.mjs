@@ -272,6 +272,30 @@ test("every production alt describes observable image content instead of repeati
   }
 });
 
+test("production alts preserve verified color facts and omit nonexistent objects", async () => {
+  const visuals = new Map();
+  for (const style of expected.keys()) {
+    const document = await json(path.join(styleRoot, style, "visuals.json"));
+    for (const visual of document.visuals) visuals.set(visual.id, visual);
+  }
+  const colorVisuals = [
+    "M-V3", "M-V4", "M-V5", "M-V6", "M-V7",
+    "B-V5", "B-V7",
+    "J-S1", "J-S2", "J-S3", "J-S4", "J-S5", "J-S6", "J-V1",
+  ];
+  for (const id of colorVisuals) {
+    assert.doesNotMatch(visuals.get(id).alt, /\bblack-and-white\b/i, `${id} is a color image`);
+  }
+  for (const color of ["red", "black", "cream"]) {
+    assert.match(visuals.get("B-V5").alt, new RegExp(`\\b${color}\\b`, "i"));
+  }
+  assert.match(visuals.get("B-V7").alt, /\b(?:yellow|tan)\b/i);
+  for (const color of ["red", "gray", "black"]) {
+    assert.match(visuals.get("B-V7").alt, new RegExp(`\\b${color}\\b`, "i"));
+  }
+  assert.doesNotMatch(visuals.get("M-V4").alt, /\bpiano\b/i);
+});
+
 test("known source publication dates are preserved", async () => {
   const { sources } = await json(path.join(styleRoot, "mid-century-modern/sources.json"));
   assert.equal(sources.find((source) => source.id === "M-A16").publication_date, "2013-06-17");
