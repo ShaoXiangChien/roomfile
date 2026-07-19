@@ -68,15 +68,31 @@ export default function StylesIndex() {
               key={pack.id}
             >
               <span className="atlas-entry-folio">{story.number}</span>
-              <Link href={`/styles/${pack.id}`} className="atlas-entry-image">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={plate.public_path}
-                  alt={plate.alt}
-                  width={plate.width}
-                  height={plate.height}
-                />
-              </Link>
+              <figure
+                className="atlas-entry-plate"
+                data-visual-id={plate.id}
+              >
+                <Link href={`/styles/${pack.id}`} className="atlas-entry-image">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={plate.public_path}
+                    alt={plate.alt}
+                    width={plate.width}
+                    height={plate.height}
+                  />
+                </Link>
+                <figcaption className="atlas-entry-credit">
+                  <p>{plate.caption}</p>
+                  <p>
+                    <span>{plate.creator}</span>
+                    <span>{plate.institution}</span>
+                  </p>
+                  <p>
+                    <a href={plate.source_page}>Source ↗</a>
+                    <a href={plate.license_url}>{plate.license} ↗</a>
+                  </p>
+                </figcaption>
+              </figure>
               <div className="atlas-entry-copy">
                 <p className="eyebrow">
                   Field guide · {pack.coverage.sources} sources ·{" "}

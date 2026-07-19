@@ -125,6 +125,48 @@ test("Style Atlas routes render sourced field guides rather than presets", async
   assert.doesNotMatch(bauhaus, /Bauhaus is primary colors/i);
 });
 
+test("each Style Atlas index image keeps its own adjacent visible attribution", async () => {
+  const [index, atlas] = await Promise.all([
+    render("/styles").then((response) => response.text()),
+    readFile(
+      new URL("../app/generated/style-atlas.json", import.meta.url),
+      "utf8",
+    ).then(JSON.parse),
+  ]);
+  const selectedVisuals = atlas.packs.map((pack, index) => ({
+    pack,
+    visual: pack.visuals[index === 0 ? 0 : index === 1 ? 4 : 1],
+  }));
+
+  for (const { pack, visual } of selectedVisuals) {
+    const figure = index.match(
+      new RegExp(
+        `<figure[^>]*data-visual-id="${visual.id}"[\\s\\S]*?</figure>`,
+      ),
+    )?.[0];
+    assert.notEqual(figure, undefined, `${pack.id}/${visual.id} figure`);
+    assert.match(figure, /<figcaption/);
+    for (const value of [
+      visual.caption,
+      visual.creator,
+      visual.institution,
+      visual.source_page,
+      visual.license,
+      visual.license_url,
+    ]) {
+      assert.equal(
+        figure.includes(html(value)),
+        true,
+        `${pack.id}/${visual.id}: ${value}`,
+      );
+    }
+  }
+
+  const japandi = selectedVisuals.find(({ pack }) => pack.id === "japandi");
+  assert.equal(japandi.visual.license, "CC-BY-4.0");
+  assert.match(index, /Sherwin John Carlquist/);
+});
+
 test("every synchronized Atlas visual and source is published with attribution", async () => {
   const atlas = JSON.parse(
     await readFile(new URL("../app/generated/style-atlas.json", import.meta.url), "utf8"),
@@ -238,3 +280,12 @@ test("ships launch metadata and crawl files without starter residue", async () =
 
   await assert.rejects(access(new URL("../app/_sites-preview", import.meta.url)));
 });
+
+function html(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#x27;");
+}

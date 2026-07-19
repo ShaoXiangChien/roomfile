@@ -1303,7 +1303,7 @@ h3 {
   grid-template-columns: 70px minmax(300px, 0.62fr) minmax(460px, 1.38fr);
 }
 
-.atlas-reading-2 .atlas-entry-image {
+.atlas-reading-2 .atlas-entry-plate {
   grid-column: 3;
   grid-row: 1;
 }
@@ -1319,7 +1319,7 @@ h3 {
   padding-left: 12vw;
 }
 
-.atlas-reading-3 .atlas-entry-image {
+.atlas-reading-3 .atlas-entry-plate {
   max-width: 560px;
 }
 
@@ -1333,7 +1333,13 @@ h3 {
   line-height: 1;
 }
 
+.atlas-entry-plate {
+  min-width: 0;
+  margin: 0;
+}
+
 .atlas-entry-image {
+  display: block;
   overflow: hidden;
 }
 
@@ -1346,6 +1352,42 @@ h3 {
 
 .atlas-entry-image:hover img {
   transform: scale(1.018);
+}
+
+.atlas-entry-credit {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(220px, 0.65fr);
+  gap: 8px 24px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--ink);
+  font-family: var(--mono);
+  font-size: 0.52rem;
+  letter-spacing: 0.015em;
+  line-height: 1.5;
+}
+
+.atlas-entry-credit p {
+  margin: 0;
+}
+
+.atlas-entry-credit > p:first-child {
+  grid-row: 1 / span 2;
+}
+
+.atlas-entry-credit > p:nth-child(2) {
+  display: flex;
+  flex-direction: column;
+}
+
+.atlas-entry-credit > p:last-child {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.atlas-entry-credit a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .atlas-entry-copy {
@@ -2656,9 +2698,9 @@ h3 {
 
   .atlas-index-hero h1,
   .atlas-index-intro,
-  .atlas-reading-2 .atlas-entry-image,
+  .atlas-reading-2 .atlas-entry-plate,
   .atlas-reading-2 .atlas-entry-copy,
-  .atlas-reading-3 .atlas-entry-image,
+  .atlas-reading-3 .atlas-entry-plate,
   .atlas-reading-3 .atlas-entry-copy {
     grid-column: auto;
     grid-row: auto;
@@ -2677,8 +2719,8 @@ h3 {
     display: none;
   }
 
-  .atlas-reading-2 .atlas-entry-image,
-  .atlas-reading-3 .atlas-entry-image {
+  .atlas-reading-2 .atlas-entry-plate,
+  .atlas-reading-3 .atlas-entry-plate {
     order: -1;
     max-width: none;
   }
@@ -2923,6 +2965,14 @@ h3 {
 
   .atlas-home-entry .editorial-link {
     grid-column: auto;
+  }
+
+  .atlas-entry-credit {
+    grid-template-columns: 1fr;
+  }
+
+  .atlas-entry-credit > p:first-child {
+    grid-row: auto;
   }
 
   .room-fact-list div {
