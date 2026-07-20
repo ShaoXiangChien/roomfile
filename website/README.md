@@ -33,9 +33,17 @@ This starter does not use `wrangler.jsonc`.
 
 - `npm run dev`: start local development
 - `npm run build`: verify the vinext build output
+- `npm run build:vercel`: verify the standard Next.js build used by Vercel;
+  run `npm run sync:styles:check` from the repository before deploying
 - `npm test`: build every route and verify the public content contracts
 - `npm run sync:styles`: regenerate public Atlas data and images
 - `npm run sync:styles:check`: fail when public Atlas output has drifted
+
+## Deployment targets
+
+- OpenAI Sites uses the existing Vinext/Vite/Cloudflare Worker build.
+- Vercel uses `vercel.json` and the standard Next.js build. Run
+  `vercel --prod` from this directory after authenticating with the Vercel CLI.
 
 ## Learn More
 
